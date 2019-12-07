@@ -223,7 +223,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates:
-  - eventID: 3
+  - eventID: 5
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1325650116}
+          m_MethodName: OnSliderRelease
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 1
+  - eventID: 2
     callback:
       m_PersistentCalls:
         m_Calls:
@@ -1250,6 +1265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4163c0ebdac3cc74d9d2452c90b650c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pausePressed: 0
   slider: {fileID: 4487409}
 --- !u!1 &1349695228
 GameObject:

@@ -6,10 +6,11 @@ using UnityEngine.EventSystems;
 
 public class AudioManipulation : MonoBehaviour
 {
-    float time;
+    float time = 0f;
     float clampedLength;
     AudioSource a;
-    bool pausePressed = false;
+    [HideInInspector]
+    public bool pausePressed = false;
     public Slider slider;
 
     void Start()
@@ -23,7 +24,7 @@ public class AudioManipulation : MonoBehaviour
     {
         if (pausePressed == false)
         {
-            GetComponent<SongController>().enabled = false;
+            //GetComponent<SongController>().enabled = false;
             time = a.time;
             pausePressed = true;
             a.Stop();
@@ -34,7 +35,7 @@ public class AudioManipulation : MonoBehaviour
     {
         if (pausePressed == true)
         {
-            GetComponent<SongController>().enabled = true;
+            //GetComponent<SongController>().enabled = true;
             a.time = time;
             pausePressed = false;
             a.Play();
@@ -63,10 +64,10 @@ public class AudioManipulation : MonoBehaviour
 
     void Slider()
     {
-        if (a.isPlaying)
-        {
-            slider.value = clampedLength;
-        }
+        //if (a.isPlaying)
+        // {
+        slider.value = clampedLength;
+        // }
     }
 
     public void OnSliderRelease()

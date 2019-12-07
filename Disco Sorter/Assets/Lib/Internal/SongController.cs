@@ -66,14 +66,14 @@ public class SongController : MonoBehaviour {
 
 	void Update() {
 		// Real-time
-		if (realTimeSamples) {
+		if (realTimeSamples && !GetComponent<AudioManipulation>().pausePressed) {
 			audioSource.GetSpectrumData (realTimeSpectrum, 0, FFTWindow.BlackmanHarris);
 			realTimeSpectralFluxAnalyzer.analyzeSpectrum (realTimeSpectrum, audioSource.time);
 			realTimePlotController.updatePlot (realTimeSpectralFluxAnalyzer.spectralFluxSamples);
 		}
 
 		// Preprocessed
-		if (preProcessSamples) {
+		if (preProcessSamples && !GetComponent<AudioManipulation>().pausePressed) {
 			int indexToPlot = getIndexFromTime (audioSource.time) / 1024;
 			preProcessedPlotController.updatePlot (preProcessedSpectralFluxAnalyzer.spectralFluxSamples, indexToPlot);
 		}
