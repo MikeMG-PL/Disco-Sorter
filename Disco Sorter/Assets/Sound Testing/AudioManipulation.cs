@@ -11,6 +11,7 @@ public class AudioManipulation : MonoBehaviour
     AudioSource a;
     [HideInInspector]
     public bool pausePressed = false;
+    bool virtualPause;
     public Slider slider;
 
     void Start()
@@ -18,6 +19,7 @@ public class AudioManipulation : MonoBehaviour
         a = GetComponent<AudioSource>();
         a.time = time;
         pausePressed = true;
+        virtualPause = true;
     }
 
     public void Pause()
@@ -27,11 +29,24 @@ public class AudioManipulation : MonoBehaviour
             //GetComponent<SongController>().enabled = false;
             time = a.time;
             pausePressed = true;
+            virtualPause = true;
             a.Stop();
         }
     }
 
     public void Play()
+    {
+        if (pausePressed == true)
+        {
+            //GetComponent<SongController>().enabled = true;
+            a.time = time;
+            pausePressed = false;
+            virtualPause = false;
+            a.Play();
+        }
+    }
+
+    public void VirtualPlay()
     {
         if (pausePressed == true)
         {
@@ -64,16 +79,37 @@ public class AudioManipulation : MonoBehaviour
 
     void Slider()
     {
-        //if (a.isPlaying)
-        // {
-        slider.value = clampedLength;
-        // }
+        if (a.isPlaying)
+        {
+            slider.value = clampedLength;
+        }
+    }
+
+    public void OnSliderMove()
+    {
+        if (!virtualPause)
+        {
+            Debug.Log("Slider released!");
+            time = slider.value * a.clip.length;
+            //a.volume = 0f;
+            a.time = time;
+        }
+        else
+        {
+            Play();
+            Debug.Log("Slider released!");
+            time = slider.value * a.clip.length;
+            //a.volume = 0f;
+            a.time = time;
+            virtualPause = true;
+        }
+
     }
 
     public void OnSliderRelease()
     {
-        Debug.Log("Slider released!");
-        time = slider.value * a.clip.length;
+        if (virtualPause)
+            Pause();
     }
 
     void Update()
