@@ -6,14 +6,19 @@ using UnityEngine.EventSystems;
 
 public class AudioManipulation : MonoBehaviour
 {
-    float time = 0f;
-    float clampedLength;
-    AudioSource a;
-    [HideInInspector]
-    public bool pausePressed = false;
-    bool virtualPause;
-    public Slider slider;
+    float time = 0f;                        // Zmienna opisująca porządany moment w piosence
+    float clampedLength;                    // Zmienna opisująca porządany moment w piosence w przedziale <0; 1>
+    AudioSource a;                          // Zmienna reprezentująca źródło dźwięku
 
+    [HideInInspector]
+    public bool pausePressed = false;       // Zmienna mówiąca czy został wciśnięty przycisk pauzy
+
+    bool virtualPause;                      // Zmienna mówiąca czy jest włączona wirtualna pauza*
+    public Slider slider;                   // Zmienna opisująca slider
+
+    // * - wirtualna pauza - pauza piosenki mogąca pojawić się bez wciśnięcia przycisku pauzy (bo wymaga tego edytor do niektórych celów)
+
+    /// Pobranie źródła dźwięku, przewinięcie źródła dźwięku do początku, wciśnięcie pauzy oraz pauzy wirtualnej ///
     void Start()
     {
         a = GetComponent<AudioSource>();
@@ -22,17 +27,15 @@ public class AudioManipulation : MonoBehaviour
         virtualPause = true;
     }
 
-    public void Pause()
+    /// Funkcja wykonująca co klatkę najważniejsze operacje ///
+    void Update()
     {
-        if (pausePressed == false)
-        {
-            time = a.time;
-            pausePressed = true;
-            virtualPause = true;
-            a.Stop();
-        }
+        Clamp();
+        Slider();
+        OnClipEnd();
     }
 
+    /// Funkcja opisująca odtwarzanie linii poprzez wciśnięcie przycisku ///
     public void Play()
     {
         if (pausePressed == true)
@@ -45,6 +48,19 @@ public class AudioManipulation : MonoBehaviour
         }
     }
 
+    /// Funkcja opisująca pauzowanie linii poprzez wciśnięcie przycisku ///
+    public void Pause()
+    {
+        if (pausePressed == false)
+        {
+            time = a.time;
+            pausePressed = true;
+            virtualPause = true;
+            a.Stop();
+        }
+    }
+
+    /// Funkcja umożliwiająca przewijanie linii podczas gdy gra jest zapauzowana ///
     public void VirtualPlay()
     {
         if (pausePressed == true)
@@ -56,21 +72,21 @@ public class AudioManipulation : MonoBehaviour
         }
     }
 
+    /// Funkcja "ściskająca długość piosenki w przedziale <0; 1> ///
     void Clamp()
     {
         if (a.isPlaying)
-        {
             clampedLength = a.time / a.clip.length;
-            Debug.Log(clampedLength);
-        }
     }
 
+    /// Funkcja zatrzymująca linię po zakończeniu odtwarzania ///
     void OnClipEnd()
     {
         if ((!a.isPlaying && a.time > 0.1f) || a.time >= a.clip.length)
             Pause();
     }
 
+    /// Funkcja przenosząca "ściśniętą" długość (liczby) na slider ///
     void Slider()
     {
         if (a.isPlaying)
@@ -79,6 +95,7 @@ public class AudioManipulation : MonoBehaviour
         }
     }
 
+    /// Funkcja odpowiedzialna za przewijanie sliderem do przodu i do tyłu ///
     public void OnSliderMove()
     {
         if (!virtualPause)
@@ -98,16 +115,12 @@ public class AudioManipulation : MonoBehaviour
 
     }
 
+    /// Funkcja odpowiedzialna za pauzowanie linii, gdy puścimy slider, a przewijamy podczas zapauzowanej piosenki ///
     public void OnSliderRelease()
     {
         if (virtualPause)
             Pause();
     }
 
-    void Update()
-    {
-        Clamp();
-        Slider();
-        OnClipEnd();
-    }
+    
 }
