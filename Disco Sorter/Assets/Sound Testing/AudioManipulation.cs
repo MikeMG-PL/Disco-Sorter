@@ -26,7 +26,6 @@ public class AudioManipulation : MonoBehaviour
     {
         if (pausePressed == false)
         {
-            //GetComponent<SongController>().enabled = false;
             time = a.time;
             pausePressed = true;
             virtualPause = true;
@@ -38,7 +37,6 @@ public class AudioManipulation : MonoBehaviour
     {
         if (pausePressed == true)
         {
-            //GetComponent<SongController>().enabled = true;
             a.time = time;
             pausePressed = false;
             virtualPause = false;
@@ -51,7 +49,6 @@ public class AudioManipulation : MonoBehaviour
     {
         if (pausePressed == true)
         {
-            //GetComponent<SongController>().enabled = true;
             a.time = time;
             pausePressed = false;
             if (time < a.clip.length)
@@ -74,11 +71,6 @@ public class AudioManipulation : MonoBehaviour
             Pause();
     }
 
-    public void Test()
-    {
-        Debug.Log("Klik!");
-    }
-
     void Slider()
     {
         if (a.isPlaying)
@@ -91,18 +83,14 @@ public class AudioManipulation : MonoBehaviour
     {
         if (!virtualPause)
         {
-            Debug.Log("Slider released!");
             time = slider.value * a.clip.length;
-            //a.volume = 0f;
             if (time < a.clip.length)
                 a.time = time;
         }
         else
         {
             Play();
-            Debug.Log("Slider released!");
             time = slider.value * a.clip.length;
-            //a.volume = 0f;
             if (time < a.clip.length)
                 a.time = time;
             virtualPause = true;
