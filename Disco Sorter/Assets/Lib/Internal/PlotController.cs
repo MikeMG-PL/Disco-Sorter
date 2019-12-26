@@ -1,16 +1,21 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlotController : MonoBehaviour {
 
 	public List<Transform> plotPoints;
+	public GameObject peakPoint;
 	private Material highlightMaterial;
 	public int displayWindowSize = 300;
+
+	GameObject[] entityArray;
 
 	// Use this for initialization
 	void Start () {
 		plotPoints = new List<Transform> ();
+		//entityArray = GameObject.Find("SongController").GetComponent<EditorNet>().entityArray;
 
 		float localWidth = transform.Find("Point/BasePoint").localScale.x;
 		// -n/2...0...n/2
@@ -54,6 +59,7 @@ public class PlotController : MonoBehaviour {
 			if (pointInfo[i].isPeak) {
 				setPointHeight (peakPoint, pointInfo [i].spectralFlux);
 				setPointHeight (fluxPoint, 0f);
+				//if (pointInfo[i].spectralFlux * 0.06f > 0.09f) CreatePeakAboveEntities(time);
 			} else {
 				setPointHeight (fluxPoint, pointInfo [i].spectralFlux);
 				setPointHeight (peakPoint, 0f);
@@ -67,4 +73,14 @@ public class PlotController : MonoBehaviour {
 
 		point.localPosition = new Vector3(point.localPosition.x, height * displayMultiplier, point.localPosition.z);
 	}
+
+	/* Tworzenie peaków nad siatką
+	void CreatePeakAboveEntities(float time)
+	{
+		int index = Convert.ToInt32(time);
+		Vector3 position = entityArray[index * 2].transform.position;
+		position.y += 0.2f;
+		Instantiate(peakPoint.transform).position = position;
+	}
+	*/
 }

@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class AudioManipulation : MonoBehaviour
 {
-    float time = 0f;                        // Zmienna opisująca porządany moment w piosence
+    public float time = 0f;                        // Zmienna opisująca porządany moment w piosence
     float clampedLength;                    // Zmienna opisująca porządany moment w piosence w przedziale <0; 1>
     AudioSource a;                          // Zmienna reprezentująca źródło dźwięku
 

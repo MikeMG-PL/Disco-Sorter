@@ -38,7 +38,7 @@ public class SongController : MonoBehaviour {
 
 			this.sampleRate = AudioSettings.outputSampleRate;
 		}
-
+		
 		// Preprocess entire audio file upfront
 		if (preProcessSamples) {
 			preProcessedSpectralFluxAnalyzer = new SpectralFluxAnalyzer ();
@@ -55,11 +55,11 @@ public class SongController : MonoBehaviour {
 			this.sampleRate = audioSource.clip.frequency;
 
 			audioSource.clip.GetData(multiChannelSamples, 0);
-			Debug.Log ("GetData done");
+			//Debug.Log ("GetData done");
 
 			Thread bgThread = new Thread (this.getFullSpectrumThreaded);
 
-			Debug.Log ("Starting Background Thread");
+			//Debug.Log ("Starting Background Thread");
 			bgThread.Start ();
 		}
 	}
@@ -107,8 +107,8 @@ public class SongController : MonoBehaviour {
 				}
 			}
 
-			Debug.Log ("Combine Channels done");
-			Debug.Log (preProcessedSamples.Length);
+			//Debug.Log ("Combine Channels done");
+			//Debug.Log (preProcessedSamples.Length);
 
 			// Once we have our audio sample data prepared, we can execute an FFT to return the spectrum data over the time domain
 			int spectrumSampleSize = 1024;
@@ -117,7 +117,7 @@ public class SongController : MonoBehaviour {
 			FFT fft = new FFT ();
 			fft.Initialize ((UInt32)spectrumSampleSize);
 
-			Debug.Log (string.Format("Processing {0} time domain samples for FFT", iterations));
+			//Debug.Log (string.Format("Processing {0} time domain samples for FFT", iterations));
 			double[] sampleChunk = new double[spectrumSampleSize];
 			for (int i = 0; i < iterations; i++) {
 				// Grab the current 1024 chunk of audio sample data
@@ -141,7 +141,7 @@ public class SongController : MonoBehaviour {
 			}
 
 			Debug.Log ("Spectrum Analysis done");
-			Debug.Log ("Background Thread Completed");
+			//Debug.Log ("Background Thread Completed");
 				
 		} catch (Exception e) {
 			// Catch exceptions here since the background thread won't always surface the exception to the main thread
