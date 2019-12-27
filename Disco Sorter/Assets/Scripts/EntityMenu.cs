@@ -20,7 +20,7 @@ public class EntityMenu : MonoBehaviour
         entityArray = songController.GetComponent<EditorNet>().entityArray;
 
         // Każdemu obiektowi z tablicy przypisujemy ten skrypt, aby mógł zarządzać menu jego właściwości
-        for (int i = 0; i < entityArray.Length - 1; i++)
+        for (int i = 0; i < entityArray.Length; i++)
         {
             entityArray[i].GetComponent<Entity>().entityMenuScript = this;
         }
@@ -64,6 +64,7 @@ public class EntityMenu : MonoBehaviour
     }
 
     // Funkcje wykorzystywane bezpośrednio przez menu
+    // Po wybraniu konkretnej opcji można zmieniać wygląd kostki aby w jakiś sposób to zasygnalizować
     // Zmiana właściwości obiektu: typ
     public void ChangeEntityType(int entityType)
     {

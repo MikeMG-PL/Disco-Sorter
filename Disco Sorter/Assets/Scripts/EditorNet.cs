@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class EditorNet : MonoBehaviour
 {
+    public Camera camera;
     public GameObject entity;                               // Prefab obiektu/sześcianu reprezentującego miejsce, w których mogą spawnować się obiekty w grze (różne typy jabłek itd.)
     public GameObject[] entityArray;                        // Tablica wszystkich utworzonych obiektów
     public GameObject positionForEntities;                  // Dla ułatwienia. Obiekt, od którego pozycji zaczyna się spawn sześcianów
@@ -13,9 +14,11 @@ public class EditorNet : MonoBehaviour
     private Vector3 positionToSpawnEntity;                  // Pozycja spawnu obiektu
     private GameObject createdEntity;                       // Utworzony właśnie obiekt
     private double currentTime;                             // Aktualny czas granego audio 
-    private int entityNumber;                           // Numer obiektu odpowiadającego danemu granemu czasowi pliku audio
+    private int entityNumber;                               // Numer obiektu odpowiadającego danemu granemu czasowi pliku audio
     private int previousEntityNumber;                       // Numer obiektu odpowiadającego poprzedniemu granemu czasowi pliku audio
     private int entitiesAmount;                             // Ilość obiektów ustalana na podstawie długości piosenki (w sekundach) i ilości sześcianów na sekundę
+    private float cameraSpeed = 3.5f;
+    private float scroll;
 
     void Awake()
     {
@@ -49,6 +52,9 @@ public class EditorNet : MonoBehaviour
         entityNumber = (int)(currentTime * entitiesPerSecond);              // Aktualnie wyróżniony obiekt
 
         ChangeHighlightedObject();
+
+        scroll = Input.GetAxis("Mouse ScrollWheel");
+        camera.transform.Translate(0, 0, scroll * cameraSpeed, Space.Self);
     }
 
     // Zmienanie koloru obiektu odpowiadającemu aktualnemu czasowi piosenki na zielony i poprzednio wyróżnionego na zwykły
