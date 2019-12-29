@@ -7,9 +7,9 @@ public class EntityMenu : MonoBehaviour
 {
     public GameObject songController;       // Obiekt SongController, który ma w sobie skrypt EditorNet, który to z kolei jest potrzebny do pozyskania tablicy entities
     public GameObject menuPanel;            // Panel z całym menu właściowości obiektu
-    public Dropdown typeDropdown;           // Poszczególne elementy panelu, po pierwsze: dropdown, w którym wybiera się typ obiektu
-
-    public List<string> entityTypes;        // Wszystkie typy obiektów
+    // Poszczególne elementy panelu
+    public Dropdown typeDropdown;           // Dropdown, w którym wybiera się typ obiektu
+    public List<string> entityTypes;        // Wszystkie typy obiektów, umieszczane są w typeDropdown
 
     private GameObject[] entityArray;       // Tablica z entities
     private int currentEntity = -1;         // Aktualnie zaznaczony obiekt
@@ -29,7 +29,7 @@ public class EntityMenu : MonoBehaviour
         typeDropdown.AddOptions(entityTypes);
     }
 
-    // Otwarcie menu, wyróżnienie obiektu, "odwyróżnienie" poprzedniego obiektu
+    // Otwarcie menu po kliknięciu jakiegoś obiektu, wyróżnienie obiektu, który został wybrany, "odwyróżnienie" poprzedniego obiektu
     public void OpenMenu(int entityNumber)
     {
         // Aktywowanie panelu z menu
@@ -42,23 +42,23 @@ public class EntityMenu : MonoBehaviour
 
         // Wyróżnianie nowego obiektu i odwyróżnianie poprzedniego (jeśli jakiś był)
         if (previousEntity != -1)
-            entityArray[previousEntity].GetComponent<Entity>().Highlight();
-        entityArray[currentEntity].GetComponent<Entity>().Highlight();
+            entityArray[previousEntity].GetComponent<Entity>().Highlight(false);
+        entityArray[currentEntity].GetComponent<Entity>().Highlight(true);
     }
 
-    // Panel - menu jest jedno. Dla każdego obiektu ustawiane są wartości, które powinno pokazać menu
+    // Panel menu jest jeden. Dla każdego obiektu tuż przed otwarciem ustawiane są w nim wartości, które odpowiadają wybranemu właśnie obiektowi.
     private void SetCurrentValues()
     {
         typeDropdown.value = entityArray[currentEntity].GetComponent<Entity>().entityType;
     }
 
-    // Zamykanie menu i odwyróżnianie obiektu
+    // Zamykanie menu, odwyróżnianie obiektu i ustawianie currentEntity na -1
     public void CloseMenu()
     {
         if (menuPanel.activeSelf)
         {
-            entityArray[currentEntity].GetComponent<Entity>().Highlight();
             menuPanel.SetActive(false);
+            entityArray[currentEntity].GetComponent<Entity>().Highlight(false);
             currentEntity = -1;
         }
     }
@@ -71,7 +71,7 @@ public class EntityMenu : MonoBehaviour
         if (currentEntity != -1)
         {
             entityArray[currentEntity].GetComponent<Entity>().entityType = entityType;
-            Debug.Log(entityArray[currentEntity].GetComponent<Entity>().entityType);
+            //Debug.Log(entityArray[currentEntity].GetComponent<Entity>().entityType);
         }
     }
 }

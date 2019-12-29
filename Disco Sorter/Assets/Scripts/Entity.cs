@@ -7,6 +7,7 @@ public class Entity : MonoBehaviour
 { 
     public int entityNumber;                            // Numer (identyfikator) obiektu
     public int entityType;                              // Typ obiektu
+    [HideInInspector]
     public EntityMenu entityMenuScript;
 
     private bool highlighted;                           // Czy obiekt jest aktualnie zaznaczony
@@ -24,13 +25,19 @@ public class Entity : MonoBehaviour
     }
 
     // Przełącza wyróżnienie obiektu, wykorzystuje to skrypt EntityMenu
-    public void Highlight()
+
+    private void Update()
     {
-        highlighted = !highlighted;
+        HighlightMove();
     }
 
-    // Cały update zajmuje się przemieszczaniem wyróżnionego obiektu w górę (lub po "odwyróżnieniu" - w dół)
-    private void Update()
+    public void Highlight(bool highlight)
+    {
+        highlighted = highlight;
+    }
+
+    // Zajmuje się przemieszczaniem wyróżnionego obiektu w górę (lub po "odwyróżnieniu" - w dół)
+    void HighlightMove()
     {
         if (highlighted && transform.localPosition.y < maxHightOfHighlight)
         {
