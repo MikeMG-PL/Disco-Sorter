@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class EditorNet : MonoBehaviour
 {
-    public Camera cameraObj;
     public GameObject entity;                               // Prefab obiektu/sześcianu reprezentującego miejsce, w których mogą spawnować się obiekty w grze (różne typy jabłek itd.)
     public GameObject[] entityArray;                        // Tablica wszystkich utworzonych obiektów
     public GameObject positionForEntities;                  // Dla ułatwienia. Obiekt, od którego pozycji zaczyna się spawn sześcianów
@@ -17,8 +16,6 @@ public class EditorNet : MonoBehaviour
     private int entityNumber;                               // Numer obiektu odpowiadającego danemu granemu czasowi pliku audio
     private int previousEntityNumber;                       // Numer obiektu odpowiadającego poprzedniemu granemu czasowi pliku audio
     private int entitiesAmount;                             // Ilość obiektów ustalana na podstawie długości piosenki (w sekundach) i ilości sześcianów na sekundę
-    private float cameraSpeed = 3.5f;
-    private float scroll;
 
     void Awake()
     {
@@ -41,10 +38,7 @@ public class EditorNet : MonoBehaviour
     void Update()
     {
         SetCurrentEntity();
-
         ChangeHighlightedObject();
-
-        CameraMove();
     }
 
     // Ustala, który obiekt odpowiada aktualnemu czasowi piosenki
@@ -64,7 +58,7 @@ public class EditorNet : MonoBehaviour
         if (decimals >= 0.5) entityNumber = (int)Math.Round(currentTime) * entitiesPerSecond - 1;
         else entityNumber = (int)Math.Round(currentTime) * entitiesPerSecond;
 
-        Debug.Log(entityNumber);
+        //Debug.Log(entityNumber);
     }
 
     // Zmienanie koloru obiektu odpowiadającemu aktualnemu czasowi piosenki na zielony i poprzednio wyróżnionego na zwykły
@@ -76,12 +70,5 @@ public class EditorNet : MonoBehaviour
             entityArray[previousEntityNumber].GetComponent<Renderer>().material.color = Color.white;
             entityArray[entityNumber].GetComponent<Renderer>().material.color = Color.green;
         }
-    }
-
-    // Odpowiada za ruch kamery za pomocą scrolla
-    void CameraMove()
-    {
-        scroll = Input.GetAxis("Mouse ScrollWheel");
-        cameraObj.transform.Translate(0, 0, scroll * cameraSpeed, Space.Self);
     }
 }

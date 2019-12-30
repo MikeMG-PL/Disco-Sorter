@@ -83,7 +83,11 @@ public class AudioManipulation : MonoBehaviour
     void OnClipEnd()
     {
         if ((!a.isPlaying && a.time > 0.1f) || a.time >= a.clip.length)
+        {
             Pause();
+            Play();
+            Pause();
+        }
     }
 
     /// Funkcja przenosząca "ściśniętą" długość (liczby) na slider ///
