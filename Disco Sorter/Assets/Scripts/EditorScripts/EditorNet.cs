@@ -6,7 +6,8 @@ public class EditorNet : MonoBehaviour
     public GameObject entity;                               // Prefab obiektu/sześcianu reprezentującego miejsce, w których mogą spawnować się obiekty w grze (różne typy jabłek itd.)
     public GameObject[] entityArray;                        // Tablica wszystkich utworzonych obiektów
     public GameObject positionForEntities;                  // Dla ułatwienia. Obiekt, od którego pozycji zaczyna się spawn sześcianów
-    public int entitiesPerSecond = 2;                       // Ile entities/obiektów może mieścić się w jednej sekundzie piosenki
+    public int BPM;
+    float entitiesPerSecond;                      // Ile entities/obiektów może mieścić się w jednej sekundzie piosenki
 
     private AudioClip clip;                                 // Plik audio
     private AudioSource audioSource;
@@ -17,13 +18,20 @@ public class EditorNet : MonoBehaviour
     private int previousEntityNumber;                       // Numer obiektu odpowiadającego poprzedniemu granemu czasowi pliku audio
     private Color highlightColor = Color.cyan;              // Kolor obiektu, który odpowiada aktualnemu czasowi pliku audio
     private int entitiesAmount;                             // Ilość obiektów ustalana na podstawie długości piosenki (w sekundach) i ilości sześcianów na sekundę
+    float fromLastBeat;
+    float timer;
 
     void Awake()
     {
+        entitiesPerSecond = BPM / 60f;
+        fromLastBeat = 1f / entitiesPerSecond;
+        timer = 0f;
+
         audioSource = GetComponent<AudioSource>();
         clip = audioSource.clip;
         positionToSpawnEntity = positionForEntities.transform.position;
-        entitiesAmount = (int)Math.Round(clip.length) * entitiesPerSecond;
+        //entitiesAmount = (int)((Math.Round(clip.length) * entitiesPerSecond));
+        entitiesAmount = (int)(Math.Ceiling(clip.length * entitiesPerSecond));
         entityArray = new GameObject[entitiesAmount];
 
         // Spawnowanie sześcianów i dodawanie ich do tablicy
@@ -50,19 +58,37 @@ public class EditorNet : MonoBehaviour
     {
         // Aktualny czas utworu, jeśli pauza jest aktywna, czas jest brany ze skryptu AudioManipulation
         if (!gameObject.GetComponent<AudioManipulation>().pausePressed)
+        {
             currentTime = audioSource.time;
+
+            timer += Time.deltaTime;
+
+            if (timer >= fromLastBeat)
+            {
+                timer = 0f;
+                entityNumber++;
+            }
+
+
+
+            // Trochę ***MaTeMaTyKi***, która nie wiem czy jest poprawna, ale zaokrąglanie liczb sprawiło tutaj spory problem.
+            /*float decimals = currentTime - (int)currentTime;
+
+            previousEntityNumber = entityNumber;                               // Poprzednio wyróżniony obiekt
+            // Aktualnie wyróżniony obiekt
+
+            if (decimals >= 0.5) entityNumber = (int)(Math.Round(currentTime) * entitiesPerSecond - 1); !!!!!!!!!!!!!!!
+            else entityNumber = (int)(Math.Round(currentTime) * entitiesPerSecond);*/
+
+
+            Debug.Log(entityNumber);
+            //Debug.Log("CZAS OD BEATU: " + timer);
+        }
+
         else
             currentTime = gameObject.GetComponent<AudioManipulation>().time;
 
-        // Trochę ***MaTeMaTyKi***, która nie wiem czy jest poprawna, ale zaokrąglanie liczb sprawiło tutaj spory problem.
-        float decimals = currentTime - (int)currentTime;
 
-        previousEntityNumber = entityNumber;                               // Poprzednio wyróżniony obiekt
-        // Aktualnie wyróżniony obiekt
-        if (decimals >= 0.5) entityNumber = (int)Math.Round(currentTime) * entitiesPerSecond - 1;
-        else entityNumber = (int)Math.Round(currentTime) * entitiesPerSecond;
-
-        //Debug.Log(entityNumber);
     }
 
     // Zmienanie koloru obiektu odpowiadającemu aktualnemu czasowi piosenki na zielony i poprzednio wyróżnionego na zwykły
