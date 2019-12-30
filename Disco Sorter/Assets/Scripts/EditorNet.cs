@@ -12,9 +12,10 @@ public class EditorNet : MonoBehaviour
     private AudioSource audioSource;
     private Vector3 positionToSpawnEntity;                  // Pozycja spawnu obiektu
     private GameObject createdEntity;                       // Utworzony właśnie obiekt
-    private float currentTime;                             // Aktualny czas granego audio 
+    private float currentTime;                              // Aktualny czas granego audio 
     private int entityNumber;                               // Numer obiektu odpowiadającego danemu granemu czasowi pliku audio
     private int previousEntityNumber;                       // Numer obiektu odpowiadającego poprzedniemu granemu czasowi pliku audio
+    private Color highlightColor = Color.cyan;              // Kolor obiektu, który odpowiada aktualnemu czasowi pliku audio
     private int entitiesAmount;                             // Ilość obiektów ustalana na podstawie długości piosenki (w sekundach) i ilości sześcianów na sekundę
 
     void Awake()
@@ -33,6 +34,9 @@ public class EditorNet : MonoBehaviour
             entityArray[i] = createdEntity;
             positionToSpawnEntity.x += entity.transform.lossyScale.x * 1.05f;
         }
+
+        // Pierwszy obiekt odpowiada początkowemu czasowi piosenki
+        entityArray[0].GetComponent<Renderer>().material.color = Color.cyan;
     }
 
     void Update()
@@ -64,11 +68,12 @@ public class EditorNet : MonoBehaviour
     // Zmienanie koloru obiektu odpowiadającemu aktualnemu czasowi piosenki na zielony i poprzednio wyróżnionego na zwykły
     void ChangeHighlightedObject()
     {
-        if (entityArray[0] != null)
+        // Jeśli tablica obiektów została już stworzona, i jeśli nastąpiła zmiana obiektu odpowiadającego aktualnemu czasowi pliku audio lub aktywna jest pauza
+        if (entityArray[0] != null && (previousEntityNumber != entityNumber || gameObject.GetComponent<AudioManipulation>().pausePressed))
         {
-            if (entityNumber == entitiesAmount) entityNumber--;
-            entityArray[previousEntityNumber].GetComponent<Renderer>().material.color = Color.white;
-            entityArray[entityNumber].GetComponent<Renderer>().material.color = Color.green;
+            //if (entityNumber == entitiesAmount) entityNumber--;
+            entityArray[previousEntityNumber].GetComponent<Renderer>().material.color = entityArray[previousEntityNumber].GetComponent<Entity>().GetColor();
+            entityArray[entityNumber].GetComponent<Renderer>().material.color = highlightColor;
         }
     }
 }

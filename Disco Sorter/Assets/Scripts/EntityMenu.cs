@@ -10,6 +10,7 @@ public class EntityMenu : MonoBehaviour
     // Poszczególne elementy panelu
     public Dropdown typeDropdown;           // Dropdown, w którym wybiera się typ obiektu
     public List<string> entityTypes;        // Wszystkie typy obiektów, umieszczane są w typeDropdown
+    public Dropdown colorDropdown;          // Dropdown, w którym wybiera się kolor obiektu
 
     private GameObject[] entityArray;       // Tablica z entities
     private int currentEntity = -1;         // Aktualnie zaznaczony obiekt
@@ -50,6 +51,7 @@ public class EntityMenu : MonoBehaviour
     private void SetCurrentValues()
     {
         typeDropdown.value = entityArray[currentEntity].GetComponent<Entity>().entityType;
+        colorDropdown.value = entityArray[currentEntity].GetComponent<Entity>().color;
     }
 
     // Zamykanie menu, odwyróżnianie obiektu i ustawianie currentEntity na -1
@@ -72,6 +74,17 @@ public class EntityMenu : MonoBehaviour
         {
             entityArray[currentEntity].GetComponent<Entity>().entityType = entityType;
             //Debug.Log(entityArray[currentEntity].GetComponent<Entity>().entityType);
+        }
+    }
+
+    // Zmiana właściwości obiektu: kolor
+    public void ChangeColor(int color)
+    {
+        if (currentEntity != -1)
+        {
+            entityArray[currentEntity].GetComponent<Entity>().color = color;
+            entityArray[currentEntity].GetComponent<Renderer>().material.color = entityArray[currentEntity].GetComponent<Entity>().GetColor();
+            //Debug.Log(entityArray[currentEntity].GetComponent<Entity>().color);
         }
     }
 }

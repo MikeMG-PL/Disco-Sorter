@@ -7,10 +7,12 @@ public class Entity : MonoBehaviour
 { 
     public int entityNumber;                            // Numer (identyfikator) obiektu
     public int entityType;                              // Typ obiektu
+    public int color;                                   // Kolory jabłek, 0 - brak, 1 - zielony, 2 - czerwony
     [HideInInspector]
     public EntityMenu entityMenuScript;
 
-    private bool highlighted;                           // Czy obiekt jest aktualnie zaznaczony
+    private bool highlighted;                           // Czy obiekt jest aktualnie zaznaczony przez użytkownika
+    // Przydałoby się to może jakoś inaczej zrobić, minHight pobierać na Start a maxHight wybierać gdzieś w EditorNet? Nieistotne na razie.
     private float maxHightOfHighlight = -0.03f;         // Wysokość, na jaką wzniesie się zaznaczony obiekt
     private float minHight = -0.15f;                    // Wysokość standardowa niezaznaczonego obiektu
 
@@ -58,5 +60,17 @@ public class Entity : MonoBehaviour
         {
             transform.localPosition = new Vector3(transform.localPosition.x, minHight, transform.localPosition.z);
         }
+    }
+
+    // Zwraca kolor, który powinien mieć obiekt w edytorze
+    public Color GetColor()
+    {
+        if (color == 0)
+            return Color.white;
+        else if (color == 1)
+            return Color.green;
+        else if (color == 2)
+            return Color.red;
+        else return Color.white;
     }
 }
