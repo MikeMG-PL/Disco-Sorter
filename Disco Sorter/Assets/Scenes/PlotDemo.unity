@@ -2886,7 +2886,7 @@ MonoBehaviour:
   entity: {fileID: 5647251692439713505, guid: 933a28eb089911342a03aff1cf267587, type: 3}
   entityArray: []
   positionForEntities: {fileID: 1898158588}
-  BPM: 125
+  BPM: 150
 --- !u!1 &1348796583
 GameObject:
   m_ObjectHideFlags: 0
