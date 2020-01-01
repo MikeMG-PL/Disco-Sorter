@@ -3,13 +3,15 @@ using UnityEngine;
 
 public class EditorNet : MonoBehaviour
 {
+    public GameObject beatMarker;                           // Prefab znacznika beatu
     public GameObject entity;                               // Prefab obiektu/sześcianu reprezentującego miejsce, w których mogą spawnować się obiekty w grze (różne typy jabłek itd.)
     public GameObject[] entityArray;                        // Tablica wszystkich utworzonych obiektów
-    float[] entityEndTime;                             // Tablica przechowująca czasy końcowe poszczególnych obiektów
+    double[] entityEndTime;                                 // Tablica przechowująca czasy końcowe poszczególnych obiektów
     public GameObject positionForEntities;                  // Dla ułatwienia. Obiekt, od którego pozycji zaczyna się spawn sześcianów
     public int BPM;
     float entitiesPerSecond;                                // Ile entities/obiektów może mieścić się w jednej sekundzie piosenki
-    float step;                                             // Długość trwania jednej kratki
+    float step, BPMstep;                                             // Długość trwania jednej kratki
+    public int netDestiny = 1;                                         // Gęstość siatki - WIELOKROTNOŚĆ BPM
 
     private AudioClip clip;                                 // Plik audio
     private AudioSource audioSource;
@@ -18,13 +20,14 @@ public class EditorNet : MonoBehaviour
     private float currentTime;                              // Aktualny czas granego audio 
     private int entityNumber;                               // Numer obiektu odpowiadającego danemu granemu czasowi pliku audio
     private int previousEntityNumber;                       // Numer obiektu odpowiadającego poprzedniemu granemu czasowi pliku audio
-    private Color highlightColor = Color.gray;              // Kolor obiektu, który odpowiada aktualnemu czasowi pliku audio
+    private Color highlightColor = Color.blue;              // Kolor obiektu, który odpowiada aktualnemu czasowi pliku audio
     private int entitiesAmount;                             // Ilość obiektów ustalana na podstawie długości piosenki (w sekundach) i ilości sześcianów na sekundę
 
     void Awake()
     {
-        entitiesPerSecond = BPM / 60f;
+        entitiesPerSecond = (netDestiny * BPM) / 60f;
         step = 1f / entitiesPerSecond;
+        BPMstep = 1 / (BPM / 60f);
 
         audioSource = GetComponent<AudioSource>();
         clip = audioSource.clip;
@@ -33,12 +36,13 @@ public class EditorNet : MonoBehaviour
         entitiesAmount = (int)(Math.Ceiling(clip.length * entitiesPerSecond));
         entityArray = new GameObject[entitiesAmount];
         // Stworzenie tablicy czasów końcowych wszystkich kratek
-        entityEndTime = new float[entitiesAmount];
+        entityEndTime = new double[entitiesAmount];
 
         // Spawnowanie sześcianów i dodawanie ich do tablicy
         for (int i = 0; i < entitiesAmount; i++)
         {
             createdEntity = Instantiate(entity, positionToSpawnEntity, Quaternion.identity);
+
             createdEntity.GetComponent<Entity>().entityNumber = i;
             entityArray[i] = createdEntity;
             positionToSpawnEntity.x += entity.transform.lossyScale.x * 1.05f;
@@ -53,8 +57,9 @@ public class EditorNet : MonoBehaviour
         // Dodawanie do tablicy wartości o czasie końcowym każdej kratki
         for (int i = 1; i < entitiesAmount; i++)
         {
-            entityEndTime[i] = entityEndTime[i - 1] + step;
+            entityEndTime[i] = Math.Round(entityEndTime[i - 1] + step, 3);
         }
+        MarkBeats();
     }
 
     void Update()
@@ -92,7 +97,7 @@ public class EditorNet : MonoBehaviour
             }
         }
 
-        Debug.Log(entityNumber);
+        //Debug.Log(entityNumber);
     }
 
     // Zmienanie koloru obiektu odpowiadającemu aktualnemu czasowi piosenki na zielony i poprzednio wyróżnionego na zwykły
@@ -104,6 +109,23 @@ public class EditorNet : MonoBehaviour
             //if (entityNumber == entitiesAmount) entityNumber--;
             entityArray[previousEntityNumber].GetComponent<Renderer>().material.color = entityArray[previousEntityNumber].GetComponent<Entity>().GetColor();
             entityArray[entityNumber].GetComponent<Renderer>().material.color = highlightColor;
+        }
+    }
+
+    void MarkBeats()
+    {
+        for (int i = 0; i < entitiesAmount; i++)
+        {
+            //if (i == 0)
+            //Instantiate(beatMarker, new Vector3(entityArray[i].transform.position.x, entityArray[i].transform.position.y, entityArray[i].transform.position.z + 0.075f), Quaternion.identity);
+
+            if (entityEndTime[i] % BPMstep <= 0.01 && (i + netDestiny - netDestiny / 2 <= entityEndTime.Length - 1))
+            {
+                //entityArray[i].GetComponent<Renderer>().material.color = Color.blue;
+                Instantiate(beatMarker, new Vector3(entityArray[i + netDestiny - (int)Math.Ceiling((float)(netDestiny / 2))].transform.position.x, entityArray[i + netDestiny - (int)Math.Ceiling((float)(netDestiny / 2))].transform.position.y, entityArray[i + netDestiny - (int)Math.Ceiling((float)(netDestiny / 2))].transform.position.z + 0.075f), Quaternion.identity);
+            }
+
+
         }
     }
 }
