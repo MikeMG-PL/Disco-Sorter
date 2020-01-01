@@ -2918,7 +2918,6 @@ MonoBehaviour:
   time: 0
   pausePressed: 0
   slider: {fileID: 4487409}
-  latency: 1
 --- !u!114 &1325650117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2934,7 +2933,7 @@ MonoBehaviour:
   entity: {fileID: 5647251692439713505, guid: 933a28eb089911342a03aff1cf267587, type: 3}
   entityArray: []
   positionForEntities: {fileID: 1898158588}
-  BPM: 150
+  BPM: 125
 --- !u!1 &1348796583
 GameObject:
   m_ObjectHideFlags: 0
