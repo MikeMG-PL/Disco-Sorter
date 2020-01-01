@@ -18,7 +18,7 @@ public class EditorNet : MonoBehaviour
     private float currentTime;                              // Aktualny czas granego audio 
     private int entityNumber;                               // Numer obiektu odpowiadającego danemu granemu czasowi pliku audio
     private int previousEntityNumber;                       // Numer obiektu odpowiadającego poprzedniemu granemu czasowi pliku audio
-    private Color highlightColor = Color.cyan;              // Kolor obiektu, który odpowiada aktualnemu czasowi pliku audio
+    private Color highlightColor = Color.gray;              // Kolor obiektu, który odpowiada aktualnemu czasowi pliku audio
     private int entitiesAmount;                             // Ilość obiektów ustalana na podstawie długości piosenki (w sekundach) i ilości sześcianów na sekundę
 
     void Awake()
@@ -45,7 +45,7 @@ public class EditorNet : MonoBehaviour
         }
 
         // Pierwszy obiekt odpowiada początkowemu czasowi piosenki
-        entityArray[0].GetComponent<Renderer>().material.color = Color.cyan;
+        entityArray[0].GetComponent<Renderer>().material.color = highlightColor;
 
         // Pierwszy czas końcowy odpowiada wartości zmiennej step
         entityEndTime[0] = step;
@@ -75,13 +75,18 @@ public class EditorNet : MonoBehaviour
 
         // Pętla określająca numer kratki na bazie czasu piosenki
         if (currentTime <= step)
+        {
             entityNumber = 0;
+            previousEntityNumber = 0;
+        }
+
         else
         {
             for (int i = 1; i < entitiesAmount; i++)
             {
                 if (entityEndTime[i] >= currentTime)
                 {
+                    previousEntityNumber = entityNumber;
                     entityNumber = i;
                     entityArray[previousEntityNumber].GetComponent<Renderer>().material.color = entityArray[previousEntityNumber].GetComponent<Entity>().GetColor();
                     entityArray[entityNumber].GetComponent<Renderer>().material.color = highlightColor;
