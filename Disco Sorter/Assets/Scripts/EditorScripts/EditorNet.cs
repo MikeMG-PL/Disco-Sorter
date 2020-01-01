@@ -5,12 +5,13 @@ public class EditorNet : MonoBehaviour
 {
     public GameObject entity;                               // Prefab obiektu/sześcianu reprezentującego miejsce, w których mogą spawnować się obiekty w grze (różne typy jabłek itd.)
     public GameObject[] entityArray;                        // Tablica wszystkich utworzonych obiektów
-    float[] entityEndTime;                             // Tablica przechowująca czasy końcowe poszczególnych obiektów
+    float[] entityEndTime;                                  // Tablica przechowująca czasy końcowe poszczególnych obiektów
     public GameObject positionForEntities;                  // Dla ułatwienia. Obiekt, od którego pozycji zaczyna się spawn sześcianów
+    public string songName;
     public int BPM;
-    float entitiesPerSecond;                                // Ile entities/obiektów może mieścić się w jednej sekundzie piosenki
-    float step;                                             // Długość trwania jednej kratki
+    public float entitiesPerSecond;                         // Ile entities/obiektów może mieścić się w jednej sekundzie piosenki
 
+    private float step;                                     // Długość trwania jednej kratki
     private AudioClip clip;                                 // Plik audio
     private AudioSource audioSource;
     private Vector3 positionToSpawnEntity;                  // Pozycja spawnu obiektu
@@ -28,6 +29,7 @@ public class EditorNet : MonoBehaviour
 
         audioSource = GetComponent<AudioSource>();
         clip = audioSource.clip;
+        songName = clip.name;
 
         positionToSpawnEntity = positionForEntities.transform.position;
         entitiesAmount = (int)(Math.Ceiling(clip.length * entitiesPerSecond));
