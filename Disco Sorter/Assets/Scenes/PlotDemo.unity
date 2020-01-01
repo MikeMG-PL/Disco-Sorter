@@ -3064,6 +3064,8 @@ MonoBehaviour:
   entity: {fileID: 5647251692439713505, guid: 933a28eb089911342a03aff1cf267587, type: 3}
   entityArray: []
   positionForEntities: {fileID: 1898158588}
+  songName: 
+  BPM: 125
   entitiesPerSecond: 2
 --- !u!114 &1325650118
 MonoBehaviour:
@@ -3077,7 +3079,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b8ef07d803168a43a4bfed643eccdce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BPM: 125
 --- !u!1 &1348796583
 GameObject:
   m_ObjectHideFlags: 0

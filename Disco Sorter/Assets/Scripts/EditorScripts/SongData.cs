@@ -8,7 +8,7 @@ public class SongData
     public List<int> entityNumber = new List<int>();
     public List<int> entityType = new List<int>();
     public List<int> color = new List<int>();
-    public int entitiesPerSecond;
+    public float entitiesPerSecond;
 
     public SongData(EditorNet editorNet)
     {

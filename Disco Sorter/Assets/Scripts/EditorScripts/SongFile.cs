@@ -4,15 +4,15 @@ using UnityEngine;
 
 public static class SongFile
 {
-    private static string folderPath = Application.persistentDataPath + "/";
-    private static string name = "/song.data";
+    private static string folderPath = Application.persistentDataPath;
+    private static string name = "song.data";
 
     public static void SaveSong(EditorNet editorNet)
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        Directory.CreateDirectory(folderPath + editorNet.songName);
+        Directory.CreateDirectory(folderPath + "/" + editorNet.songName);
         string filePath = Path.Combine(folderPath, editorNet.songName, name);
-
+        Debug.Log(filePath);
         FileStream stream = new FileStream(filePath, FileMode.Create);
         SongData songData = new SongData(editorNet);
 
