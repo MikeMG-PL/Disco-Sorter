@@ -69,7 +69,11 @@ public class EditorNet : MonoBehaviour
                 entityNumber++;
             }
 
-
+            if (entityArray[0] != null)
+            {
+                entityArray[previousEntityNumber].GetComponent<Renderer>().material.color = entityArray[previousEntityNumber].GetComponent<Entity>().GetColor();
+                entityArray[entityNumber].GetComponent<Renderer>().material.color = highlightColor;
+            }
 
             // Trochę ***MaTeMaTyKi***, która nie wiem czy jest poprawna, ale zaokrąglanie liczb sprawiło tutaj spory problem.
             /*float decimals = currentTime - (int)currentTime;
@@ -84,7 +88,6 @@ public class EditorNet : MonoBehaviour
             Debug.Log(entityNumber);
             //Debug.Log("CZAS OD BEATU: " + timer);
         }
-
         else
             currentTime = gameObject.GetComponent<AudioManipulation>().time;
 
