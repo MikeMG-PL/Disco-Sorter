@@ -14,7 +14,6 @@ public class EditorNet : MonoBehaviour
     float step, BPMstep;                                             // Długość trwania jednej kratki
     public int netDestiny = 1;                                         // Gęstość siatki - WIELOKROTNOŚĆ BPM
 
-    private float step;                                     // Długość trwania jednej kratki
     private AudioClip clip;                                 // Plik audio
     private AudioSource audioSource;
     private Vector3 positionToSpawnEntity;                  // Pozycja spawnu obiektu
