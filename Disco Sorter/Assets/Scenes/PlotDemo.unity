@@ -3068,7 +3068,8 @@ MonoBehaviour:
   positionForEntities: {fileID: 1898158588}
   songName: 
   BPM: 125
-  entitiesPerSecond: 2
+  entitiesPerSecond: 0
+  netDestiny: 1
 --- !u!114 &1325650118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3081,7 +3082,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b8ef07d803168a43a4bfed643eccdce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  netDestiny: 1
 --- !u!1 &1348796583
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,7 +10,8 @@ public class EditorNet : MonoBehaviour
     public GameObject positionForEntities;                  // Dla ułatwienia. Obiekt, od którego pozycji zaczyna się spawn sześcianów
     public string songName;
     public int BPM;
-    float entitiesPerSecond;                                // Ile entities/obiektów może mieścić się w jednej sekundzie piosenki
+    [HideInInspector]
+    public float entitiesPerSecond;                                // Ile entities/obiektów może mieścić się w jednej sekundzie piosenki
     float step, BPMstep;                                             // Długość trwania jednej kratki
     public int netDestiny = 1;                                         // Gęstość siatki - WIELOKROTNOŚĆ BPM
 
