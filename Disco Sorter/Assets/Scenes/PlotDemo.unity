@@ -2936,7 +2936,7 @@ MonoBehaviour:
   entityArray: []
   positionForEntities: {fileID: 1898158588}
   BPM: 125
-  netDestiny: 3
+  netDestiny: 1
 --- !u!1 &1348796583
 GameObject:
   m_ObjectHideFlags: 0
