@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class AudioManipulation : MonoBehaviour
 {
-    public float time = 0f;                        // Zmienna opisująca porządany moment w piosence
+    public float time = 0f;                 // Zmienna opisująca porządany moment w piosence
     float clampedLength;                    // Zmienna opisująca porządany moment w piosence w przedziale <0; 1>
     AudioSource a;                          // Zmienna reprezentująca źródło dźwięku
 
@@ -15,6 +15,7 @@ public class AudioManipulation : MonoBehaviour
 
     bool virtualPause;                      // Zmienna mówiąca czy jest włączona wirtualna pauza*
     public Slider slider;                   // Zmienna opisująca slider
+    //public float latency = 0f;                  // Opóźnienie, z jakim odtwarzana jest piosenka
 
     // * - wirtualna pauza - pauza piosenki mogąca pojawić się bez wciśnięcia przycisku pauzy (bo wymaga tego edytor do niektórych celów)
 
@@ -45,6 +46,8 @@ public class AudioManipulation : MonoBehaviour
             virtualPause = false;
             if (time < a.clip.length)
                 a.Play();
+            //if (time < 0.1f)
+                //a.time += latency;
         }
     }
 
