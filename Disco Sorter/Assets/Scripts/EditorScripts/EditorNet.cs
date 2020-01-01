@@ -60,12 +60,13 @@ public class EditorNet : MonoBehaviour
     void Update()
     {
         SetCurrentEntity();
-        //ChangeHighlightedObject();
+        ChangeHighlightedObject();
     }
 
     // Ustala, który obiekt odpowiada aktualnemu czasowi piosenki
     void SetCurrentEntity()
     {
+        previousEntityNumber = entityNumber;
         // Aktualny czas utworu, jeśli pauza jest aktywna, czas jest brany ze skryptu AudioManipulation
         if (!gameObject.GetComponent<AudioManipulation>().pausePressed)
             currentTime = audioSource.time;
@@ -77,7 +78,6 @@ public class EditorNet : MonoBehaviour
         if (currentTime <= step)
         {
             entityNumber = 0;
-            previousEntityNumber = 0;
         }
 
         else
@@ -86,13 +86,9 @@ public class EditorNet : MonoBehaviour
             {
                 if (entityEndTime[i] >= currentTime)
                 {
-                    previousEntityNumber = entityNumber;
                     entityNumber = i;
-                    entityArray[previousEntityNumber].GetComponent<Renderer>().material.color = entityArray[previousEntityNumber].GetComponent<Entity>().GetColor();
-                    entityArray[entityNumber].GetComponent<Renderer>().material.color = highlightColor;
                     break;
                 }
-
             }
         }
 
