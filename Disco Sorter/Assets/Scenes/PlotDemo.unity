@@ -1576,7 +1576,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 0.75
   m_Depth: -1
   m_CullingMask:
@@ -2936,7 +2936,7 @@ MonoBehaviour:
   entityArray: []
   positionForEntities: {fileID: 1898158588}
   BPM: 125
-  netDestiny: 1
+  netDestiny: 3
 --- !u!1 &1348796583
 GameObject:
   m_ObjectHideFlags: 0
