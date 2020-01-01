@@ -6,6 +6,7 @@ public class EditorNet : MonoBehaviour
     public GameObject entity;                               // Prefab obiektu/sześcianu reprezentującego miejsce, w których mogą spawnować się obiekty w grze (różne typy jabłek itd.)
     public GameObject[] entityArray;                        // Tablica wszystkich utworzonych obiektów
     public GameObject positionForEntities;                  // Dla ułatwienia. Obiekt, od którego pozycji zaczyna się spawn sześcianów
+    public string songName;
     public int entitiesPerSecond = 2;                       // Ile entities/obiektów może mieścić się w jednej sekundzie piosenki
 
     private AudioClip clip;                                 // Plik audio
@@ -22,6 +23,7 @@ public class EditorNet : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         clip = audioSource.clip;
+        songName = clip.name;
         positionToSpawnEntity = positionForEntities.transform.position;
         entitiesAmount = (int)Math.Round(clip.length) * entitiesPerSecond;
         entityArray = new GameObject[entitiesAmount];
