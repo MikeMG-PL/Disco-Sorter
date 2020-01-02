@@ -26,6 +26,7 @@ public class EditorNet : MonoBehaviour
     private int entityNumber;                               // Numer obiektu odpowiadającego danemu granemu czasowi pliku audio
     private int previousEntityNumber;                       // Numer obiektu odpowiadającego poprzedniemu granemu czasowi pliku audio
     private int entitiesAmount;                             // Ilość obiektów ustalana na podstawie długości piosenki (w sekundach) i ilości sześcianów na sekundę
+    private int num;
 
     void Start()
     {
@@ -147,8 +148,9 @@ public class EditorNet : MonoBehaviour
 
             if (entityEndTime[i] % BPMstep <= 0.01 && (i + netDensity - netDensity / 2 <= entityEndTime.Length - 1))
             {
+                num = i + netDestiny - (int)Math.Ceiling((float)(netDestiny / 2));
                 //entityArray[i].GetComponent<Renderer>().material.color = Color.blue;
-                Instantiate(beatMarker, new Vector3(entityArray[i + netDensity - (int)Math.Ceiling((float)(netDensity / 2))].transform.position.x, entityArray[i + netDensity - (int)Math.Ceiling((float)(netDensity / 2))].transform.position.y, entityArray[i + netDensity - (int)Math.Ceiling((float)(netDensity / 2))].transform.position.z + 0.075f), Quaternion.identity);
+                Instantiate(beatMarker, new Vector3(entityArray[num].transform.position.x, entityArray[num].transform.position.y, entityArray[num].transform.position.z + 0.075f), Quaternion.identity);
             }
 
 

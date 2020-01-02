@@ -105,5 +105,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c036edc31d3ec14393a35a372fe4e52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EntityNumber: 0
+  markerPrefab: {fileID: 7517304038703585875, guid: fcce302caa52a9e4a8d7148e9beedab5,
+    type: 3}
+  entityNumber: 0
   entityType: 0
+  color: 0
+  entityMenuScript: {fileID: 0}

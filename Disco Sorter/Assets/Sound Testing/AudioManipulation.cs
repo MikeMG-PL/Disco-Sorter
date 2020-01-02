@@ -15,7 +15,6 @@ public class AudioManipulation : MonoBehaviour
 
     bool virtualPause;                      // Zmienna mówiąca czy jest włączona wirtualna pauza*
     public Slider slider;                   // Zmienna opisująca slider
-    //public float latency = 0f;                  // Opóźnienie, z jakim odtwarzana jest piosenka
 
     // * - wirtualna pauza - pauza piosenki mogąca pojawić się bez wciśnięcia przycisku pauzy (bo wymaga tego edytor do niektórych celów)
 
@@ -23,6 +22,7 @@ public class AudioManipulation : MonoBehaviour
     void Start()
     {
         a = GetComponent<AudioSource>();
+        Waveform(); // wyrenderowanie i synchronizacja waveformu
         a.time = time;
         pausePressed = true;
         virtualPause = true;
@@ -47,7 +47,7 @@ public class AudioManipulation : MonoBehaviour
             if (time < a.clip.length)
                 a.Play();
             //if (time < 0.1f)
-                //a.time += latency;
+            //a.time += latency;
         }
     }
 
@@ -133,4 +133,40 @@ public class AudioManipulation : MonoBehaviour
     {
         a.time = 0f;
     }
+    
+    /// Funkcja odpowiedzialna za poprawne renderowanie i synchronizację waveformu ///
+    void Waveform()
+    {
+        MeshRenderer renderer = GameObject.FindGameObjectWithTag("Waveform").GetComponent<MeshRenderer>();
+        DrawWaveForm waveForm = GetComponent<DrawWaveForm>();
+        GameObject[] entityArray = GetComponent<EditorNet>().entityArray;
+        EditorNet editorNet = GetComponent<EditorNet>();
+        float sceneSongLength = editorNet.entitiesAmount * 0.1f + editorNet.entitiesAmount * 0.005f;
+        Vector3 scaleVector = new Vector3(sceneSongLength, 1, 0.1f);
+
+        // obliczenie długosci piosenki na scenie
+        // utworzenie Vectora3 skali określającego porządaną długość 
+        // przypisanie quadowi nowego vectora3 skali
+
+        Debug.Log((int)sceneSongLength);
+        renderer.gameObject.transform.localScale = scaleVector;
+
+        //Mechanizm skalowania tekstury w zależności od długości piosenki i gęstości siatki
+        if((int)sceneSongLength * 150 >= 60000)
+            renderer.material.mainTexture = waveForm.PaintWaveformSpectrum(a.clip, 1f, 16000, 1000, Color.red);
+        else if ((int)sceneSongLength * 150 >= 48000 && (int)sceneSongLength * 150 < 60000)
+            renderer.material.mainTexture = waveForm.PaintWaveformSpectrum(a.clip, 1f, (int)sceneSongLength * 40, 1000, Color.red);
+        else if ((int)sceneSongLength * 150 >= 36000 && (int)sceneSongLength * 150 < 48000)
+            renderer.material.mainTexture = waveForm.PaintWaveformSpectrum(a.clip, 1f, (int)sceneSongLength * 50, 1000, Color.red); // liczba 150 - czułość wyświetlania waveformu
+        else if ((int)sceneSongLength * 150 >= 24000 && (int)sceneSongLength * 150 < 36000)
+            renderer.material.mainTexture = waveForm.PaintWaveformSpectrum(a.clip, 1f, (int)sceneSongLength * 65, 1000, Color.red);
+        else if ((int)sceneSongLength * 150 >= 16000 && (int)sceneSongLength * 150 < 24000)
+            renderer.material.mainTexture = waveForm.PaintWaveformSpectrum(a.clip, 1f, (int)sceneSongLength * 100, 1000, Color.red);
+        else if ((int)sceneSongLength * 150 < 16000)
+            renderer.material.mainTexture = waveForm.PaintWaveformSpectrum(a.clip, 1f, (int)sceneSongLength * 150, 1000, Color.red);
+
+        renderer.gameObject.transform.position = new Vector3(entityArray[0].transform.position.x-0.05f, entityArray[0].transform.position.y, entityArray[0].transform.position.z + 0.55f);
+        renderer.material.mainTexture.filterMode = FilterMode.Point;
+    }
+
 }
