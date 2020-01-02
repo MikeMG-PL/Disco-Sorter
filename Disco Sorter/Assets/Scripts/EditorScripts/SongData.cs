@@ -14,7 +14,7 @@ public class SongData
     {
         for (int i = 0; i < editorNet.entityArray.Length; i++)
         {
-            entityNumber.Add(editorNet.entityArray[i].GetComponent<Entity>().entityNumber);
+            //entityNumber.Add(editorNet.entityArray[i].GetComponent<Entity>().entityNumber);
             entityType.Add(editorNet.entityArray[i].GetComponent<Entity>().entityType);
             color.Add(editorNet.entityArray[i].GetComponent<Entity>().color);
         }
