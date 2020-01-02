@@ -5,18 +5,26 @@ using UnityEngine.UI;
 
 public class EntityMenu : MonoBehaviour
 {
-    public GameObject songController;       // Obiekt SongController, który ma w sobie skrypt EditorNet, który to z kolei jest potrzebny do pozyskania tablicy entities
-    public GameObject menuPanel;            // Panel z całym menu właściowości obiektu
-    // Poszczególne elementy panelu
+    // Poszczególne elementy menu
     public Dropdown typeDropdown;           // Dropdown, w którym wybiera się typ obiektu
     public List<string> entityTypes;        // Wszystkie typy obiektów, umieszczane są w typeDropdown
     public Dropdown colorDropdown;          // Dropdown, w którym wybiera się kolor obiektu
+
+    public GameObject songController;       // Obiekt SongController, który ma w sobie skrypt EditorNet, który to z kolei jest potrzebny do pozyskania tablicy entities
+    public GameObject menuPanel;            // Panel z całym menu właściowości obiektu
 
     private GameObject[] entityArray;       // Tablica z entities
     private int currentEntity = -1;         // Aktualnie zaznaczony obiekt
     private int previousEntity;             // Poprzednio zaznaczony obiekt
 
     void Start()
+    {
+        // Dodawanie wszystkich opcji, które ustalono w liście entityTypes bezpośrednio w edytorze
+        typeDropdown.AddOptions(entityTypes);
+    }
+
+    // Funkcja przypisuje 
+    public void Initialization()
     {
         entityArray = songController.GetComponent<EditorNet>().entityArray;
 
@@ -26,8 +34,7 @@ public class EntityMenu : MonoBehaviour
             entityArray[i].GetComponent<Entity>().entityMenuScript = this;
         }
 
-        // Dodawanie wszystkich opcji, które ustalono w liście entityTypes bezpośrednio w edytorze
-        typeDropdown.AddOptions(entityTypes);
+        CloseMenu();
     }
 
     // Otwarcie menu po kliknięciu jakiegoś obiektu, wyróżnienie obiektu, który został wybrany, "odwyróżnienie" poprzedniego obiektu
