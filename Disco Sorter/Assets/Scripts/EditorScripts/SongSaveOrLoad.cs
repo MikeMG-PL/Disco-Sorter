@@ -22,7 +22,7 @@ public class SongSaveOrLoad : MonoBehaviour
 
         editorNet.BPM = songData.BPM;
         editorNet.netDensity = songData.netDensity;
-
+        Destroy(GameObject.FindGameObjectWithTag("Marker"));
         editorNet.BuildNet();
 
         for (int i = 0; i < editorNet.entityArray.Length; i++)
