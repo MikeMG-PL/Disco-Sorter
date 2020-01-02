@@ -10,6 +10,7 @@ public class EditorNet : MonoBehaviour
     public GameObject[] entityArray;                        // Tablica wszystkich utworzonych obiektów
     public GameObject positionForEntities;                  // Dla ułatwienia. Obiekt, od którego pozycji zaczyna się spawn sześcianów
     public int BPM;
+    public int entitiesAmount;                             // Ilość obiektów ustalana na podstawie długości piosenki (w sekundach) i ilości sześcianów na sekundę
     public int netDensity = 1;                              // Gęstość siatki - WIELOKROTNOŚĆ BPM
     public string songName;
 
@@ -25,7 +26,6 @@ public class EditorNet : MonoBehaviour
     private float entitiesPerSecond;                        // Ile entities/obiektów może mieścić się w jednej sekundzie piosenki
     private int entityNumber;                               // Numer obiektu odpowiadającego danemu granemu czasowi pliku audio
     private int previousEntityNumber;                       // Numer obiektu odpowiadającego poprzedniemu granemu czasowi pliku audio
-    private int entitiesAmount;                             // Ilość obiektów ustalana na podstawie długości piosenki (w sekundach) i ilości sześcianów na sekundę
     private int num;
 
     void Start()
@@ -91,6 +91,7 @@ public class EditorNet : MonoBehaviour
         }
 
         entityMenu.Initialization();
+        gameObject.GetComponent<AudioManipulation>().Waveform(); // wwyrenderowanie i synchronizacja waveformu
         MarkBeats();
 
         Debug.Log("Ilość obiektów: " + entityArray.Length);
@@ -148,7 +149,7 @@ public class EditorNet : MonoBehaviour
 
             if (entityEndTime[i] % BPMstep <= 0.01 && (i + netDensity - netDensity / 2 <= entityEndTime.Length - 1))
             {
-                num = i + netDestiny - (int)Math.Ceiling((float)(netDestiny / 2));
+                num = i + netDensity - (int)Math.Ceiling((float)(netDensity / 2));
                 //entityArray[i].GetComponent<Renderer>().material.color = Color.blue;
                 Instantiate(beatMarker, new Vector3(entityArray[num].transform.position.x, entityArray[num].transform.position.y, entityArray[num].transform.position.z + 0.075f), Quaternion.identity);
             }

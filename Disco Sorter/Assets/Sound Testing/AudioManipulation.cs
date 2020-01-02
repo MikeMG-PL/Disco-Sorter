@@ -22,7 +22,6 @@ public class AudioManipulation : MonoBehaviour
     void Start()
     {
         a = GetComponent<AudioSource>();
-        Waveform(); // wyrenderowanie i synchronizacja waveformu
         a.time = time;
         pausePressed = true;
         virtualPause = true;
@@ -135,7 +134,7 @@ public class AudioManipulation : MonoBehaviour
     }
     
     /// Funkcja odpowiedzialna za poprawne renderowanie i synchronizację waveformu ///
-    void Waveform()
+    public void Waveform()
     {
         MeshRenderer renderer = GameObject.FindGameObjectWithTag("Waveform").GetComponent<MeshRenderer>();
         DrawWaveForm waveForm = GetComponent<DrawWaveForm>();
