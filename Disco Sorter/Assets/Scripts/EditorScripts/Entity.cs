@@ -4,7 +4,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class Entity : MonoBehaviour
-{ 
+{
+
+    public GameObject markerPrefab;                     // Prefab znacznika
+    GameObject marker;
     public int entityNumber;                            // Numer (identyfikator) obiektu
     public int entityType;                              // Typ obiektu
     public int color;                                   // Kolory jabłek, 0 - brak, 1 - zielony, 2 - czerwony
@@ -21,6 +24,8 @@ public class Entity : MonoBehaviour
         // EventSystem.current.IsPointerOverGameObject() upewnia się, że użytkownik nie kliknął na obiekt przez jakiś element UI
         if (!EventSystem.current.IsPointerOverGameObject())
         {
+            if (marker == null)
+                marker = Instantiate(markerPrefab, transform.position, transform.rotation);
             // Otwieranie menu obiektu, w którym można dostować jego właściwości
             entityMenuScript.OpenMenu(entityNumber);
         }
@@ -30,12 +35,27 @@ public class Entity : MonoBehaviour
 
     private void Update()
     {
-        HighlightMove();
+        HighlightMark();
+        //HighlightMove();
     }
 
     public void Highlight(bool highlight)
     {
         highlighted = highlight;
+    }
+
+    void HighlightMark()
+    {
+        if (highlighted)
+        {
+
+            if (marker.transform.localPosition.y < maxHightOfHighlight)
+                marker.transform.Translate(Vector3.up * Time.deltaTime, Space.World);
+            else
+                marker.transform.localPosition = new Vector3(transform.localPosition.x, maxHightOfHighlight, transform.localPosition.z);
+        }
+        else
+            Destroy(marker);
     }
 
     // Zajmuje się przemieszczaniem wyróżnionego obiektu w górę (lub po "odwyróżnieniu" - w dół)
