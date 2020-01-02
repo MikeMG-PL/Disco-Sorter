@@ -8,11 +8,10 @@ public class SongData
     public List<int> entityNumber = new List<int>();
     public List<int> entityType = new List<int>();
     public List<int> color = new List<int>();
-    public float entitiesPerSecond;
+    public int BPM, netDensity;
 
     public SongData(EditorNet editorNet)
     {
-        
         for (int i = 0; i < editorNet.entityArray.Length; i++)
         {
             entityNumber.Add(editorNet.entityArray[i].GetComponent<Entity>().entityNumber);
@@ -20,6 +19,7 @@ public class SongData
             color.Add(editorNet.entityArray[i].GetComponent<Entity>().color);
         }
 
-        entitiesPerSecond = editorNet.entitiesPerSecond;
+        BPM = editorNet.BPM;
+        netDensity = editorNet.netDensity;
     }
 }

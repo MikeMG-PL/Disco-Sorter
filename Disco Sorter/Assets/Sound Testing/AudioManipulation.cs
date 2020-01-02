@@ -129,5 +129,8 @@ public class AudioManipulation : MonoBehaviour
             Pause();
     }
 
-    
+    public void Restart()
+    {
+        a.time = 0f;
+    }
 }
