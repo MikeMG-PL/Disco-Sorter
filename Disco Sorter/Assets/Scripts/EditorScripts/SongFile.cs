@@ -18,7 +18,6 @@ public static class SongFile
 
         formatter.Serialize(stream, songData);
         stream.Close();
-
     }
 
     public static SongData LoadSong(string songName)
