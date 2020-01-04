@@ -18,6 +18,7 @@ public static class SongFile
 
         formatter.Serialize(stream, songData);
         stream.Close();
+
     }
 
     public static SongData LoadSong(string songName)
@@ -35,7 +36,6 @@ public static class SongFile
 
         SongData songData = formatter.Deserialize(stream) as SongData;
         stream.Close();
-
         return songData;
     }
 }

@@ -8,6 +8,7 @@ public class EditorNet : MonoBehaviour
     public GameObject entityCanvas;                         // Obiekt zawierający skrypt EntityMenu
     [HideInInspector]
     public GameObject[] entityArray;                        // Tablica wszystkich utworzonych obiektów
+    public GameObject[] beatArray;                          // Tablica wszystkich beatów
     public GameObject positionForEntities;                  // Dla ułatwienia. Obiekt, od którego pozycji zaczyna się spawn sześcianów
     public int BPM;
     public int entitiesAmount;                             // Ilość obiektów ustalana na podstawie długości piosenki (w sekundach) i ilości sześcianów na sekundę
@@ -49,6 +50,7 @@ public class EditorNet : MonoBehaviour
         for (int i = 0; i < entitiesAmount; i++)
         {
             Destroy(entityArray[i]);
+            Destroy(beatArray[i]);
         }
 
         // Resetowanie piosenki
@@ -142,6 +144,7 @@ public class EditorNet : MonoBehaviour
 
     void MarkBeats()
     {
+        beatArray = new GameObject[entitiesAmount];
         for (int i = 0; i < entitiesAmount; i++)
         {
             //if (i == 0)
@@ -151,7 +154,7 @@ public class EditorNet : MonoBehaviour
             {
                 num = i + netDensity - (int)Math.Ceiling((float)(netDensity / 2));
                 //entityArray[i].GetComponent<Renderer>().material.color = Color.blue;
-                Instantiate(beatMarker, new Vector3(entityArray[num].transform.position.x, entityArray[num].transform.position.y, entityArray[num].transform.position.z + 0.075f), Quaternion.identity);
+                beatArray[i] = Instantiate(beatMarker, new Vector3(entityArray[num].transform.position.x, entityArray[num].transform.position.y, entityArray[num].transform.position.z + 0.075f), Quaternion.identity);
             }
 
 
