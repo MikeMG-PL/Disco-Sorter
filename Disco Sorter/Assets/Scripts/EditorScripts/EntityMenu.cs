@@ -9,6 +9,7 @@ public class EntityMenu : MonoBehaviour
     public Dropdown typeDropdown;           // Dropdown, w którym wybiera się typ obiektu
     public List<string> entityTypes;        // Wszystkie typy obiektów, umieszczane są w typeDropdown
     public Dropdown colorDropdown;          // Dropdown, w którym wybiera się kolor obiektu
+    public Text colorWarning;               // Tekst mówiący, że tylko jabłkom można dostować kolor
 
     public GameObject songController;       // Obiekt SongController, który ma w sobie skrypt EditorNet, który to z kolei jest potrzebny do pozyskania tablicy entities
     public GameObject menuPanel;            // Panel z całym menu właściowości obiektu
@@ -57,8 +58,11 @@ public class EntityMenu : MonoBehaviour
     // Panel menu jest jeden. Dla każdego obiektu tuż przed otwarciem ustawiane są w nim wartości, które odpowiadają wybranemu właśnie obiektowi.
     private void SetCurrentValues()
     {
-        typeDropdown.value = entityArray[currentEntity].GetComponent<Entity>().entityType;
-        colorDropdown.value = entityArray[currentEntity].GetComponent<Entity>().color;
+        Entity entity = entityArray[currentEntity].GetComponent<Entity>();
+        typeDropdown.value = entity.entityType;
+        colorDropdown.value = entity.color;
+
+        SetInteractableOptions(entity);
     }
 
     // Zamykanie menu, odwyróżnianie obiektu i ustawianie currentEntity na -1
@@ -79,7 +83,10 @@ public class EntityMenu : MonoBehaviour
     {
         if (currentEntity != -1)
         {
-            entityArray[currentEntity].GetComponent<Entity>().entityType = entityType;
+            Entity entity = entityArray[currentEntity].GetComponent<Entity>();
+            entity.entityType = entityType;
+            entityArray[currentEntity].GetComponent<Renderer>().material.color = entity.GetColor();
+            SetInteractableOptions(entity);
             //Debug.Log(entityArray[currentEntity].GetComponent<Entity>().entityType);
         }
     }
@@ -92,6 +99,20 @@ public class EntityMenu : MonoBehaviour
             entityArray[currentEntity].GetComponent<Entity>().color = color;
             entityArray[currentEntity].GetComponent<Renderer>().material.color = entityArray[currentEntity].GetComponent<Entity>().GetColor();
             //Debug.Log(entityArray[currentEntity].GetComponent<Entity>().color);
+        }
+    }
+
+    private void SetInteractableOptions(Entity entity)
+    {
+        if (entity.IsApple())
+        {
+            colorDropdown.interactable = true;
+            colorWarning.gameObject.SetActive(false);
+        }
+        else
+        {
+            colorDropdown.interactable = false;
+            colorWarning.gameObject.SetActive(true);
         }
     }
 }

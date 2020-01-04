@@ -83,14 +83,26 @@ public class Entity : MonoBehaviour
     }
 
     // Zwraca kolor, który powinien mieć obiekt w edytorze
+    // Może zrobić jako switch, chociaż tu jest kilka zmiennych
     public Color GetColor()
     {
-        if (color == 0)
+        // Jeśli obiekt jest typem disco, zwracany jest kolor magenta
+        if (entityType == 3)
+            return Color.magenta;
+        // Jeśli obiekt jest typem none, lub nie ma wybranego koloru zwracany jest kolor biały
+        else if (color == 0 || entityType == 0)
             return Color.white;
         else if (color == 1)
             return Color.green;
         else if (color == 2)
             return Color.red;
         else return Color.white;
+    }
+
+    public bool IsApple()
+    {
+        if (entityType == 1 || entityType == 2)
+            return true;
+        else return false;
     }
 }
