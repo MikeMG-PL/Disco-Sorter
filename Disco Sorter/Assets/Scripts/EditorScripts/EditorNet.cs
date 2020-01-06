@@ -41,6 +41,14 @@ public class EditorNet : MonoBehaviour
 
     public void BuildNet()
     {
+        // Jeśli określony plik został wczytany
+        if (MenuSelectedOption.editorLoad)
+        {
+            MenuSelectedOption.editorLoad = false;
+            GetComponent<SongSaveOrLoad>().LoadSong(MenuSelectedOption.selectedSong);
+            return;
+        }
+
         for (int i = 0; i < entitiesAmount; i++)
         {
             Destroy(entityArray[i]);

@@ -2,9 +2,10 @@
 
 public class SongSaveOrLoad : MonoBehaviour
 {
+    public GameObject savesPanel;       // Panel, w którym znajdują się przyciski do wyboru pliku, do wczytania
     private EditorNet editorNet;
 
-    private void Start()
+    private void Awake()
     {
         editorNet = GetComponent<EditorNet>();
     }
@@ -14,9 +15,16 @@ public class SongSaveOrLoad : MonoBehaviour
         SongFile.SaveSong(gameObject.GetComponent<EditorNet>());
     }
 
-    public void LoadSong(string songName)
+    // Wczytuje dany plik, na podstawie int przekazanego przez przycisk znajdujący się w savesPanel
+    public void LoadSong(int selectedButton)
     {
-        SongData songData = SongFile.LoadSong(songName);
+        savesPanel.SetActive(false);
+        string[] songNames = SongFile.GetSavesNames();
+
+        if (selectedButton >= songNames.Length)
+            return;
+
+        SongData songData = SongFile.LoadSong(songNames[selectedButton]);
 
         editorNet.BPM = songData.BPM;
         editorNet.netDensity = songData.netDensity;
@@ -28,5 +36,14 @@ public class SongSaveOrLoad : MonoBehaviour
             editorNet.entityArray[i].GetComponent<Entity>().entityType = songData.entityType[i];
             editorNet.entityArray[i].GetComponent<Renderer>().material.color = editorNet.entityArray[i].GetComponent<Entity>().GetColor();
         }
+    }
+
+    // Aktywuje (lub zamyka) panel z zapisami i aktualizuje napisy na przyciskach
+    public void ShowSaves()
+    {
+        string[] songNames = SongFile.GetSavesNames();
+
+        savesPanel.SetActive(!savesPanel.activeSelf);
+        savesPanel.GetComponent<SavesManager>().UpdateSavesNames(songNames);
     }
 }
