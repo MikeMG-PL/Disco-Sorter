@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 
 public class AudioManipulation : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class AudioManipulation : MonoBehaviour
 
     bool virtualPause;                      // Zmienna mówiąca czy jest włączona wirtualna pauza*
     public Slider slider;                   // Zmienna opisująca slider
+    public Text timeText;                   // Tekst wyświetlający aktualny czas utworu
+
+    private string clipLength;
 
     // * - wirtualna pauza - pauza piosenki mogąca pojawić się bez wciśnięcia przycisku pauzy (bo wymaga tego edytor do niektórych celów)
 
@@ -25,6 +29,12 @@ public class AudioManipulation : MonoBehaviour
         a.time = time;
         pausePressed = true;
         virtualPause = true;
+
+        // Czas trwania utworu przedstawiony w postaci string i ustawienie początkowego czasu
+        string minutes = Mathf.Floor(a.clip.length / 60).ToString("00");
+        string seconds = Mathf.Floor(a.clip.length % 60).ToString("00");
+        clipLength = $"{minutes}.{seconds}";
+        TimeTextUpdate();
     }
 
     /// Funkcja wykonująca co klatkę najważniejsze operacje ///
@@ -33,6 +43,8 @@ public class AudioManipulation : MonoBehaviour
         Clamp();
         Slider();
         OnClipEnd();
+        if (!pausePressed)
+            TimeTextUpdate();
     }
 
     /// Funkcja opisująca odtwarzanie linii poprzez wciśnięcie przycisku ///
@@ -132,7 +144,14 @@ public class AudioManipulation : MonoBehaviour
     {
         a.time = 0f;
     }
-    
+
+    private void TimeTextUpdate()
+    {
+        string minutes = Mathf.Floor(a.time / 60).ToString("00");
+        string seconds = Mathf.Floor(a.time % 60).ToString("00");
+        timeText.text = $"{minutes}.{seconds} / {clipLength}";
+    }
+
     /// Funkcja odpowiedzialna za poprawne renderowanie i synchronizację waveformu ///
     public void Waveform()
     {

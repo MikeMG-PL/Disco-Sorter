@@ -12,25 +12,20 @@ public class EditorNet : MonoBehaviour
     public int BPM;
     public int entitiesAmount;                             // Ilość obiektów ustalana na podstawie długości piosenki (w sekundach) i ilości sześcianów na sekundę
     public int netDensity = 1;                              // Gęstość siatki - WIELOKROTNOŚĆ BPM
+    [HideInInspector]
     public string songName;
 
     private AudioClip clip;                                 // Plik audio
     private AudioSource audioSource;
-    private EntityMenu entityMenu;
-    private GameObject createdEntity;                       // Utworzony właśnie obiekt
     private Color highlightColor = Color.blue;              // Kolor obiektu, który odpowiada aktualnemu czasowi pliku audio
-    private Vector3 positionToSpawnEntity;                  // Pozycja spawnu obiektu
     private double[] entityEndTime;                         // Tablica przechowująca czasy końcowe poszczególnych obiektów
     private float currentTime;                              // Aktualny czas granego audio 
-    private float step, BPMstep;                            // Długość trwania jednej kratki
-    private float entitiesPerSecond;                        // Ile entities/obiektów może mieścić się w jednej sekundzie piosenki
+    private float step;                                     // Długość trwania jednej kratki
     private int entityNumber;                               // Numer obiektu odpowiadającego danemu granemu czasowi pliku audio
     private int previousEntityNumber;                       // Numer obiektu odpowiadającego poprzedniemu granemu czasowi pliku audio
-    private int num;
 
     void Start()
     {
-        entityMenu = entityCanvas.GetComponent<EntityMenu>();
         audioSource = GetComponent<AudioSource>();
         clip = audioSource.clip;
         songName = clip.name;
@@ -56,12 +51,12 @@ public class EditorNet : MonoBehaviour
         gameObject.GetComponent<AudioManipulation>().Restart();
 
         // Ustawianie pozycji dla pierwszego obiektu siatki
-        positionToSpawnEntity = positionForEntities.transform.position;
+        Vector3 positionToSpawnEntity = positionForEntities.transform.position;     // Pozycja spawnu obiektu
 
         // Obliczanie obiektów na sekundę, stepów i ilości obiektów
-        entitiesPerSecond = netDensity * BPM / 60f;
+        float entitiesPerSecond = netDensity * BPM / 60f;
         step = 1f / entitiesPerSecond;
-        BPMstep = 1 / (BPM / 60f);
+        float BPMstep = 1 / (BPM / 60f);
         entitiesAmount = (int)Math.Ceiling(clip.length * entitiesPerSecond);
 
         // Stworzenie tablicy obiektów
@@ -70,6 +65,7 @@ public class EditorNet : MonoBehaviour
         // Stworzenie tablicy czasów końcowych wszystkich kratek
         entityEndTime = new double[entitiesAmount];
 
+        GameObject createdEntity;   // Utworzony właśnie obiekt
         // Spawnowanie obiektów i dodawanie ich do tablicy
         for (int i = 0; i < entitiesAmount; i++)
         {
@@ -91,9 +87,9 @@ public class EditorNet : MonoBehaviour
             entityEndTime[i] = Math.Round(entityEndTime[i - 1] + step, 3);
         }
 
-        entityMenu.Initialization();
+        entityCanvas.GetComponent<EntityMenu>().Initialization();
         gameObject.GetComponent<AudioManipulation>().Waveform(); // wwyrenderowanie i synchronizacja waveformu
-        MarkBeats();
+        MarkBeats(BPMstep);
 
         Debug.Log("Ilość obiektów: " + entityArray.Length);
     }
@@ -141,8 +137,9 @@ public class EditorNet : MonoBehaviour
         }
     }
 
-    void MarkBeats()
+    void MarkBeats(float BPMstep)
     {
+        int num;
         for (int i = 0; i < entitiesAmount; i++)
         {
             //if (i == 0)
