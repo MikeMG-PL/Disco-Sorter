@@ -4542,6 +4542,7 @@ GameObject:
   - component: {fileID: 1325650116}
   - component: {fileID: 1325650118}
   - component: {fileID: 1325650117}
+  - component: {fileID: 1325650120}
   - component: {fileID: 1325650119}
   m_Layer: 0
   m_Name: SongController
@@ -4713,10 +4714,12 @@ MonoBehaviour:
   entityCanvas: {fileID: 988572330}
   entityArray: []
   positionForEntities: {fileID: 1898158588}
+  entityEndTime: []
   BPM: 125
   entitiesAmount: 0
   netDensity: 2
   songName: 
+  step: 0
 --- !u!114 &1325650118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4742,6 +4745,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 933155586f4b1a948af33fcfd62f4e4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1325650120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1325650112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d6c56e9f5dc7c04b9b4e9ae7e85d758, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightColor: {r: 0, g: 0, b: 1, a: 1}
 --- !u!1 &1348796583
 GameObject:
   m_ObjectHideFlags: 0

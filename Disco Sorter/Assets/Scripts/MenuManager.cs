@@ -23,7 +23,7 @@ public class MenuManager : MonoBehaviour
     // Wczytuje dany projekt
     public void OpenEditorLoad(int selectedButton)
     {
-        MenuSelectedOption.editorLoad = true;
+        MenuSelectedOption.editorLoaded = true;
         MenuSelectedOption.selectedSong = selectedButton;
         SceneManager.LoadScene(1);
     }
