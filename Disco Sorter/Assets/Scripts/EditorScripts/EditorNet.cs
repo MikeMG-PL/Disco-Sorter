@@ -8,7 +8,7 @@ public class EditorNet : MonoBehaviour
     public GameObject entityCanvas;                         // Obiekt zawierający skrypt EntityMenu
     [HideInInspector]
     public GameObject[] entityArray;                        // Tablica wszystkich utworzonych obiektów
-    public GameObject positionForEntities;                  // Dla ułatwienia. Obiekt, od którego pozycji zaczyna się spawn sześcianów
+    public GameObject netPosition;                  // Dla ułatwienia. Obiekt, od którego pozycji zaczyna się spawn sześcianów
     public double[] entityEndTime;                          // Tablica przechowująca czasy końcowe poszczególnych obiektów
     public int BPM;
     public int entitiesAmount;                              // Ilość obiektów ustalana na podstawie długości piosenki (w sekundach) i ilości sześcianów na sekundę
@@ -74,7 +74,7 @@ public class EditorNet : MonoBehaviour
         // Stworzenie tablicy czasów końcowych wszystkich kratek
         entityEndTime = new double[entitiesAmount];
         
-        Vector3 positionToSpawnEntity = positionForEntities.transform.position;     // Worldspace pierwszego obiektu siatki
+        Vector3 positionToSpawnEntity = netPosition.transform.position;     // Worldspace pierwszego obiektu siatki
         GameObject createdEntity;                                                   // Utworzony właśnie obiekt
         // Spawnowanie obiektów i dodawanie ich do tablicy
         for (int i = 0; i < entitiesAmount; i++)
@@ -84,9 +84,6 @@ public class EditorNet : MonoBehaviour
             entityArray[i] = createdEntity;
             positionToSpawnEntity.x += entity.transform.lossyScale.x * 1.05f;
         }
-
-        // Pierwszy obiekt odpowiada początkowemu czasowi piosenki
-        entityArray[0].GetComponent<Renderer>().material.color = GetComponent<EntityCurrentTimeHighlight>().highlightColor;
 
         // Pierwszy czas końcowy odpowiada wartości zmiennej step
         entityEndTime[0] = step;

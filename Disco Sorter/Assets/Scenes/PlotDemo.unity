@@ -4713,7 +4713,7 @@ MonoBehaviour:
   entity: {fileID: 5647251692439713505, guid: 933a28eb089911342a03aff1cf267587, type: 3}
   entityCanvas: {fileID: 988572330}
   entityArray: []
-  positionForEntities: {fileID: 1898158588}
+  netPosition: {fileID: 1898158588}
   entityEndTime: []
   BPM: 125
   entitiesAmount: 0
@@ -7265,7 +7265,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1898158589}
   m_Layer: 0
-  m_Name: Start Position For Entities
+  m_Name: Net Position
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
