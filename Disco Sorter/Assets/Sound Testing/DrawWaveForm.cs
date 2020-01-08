@@ -22,7 +22,6 @@ public class DrawWaveForm : MonoBehaviour
         // utworzenie Vectora3 skali określającego porządaną długość 
         // przypisanie quadowi nowego vectora3 skali
 
-        Debug.Log((int)sceneSongLength);
         renderer.gameObject.transform.localScale = scaleVector;
 
         //Mechanizm skalowania tekstury w zależności od długości piosenki i gęstości siatki

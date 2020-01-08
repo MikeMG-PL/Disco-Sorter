@@ -42,7 +42,6 @@ public class EditorNet : MonoBehaviour
     {
         DestroyOldNet();
         CreateNet();
-        InitializeOther();
 
         Debug.Log("Ilość obiektów: " + entityArray.Length);
     }
@@ -72,17 +71,13 @@ public class EditorNet : MonoBehaviour
     // Tworzy nową siatkę
     private void CreateNet()
     {
-        // Obliczanie obiektów na sekundę, stepów i ilości obiektów nowej siatki
+        // Obliczanie step i ilości obiektów nowej siatki
         float entitiesPerSecond = netDensity * BPM / 60f;
         step = 1f / entitiesPerSecond;
-        entitiesAmount = (int)Math.Ceiling(clip.length * entitiesPerSecond);
+        entitiesAmount = (int)Math.Ceiling(clip.length * entitiesPerSecond);  
+        entityArray = new GameObject[entitiesAmount];                       // Stworzenie tablicy obiektów 
+        entityEndTime = new double[entitiesAmount];                         // Stworzenie tablicy czasów końcowych wszystkich kratek
 
-        // Stworzenie tablicy obiektów
-        entityArray = new GameObject[entitiesAmount];
-
-        // Stworzenie tablicy czasów końcowych wszystkich kratek
-        entityEndTime = new double[entitiesAmount];
-        
         Vector3 positionToSpawnEntity = netPosition.transform.position;     // Worldspace pierwszego obiektu siatki
         GameObject createdEntity;                                           // Utworzony właśnie obiekt
         // Spawnowanie obiektów i dodawanie ich do tablicy
@@ -94,14 +89,13 @@ public class EditorNet : MonoBehaviour
             positionToSpawnEntity.x += entity.transform.lossyScale.x * 1.05f;
         }
 
-        // Pierwszy czas końcowy odpowiada wartości zmiennej step
-        entityEndTime[0] = step;
-
         // Dodawanie do tablicy wartości o czasie końcowym każdej kratki
-        for (int i = 1; i < entitiesAmount; i++)
+        for (int i = 0; i < entitiesAmount; i++)
         {
-            entityEndTime[i] = Math.Round(entityEndTime[i - 1] + step, 3);
+            entityEndTime[i] = Math.Round(step * (i + 1), 3);
         }
+
+        InitializeOther();
     }
 
     // Inicializuje pozostałe skrypty, które wymagają do działania danych z tego skryptu
