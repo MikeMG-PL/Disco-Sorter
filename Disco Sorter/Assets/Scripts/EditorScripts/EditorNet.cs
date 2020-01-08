@@ -3,19 +3,28 @@ using UnityEngine;
 
 public class EditorNet : MonoBehaviour
 {
-    public GameObject beatMarker;                           // Prefab znacznika beatu
-    public GameObject entity;                               // Prefab obiektu/sześcianu reprezentującego miejsce, w których mogą spawnować się obiekty w grze (różne typy jabłek itd.)
-    public GameObject entityCanvas;                         // Obiekt zawierający skrypt EntityMenu
+    public int netDensity = 1;                              // Gęstość siatki - WIELOKROTNOŚĆ BPM
+    public int BPM;
+
     [HideInInspector]
     public GameObject[] entityArray;                        // Tablica wszystkich utworzonych obiektów
-    public GameObject netPosition;                  // Dla ułatwienia. Obiekt, od którego pozycji zaczyna się spawn sześcianów
+    [HideInInspector]
     public double[] entityEndTime;                          // Tablica przechowująca czasy końcowe poszczególnych obiektów
-    public int BPM;
+    [HideInInspector]
     public int entitiesAmount;                              // Ilość obiektów ustalana na podstawie długości piosenki (w sekundach) i ilości sześcianów na sekundę
-    public int netDensity = 1;                              // Gęstość siatki - WIELOKROTNOŚĆ BPM
     [HideInInspector]
     public string songName;
+    [HideInInspector]
     public float step;                                      // Długość trwania jednej kratki
+
+    [SerializeField]
+    private GameObject netPosition;                         // Dla ułatwienia. Obiekt, od którego pozycji zaczyna się spawn sześcianów
+    [SerializeField]
+    private GameObject beatMarker;                          // Prefab znacznika beatu
+    [SerializeField]
+    private GameObject entity;                              // Prefab obiektu/sześcianu reprezentującego miejsce, w których mogą spawnować się obiekty w grze (różne typy jabłek itd.)
+    [SerializeField]
+    private GameObject entityCanvas;                        // Obiekt zawierający skrypt EntityMenu
 
     private AudioClip clip;                                 // Plik audio
 
@@ -75,7 +84,7 @@ public class EditorNet : MonoBehaviour
         entityEndTime = new double[entitiesAmount];
         
         Vector3 positionToSpawnEntity = netPosition.transform.position;     // Worldspace pierwszego obiektu siatki
-        GameObject createdEntity;                                                   // Utworzony właśnie obiekt
+        GameObject createdEntity;                                           // Utworzony właśnie obiekt
         // Spawnowanie obiektów i dodawanie ich do tablicy
         for (int i = 0; i < entitiesAmount; i++)
         {
@@ -102,7 +111,7 @@ public class EditorNet : MonoBehaviour
 
         entityCanvas.GetComponent<EntityMenu>().Initialization();
         GetComponent<EntityCurrentTimeHighlight>().Initialization(entityArray, entityEndTime, entitiesAmount, step);
-        GetComponent<AudioManipulation>().Waveform(); // wwyrenderowanie i synchronizacja waveformu
+        GetComponent<DrawWaveForm>().Waveform(); // Wyrenderowanie i synchronizacja waveformu
         MarkBeats(BPMstep);
     }
 

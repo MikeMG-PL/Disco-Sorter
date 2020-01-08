@@ -1,11 +1,47 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class DrawWaveForm : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject waveformObject;
+
     private Color32 black = new Color32(0, 0, 0, 255);
     private Color32 red = new Color32(255, 0, 0, 255);
+
+    /// Funkcja odpowiedzialna za poprawne renderowanie i synchronizację waveformu ///
+    public void Waveform()
+    {
+        AudioClip audioClip = GetComponent<AudioSource>().clip;
+        MeshRenderer renderer = waveformObject.GetComponent<MeshRenderer>();
+        GameObject[] entityArray = GetComponent<EditorNet>().entityArray;
+        EditorNet editorNet = GetComponent<EditorNet>();
+        float sceneSongLength = editorNet.entitiesAmount * 0.1f + editorNet.entitiesAmount * 0.005f;
+        Vector3 scaleVector = new Vector3(sceneSongLength, 1, 0.1f);
+
+        // obliczenie długosci piosenki na scenie
+        // utworzenie Vectora3 skali określającego porządaną długość 
+        // przypisanie quadowi nowego vectora3 skali
+
+        Debug.Log((int)sceneSongLength);
+        renderer.gameObject.transform.localScale = scaleVector;
+
+        //Mechanizm skalowania tekstury w zależności od długości piosenki i gęstości siatki
+        if ((int)sceneSongLength * 150 >= 60000)
+            renderer.material.mainTexture = PaintWaveformSpectrum(audioClip, 1f, 16000, 1000, Color.red);
+        else if ((int)sceneSongLength * 150 >= 48000 && (int)sceneSongLength * 150 < 60000)
+            renderer.material.mainTexture = PaintWaveformSpectrum(audioClip, 1f, (int)sceneSongLength * 40, 1000, Color.red);
+        else if ((int)sceneSongLength * 150 >= 36000 && (int)sceneSongLength * 150 < 48000)
+            renderer.material.mainTexture = PaintWaveformSpectrum(audioClip, 1f, (int)sceneSongLength * 50, 1000, Color.red); // liczba 150 - czułość wyświetlania waveformu
+        else if ((int)sceneSongLength * 150 >= 24000 && (int)sceneSongLength * 150 < 36000)
+            renderer.material.mainTexture = PaintWaveformSpectrum(audioClip, 1f, (int)sceneSongLength * 65, 1000, Color.red);
+        else if ((int)sceneSongLength * 150 >= 16000 && (int)sceneSongLength * 150 < 24000)
+            renderer.material.mainTexture = PaintWaveformSpectrum(audioClip, 1f, (int)sceneSongLength * 100, 1000, Color.red);
+        else if ((int)sceneSongLength * 150 < 16000)
+            renderer.material.mainTexture = PaintWaveformSpectrum(audioClip, 1f, (int)sceneSongLength * 150, 1000, Color.red);
+
+        renderer.gameObject.transform.position = new Vector3(entityArray[0].transform.position.x - 0.05f, entityArray[0].transform.position.y, entityArray[0].transform.position.z + 0.55f);
+        renderer.material.mainTexture.filterMode = FilterMode.Point;
+    }
 
     public Texture2D PaintWaveformSpectrum(AudioClip audio, float saturation, int width, int height, Color col)
     {
