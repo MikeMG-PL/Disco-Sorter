@@ -5,104 +5,70 @@ using UnityEngine.EventSystems;
 
 public class Entity : MonoBehaviour
 {
-
-    public GameObject markerPrefab;                     // Prefab znacznika
-    GameObject marker;
+    // Zmienne określające dany obiekt, zapisywane są one do pliku
+    public int action;                                  // Akcja, którą można wykonać na obiekcie
     public int entityNumber;                            // Numer (identyfikator) obiektu
     public int entityType;                              // Typ obiektu
     public int color;                                   // Kolory jabłek, 0 - brak, 1 - zielony, 2 - czerwony
+
     [HideInInspector]
     public EntityMenu entityMenuScript;
 
-    private bool highlighted;                           // Czy obiekt jest aktualnie zaznaczony przez użytkownika
-    // Przydałoby się to może jakoś inaczej zrobić, minHight pobierać na Start a maxHight wybierać gdzieś w EditorNet? Nieistotne na razie.
-    private float maxHightOfHighlight = -0.03f;         // Wysokość, na jaką wzniesie się zaznaczony obiekt
-    private float minHight = -0.15f;                    // Wysokość standardowa niezaznaczonego obiektu
+    [SerializeField]
+    private GameObject markerPrefab;                    // Prefab znacznika
+
+    private GameObject marker, icon;
+    private bool ishighlighted;                         // Czy obiekt jest aktualnie zaznaczony przez użytkownika
 
     private void OnMouseDown()
     {
         // EventSystem.current.IsPointerOverGameObject() upewnia się, że użytkownik nie kliknął na obiekt przez jakiś element UI
         if (!EventSystem.current.IsPointerOverGameObject())
         {
-            if (marker == null)
-                marker = Instantiate(markerPrefab, transform.position, transform.rotation);
             // Otwieranie menu obiektu, w którym można dostować jego właściwości
             entityMenuScript.OpenMenu(entityNumber);
         }
     }
 
-    // Przełącza wyróżnienie obiektu, wykorzystuje to skrypt EntityMenu
-
-    private void Update()
-    {
-        HighlightMark();
-        //HighlightMove();
-    }
-
     public void Highlight(bool highlight)
     {
-        highlighted = highlight;
-    }
+        ishighlighted = highlight;
 
-    void HighlightMark()
-    {
-        if (highlighted)
+        if (ishighlighted)
         {
-
-            if (marker.transform.localPosition.y < maxHightOfHighlight)
-                marker.transform.Translate(Vector3.up * Time.deltaTime, Space.World);
-            else
-                marker.transform.localPosition = new Vector3(transform.localPosition.x, maxHightOfHighlight, transform.localPosition.z);
+            if (marker == null)
+            {
+                Vector3 position = new Vector3(transform.position.x, transform.position.y + 0.05f, transform.position.z);
+                marker = Instantiate(markerPrefab, position, Quaternion.identity, transform);
+            }
         }
         else
             Destroy(marker);
     }
 
-    // Zajmuje się przemieszczaniem wyróżnionego obiektu w górę (lub po "odwyróżnieniu" - w dół)
-    void HighlightMove()
+    // Zmienia kolor obiektu w edytorze, na ustalone w skrypcie EntityMenu
+    public void ChangeColor()
     {
-        if (highlighted && transform.localPosition.y < maxHightOfHighlight)
-        {
-            transform.Translate(Vector3.up * Time.deltaTime, Space.World);
-        }
-
-        else if (highlighted && transform.localPosition.y > maxHightOfHighlight)
-        {
-            transform.localPosition = new Vector3(transform.localPosition.x, maxHightOfHighlight, transform.localPosition.z);
-        }
-
-        else if (!highlighted && transform.localPosition.y > minHight)
-        {
-            transform.Translate(Vector3.down * Time.deltaTime, Space.World);
-        }
-
-        else if (!highlighted && transform.localPosition.y < minHight)
-        {
-            transform.localPosition = new Vector3(transform.localPosition.x, minHight, transform.localPosition.z);
-        }
-    }
-
-    // Zwraca kolor, który powinien mieć obiekt w edytorze
-    // Może zrobić jako switch, chociaż tu jest kilka zmiennych
-    public Color GetColor()
-    {
-        // Jeśli obiekt jest typem disco, zwracany jest kolor magenta
-        if (entityType == 3)
-            return Color.magenta;
         // Jeśli obiekt jest typem none, lub nie ma wybranego koloru zwracany jest kolor biały
-        else if (color == 0 || entityType == 0)
-            return Color.white;
+        if (color == 0)
+            GetComponent<Renderer>().material.color = entityMenuScript.noColor;
         else if (color == 1)
-            return Color.green;
+            GetComponent<Renderer>().material.color = entityMenuScript.apple1Color;
         else if (color == 2)
-            return Color.red;
-        else return Color.white;
+            GetComponent<Renderer>().material.color = entityMenuScript.apple2Color;
+        else GetComponent<Renderer>().material.color = entityMenuScript.noColor;
     }
 
-    public bool IsApple()
+    public void ChangeTypeIcon()
     {
-        if (entityType == 1 || entityType == 2)
-            return true;
-        else return false;
+        Destroy(icon);
+        Vector3 position = new Vector3(transform.position.x, transform.position.y + 0.05f, transform.position.z);
+
+        if (entityType == 1)
+            icon = Instantiate(entityMenuScript.apple, position, entityMenuScript.apple.transform.rotation, transform);
+        else if (entityType == 2)
+            icon = Instantiate(entityMenuScript.rottenApple, position, entityMenuScript.apple.transform.rotation, transform);
+        else if (entityType == 3)
+            icon = Instantiate(entityMenuScript.disco, position, entityMenuScript.apple.transform.rotation, transform);
     }
 }

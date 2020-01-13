@@ -2,7 +2,7 @@
 
 public class EntityCurrentTimeHighlight : MonoBehaviour
 {
-    public Color highlightColor = Color.blue;              // Kolor obiektu, który odpowiada aktualnemu czasowi pliku audio
+    public Color highlightColor;                             // Kolor obiektu, który odpowiada aktualnemu czasowi pliku audio
 
     private AudioSource audioSource;
     private GameObject[] entityArray;
@@ -70,7 +70,7 @@ public class EntityCurrentTimeHighlight : MonoBehaviour
         if (entityArray != null && (previousEntityNumber != entityNumber || gameObject.GetComponent<AudioManipulation>().pausePressed))
         {
             //if (entityNumber == entitiesAmount) entityNumber--;
-            entityArray[previousEntityNumber].GetComponent<Renderer>().material.color = entityArray[previousEntityNumber].GetComponent<Entity>().GetColor();
+            entityArray[previousEntityNumber].GetComponent<Entity>().ChangeColor();
             entityArray[entityNumber].GetComponent<Renderer>().material.color = highlightColor;
         }
     }

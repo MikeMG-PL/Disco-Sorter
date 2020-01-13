@@ -32,9 +32,11 @@ public class SongSaveOrLoad : MonoBehaviour
 
         for (int i = 0; i < editorNet.entityArray.Length; i++)
         {
-            editorNet.entityArray[i].GetComponent<Entity>().color = songData.color[i];
             editorNet.entityArray[i].GetComponent<Entity>().entityType = songData.entityType[i];
-            editorNet.entityArray[i].GetComponent<Renderer>().material.color = editorNet.entityArray[i].GetComponent<Entity>().GetColor();
+            editorNet.entityArray[i].GetComponent<Entity>().color = songData.color[i];
+            editorNet.entityArray[i].GetComponent<Entity>().action = songData.action[i];
+            editorNet.entityArray[i].GetComponent<Entity>().ChangeColor();
+            editorNet.entityArray[i].GetComponent<Entity>().ChangeTypeIcon();
         }
     }
 

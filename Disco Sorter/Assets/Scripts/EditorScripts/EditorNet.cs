@@ -62,8 +62,6 @@ public class EditorNet : MonoBehaviour
             Destroy(entityArray[i]);
         }
 
-        Destroy(GameObject.FindGameObjectWithTag("Marker"));
-
         // Resetowanie piosenki
         gameObject.GetComponent<AudioManipulation>().Restart();
     }
