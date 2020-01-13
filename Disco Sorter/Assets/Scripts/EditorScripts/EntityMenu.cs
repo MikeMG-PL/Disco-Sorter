@@ -5,22 +5,54 @@ using UnityEngine.UI;
 
 public class EntityMenu : MonoBehaviour
 {
-    // Poszczególne elementy menu
-    public Dropdown typeDropdown;           // Dropdown, w którym wybiera się typ obiektu
-    public List<string> entityTypes;        // Wszystkie typy obiektów, umieszczane są w typeDropdown
-    public Dropdown colorDropdown;          // Dropdown, w którym wybiera się kolor obiektu
+    [Header("Poszczególne elementy menu: ")]
+    [SerializeField]
+    private Dropdown typeDropdown;          // Dropdown, w którym wybiera się typ obiektu i dropdown wyboru koloru
+    [SerializeField]
+    private Dropdown colorDropdown;
+    [SerializeField]
+    private Dropdown actionDropdown;
 
-    public GameObject songController;       // Obiekt SongController, który ma w sobie skrypt EditorNet, który to z kolei jest potrzebny do pozyskania tablicy entities
-    public GameObject menuPanel;            // Panel z całym menu właściowości obiektu
+    [Header("Kolor obiektu w edytorze: ")]
+    public Color noColor;
+    public Color apple1Color;
+    public Color apple2Color;
+
+    [Header("Ikona obiektu w edytorze: ")]
+    public GameObject apple;
+    public GameObject rottenApple;
+    public GameObject disco;
+
+    [Header("Obiekt zawierający skrypt SongController")]
+    [SerializeField]
+    private GameObject songController;      // Obiekt SongController, który ma w sobie skrypt EditorNet, który to z kolei jest potrzebny do pozyskania tablicy entities
+
+    [Header("Panel menu")]
+    [SerializeField]
+    private GameObject menuPanel;           // Panel z całym menu właściowości obiektu
+
+    [Header("Ostrzeżenie o niemożności wyboru koloru")]
+    [SerializeField]
+    private Text colorWarning;              // Tekst mówiący, że tylko określonym obiektom można dodać kolor
+    [SerializeField]
+    private Text actionWarning;             // Tekst mówiący, że tylko określonym obiektom można dostosować rodzaj akcji
+
+    [SerializeField]
+    private Image isSavedImage;
+    [SerializeField]
+    private Sprite savedImage;
+    [SerializeField]
+    private Sprite unsavedImage;
 
     private GameObject[] entityArray;       // Tablica z entities
+    private MenuManager menuManager;
     private int currentEntity = -1;         // Aktualnie zaznaczony obiekt
     private int previousEntity;             // Poprzednio zaznaczony obiekt
 
     void Start()
     {
-        // Dodawanie wszystkich opcji, które ustalono w liście entityTypes bezpośrednio w edytorze
-        typeDropdown.AddOptions(entityTypes);
+        menuPanel.SetActive(false);
+        menuManager = GetComponent<MenuManager>();
     }
 
     // Funkcja przypisuje 
@@ -40,8 +72,8 @@ public class EntityMenu : MonoBehaviour
     // Otwarcie menu po kliknięciu jakiegoś obiektu, wyróżnienie obiektu, który został wybrany, "odwyróżnienie" poprzedniego obiektu
     public void OpenMenu(int entityNumber)
     {
-        // Aktywowanie panelu z menu
-        menuPanel.SetActive(true);
+        // Panel z menu obiektu jest teraz aktywnym panelem
+        menuManager.ChangeActivePanel(menuPanel);
 
         previousEntity = currentEntity;
         currentEntity = entityNumber;
@@ -52,13 +84,6 @@ public class EntityMenu : MonoBehaviour
         if (previousEntity != -1)
             entityArray[previousEntity].GetComponent<Entity>().Highlight(false);
         entityArray[currentEntity].GetComponent<Entity>().Highlight(true);
-    }
-
-    // Panel menu jest jeden. Dla każdego obiektu tuż przed otwarciem ustawiane są w nim wartości, które odpowiadają wybranemu właśnie obiektowi.
-    private void SetCurrentValues()
-    {
-        typeDropdown.value = entityArray[currentEntity].GetComponent<Entity>().entityType;
-        colorDropdown.value = entityArray[currentEntity].GetComponent<Entity>().color;
     }
 
     // Zamykanie menu, odwyróżnianie obiektu i ustawianie currentEntity na -1
@@ -75,23 +100,90 @@ public class EntityMenu : MonoBehaviour
     // Funkcje wykorzystywane bezpośrednio przez menu
     // Po wybraniu konkretnej opcji można zmieniać wygląd kostki aby w jakiś sposób to zasygnalizować
     // Zmiana właściwości obiektu: typ
-    public void ChangeEntityType(int entityType)
+    public void ChangeType(int entityType)
     {
-        if (currentEntity != -1)
-        {
-            entityArray[currentEntity].GetComponent<Entity>().entityType = entityType;
-            //Debug.Log(entityArray[currentEntity].GetComponent<Entity>().entityType);
-        }
+        Entity entity = entityArray[currentEntity].GetComponent<Entity>();
+        if (entity.entityType == entityType) return;
+
+        IsSavedChange(false);
+        entity.entityType = entityType;
+        entity.ChangeTypeIcon();
+        SetCurrentValues();
     }
 
     // Zmiana właściwości obiektu: kolor
     public void ChangeColor(int color)
     {
-        if (currentEntity != -1)
+        Entity entity = entityArray[currentEntity].GetComponent<Entity>();
+        if (entity.color == color) return;
+
+        IsSavedChange(false);
+        entity.color = color;
+        entity.ChangeColor();
+        SetCurrentValues();
+    }
+
+    public void ChangeAction(int action)
+    {
+        Entity entity = entityArray[currentEntity].GetComponent<Entity>();
+        if (entity.action == action) return;
+
+        IsSavedChange(false);
+        entity.action = action;
+        SetCurrentValues();
+    }
+
+    // Funkcje pomocnicze
+    // Panel menu jest jeden. Dla każdego obiektu tuż przed otwarciem ustawiane są w nim wartości, które odpowiadają wybranemu właśnie obiektowi.
+    private void SetCurrentValues()
+    {
+        Entity entity = entityArray[currentEntity].GetComponent<Entity>();
+
+        StillHasColor(entity);
+        StillHasAction(entity);
+
+        typeDropdown.value = entity.entityType;
+        colorDropdown.value = entity.color;
+        actionDropdown.value = entity.action;
+    }
+
+    // Sprawdza czy obiektowi o wybranym typie można zmienić kolor
+    private void StillHasColor(Entity entity)
+    {
+        if (entity.entityType == 1)
         {
-            entityArray[currentEntity].GetComponent<Entity>().color = color;
-            entityArray[currentEntity].GetComponent<Renderer>().material.color = entityArray[currentEntity].GetComponent<Entity>().GetColor();
-            //Debug.Log(entityArray[currentEntity].GetComponent<Entity>().color);
+            colorDropdown.interactable = true;
+            colorWarning.gameObject.SetActive(false);
         }
+
+        else
+        {
+            entity.color = 0;
+            colorDropdown.interactable = false;
+            colorWarning.gameObject.SetActive(true);
+        }
+    }
+
+    // Sprawdza czy obiektowi o wybranym typie można zmienić akcję
+    private void StillHasAction(Entity entity)
+    {
+        if (entity.entityType == 1 || entity.entityType == 2)
+        {
+            actionDropdown.interactable = true;
+            actionWarning.gameObject.SetActive(false);
+        }
+
+        else
+        {
+            entity.action = 0;
+            actionDropdown.interactable = false;
+            actionWarning.gameObject.SetActive(true);
+        }
+    }
+
+    public void IsSavedChange(bool saved)
+    {
+        if (saved) isSavedImage.sprite = savedImage;
+        else isSavedImage.sprite = unsavedImage;
     }
 }
