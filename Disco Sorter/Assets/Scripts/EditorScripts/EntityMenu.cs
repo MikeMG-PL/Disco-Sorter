@@ -37,6 +37,13 @@ public class EntityMenu : MonoBehaviour
     [SerializeField]
     private Text actionWarning;             // Tekst mówiący, że tylko określonym obiektom można dostosować rodzaj akcji
 
+    [SerializeField]
+    private Image isSavedImage;
+    [SerializeField]
+    private Sprite savedImage;
+    [SerializeField]
+    private Sprite unsavedImage;
+
     private GameObject[] entityArray;       // Tablica z entities
     private MenuManager menuManager;
     private int currentEntity = -1;         // Aktualnie zaznaczony obiekt
@@ -96,6 +103,9 @@ public class EntityMenu : MonoBehaviour
     public void ChangeType(int entityType)
     {
         Entity entity = entityArray[currentEntity].GetComponent<Entity>();
+        if (entity.entityType == entityType) return;
+
+        IsSavedChange(false);
         entity.entityType = entityType;
         entity.ChangeTypeIcon();
         SetCurrentValues();
@@ -105,6 +115,9 @@ public class EntityMenu : MonoBehaviour
     public void ChangeColor(int color)
     {
         Entity entity = entityArray[currentEntity].GetComponent<Entity>();
+        if (entity.color == color) return;
+
+        IsSavedChange(false);
         entity.color = color;
         entity.ChangeColor();
         SetCurrentValues();
@@ -112,7 +125,11 @@ public class EntityMenu : MonoBehaviour
 
     public void ChangeAction(int action)
     {
-        entityArray[currentEntity].GetComponent<Entity>().action = action;
+        Entity entity = entityArray[currentEntity].GetComponent<Entity>();
+        if (entity.action == action) return;
+
+        IsSavedChange(false);
+        entity.action = action;
         SetCurrentValues();
     }
 
@@ -162,5 +179,11 @@ public class EntityMenu : MonoBehaviour
             actionDropdown.interactable = false;
             actionWarning.gameObject.SetActive(true);
         }
+    }
+
+    public void IsSavedChange(bool saved)
+    {
+        if (saved) isSavedImage.sprite = savedImage;
+        else isSavedImage.sprite = unsavedImage;
     }
 }

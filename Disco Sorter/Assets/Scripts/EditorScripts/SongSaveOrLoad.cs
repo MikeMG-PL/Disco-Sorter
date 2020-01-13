@@ -2,7 +2,10 @@
 
 public class SongSaveOrLoad : MonoBehaviour
 {
-    public GameObject savesPanel;       // Panel, w którym znajdują się przyciski do wyboru pliku, do wczytania
+
+    [SerializeField]
+    private GameObject savesPanel, entityMenu;       // Panel, w którym znajdują się przyciski do wyboru pliku, do wczytania. Obiekt zawierający skrypt entityMenu
+
     private EditorNet editorNet;
 
     private void Awake()
@@ -12,6 +15,7 @@ public class SongSaveOrLoad : MonoBehaviour
 
     public void SaveSong()
     {
+        entityMenu.GetComponent<EntityMenu>().IsSavedChange(true);
         SongFile.SaveSong(gameObject.GetComponent<EditorNet>());
     }
 
