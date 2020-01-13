@@ -102,8 +102,9 @@ public class EntityMenu : MonoBehaviour
     // Zmiana właściwości obiektu: kolor
     public void ChangeColor(int color)
     {
-        entityArray[currentEntity].GetComponent<Entity>().color = color;
-        entityArray[currentEntity].GetComponent<Entity>().ChangeColor();
+        Entity entity = entityArray[currentEntity].GetComponent<Entity>();
+        entity.color = color;
+        entity.ChangeColor();
         SetCurrentValues();
     }
 

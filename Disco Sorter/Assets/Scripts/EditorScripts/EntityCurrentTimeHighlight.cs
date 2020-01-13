@@ -7,7 +7,7 @@ public class EntityCurrentTimeHighlight : MonoBehaviour
     private AudioSource audioSource;
     private GameObject[] entityArray;
     private double[] entityEndTime;                         // Tablica przechowująca czasy końcowe poszczególnych obiektów
-    private int entitiesAmount;
+    private int entitiesAmountInColumn;
     private int entityNumber;                               // Numer obiektu odpowiadającego danemu granemu czasowi pliku audio
     private int previousEntityNumber;                       // Numer obiektu odpowiadającego poprzedniemu granemu czasowi pliku audio
     private float currentTime;                              // Aktualny czas granego audio
@@ -29,7 +29,7 @@ public class EntityCurrentTimeHighlight : MonoBehaviour
     {
         entityArray = gameObjects;
         entityEndTime = endTimes;
-        entitiesAmount = amount;
+        entitiesAmountInColumn = amount;
         step = editorNetstep;
     }
 
@@ -52,7 +52,7 @@ public class EntityCurrentTimeHighlight : MonoBehaviour
 
         else
         {
-            for (int i = 1; i < entitiesAmount; i++)
+            for (int i = 1; i < entitiesAmountInColumn; i++)
             {
                 if (entityEndTime[i] >= currentTime)
                 {

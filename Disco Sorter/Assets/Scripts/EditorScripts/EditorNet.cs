@@ -11,7 +11,9 @@ public class EditorNet : MonoBehaviour
     [HideInInspector]
     public double[] entityEndTime;                          // Tablica przechowująca czasy końcowe poszczególnych obiektów
     [HideInInspector]
-    public int entitiesAmount;                              // Ilość obiektów ustalana na podstawie długości piosenki (w sekundach) i ilości sześcianów na sekundę
+    public int entitiesOverallAmount;                       // Całkowita ilość obiektów, ilość obiektów w kolumnie pomnożona przez ilość kolumn
+    [HideInInspector]
+    public int entitiesAmountInColumn;                      // Ilość obiektów w kolumnie ustalana na podstawie długości piosenki (w sekundach) i ilości sześcianów na sekundę
     [HideInInspector]
     public string songName;
     [HideInInspector]
@@ -27,6 +29,7 @@ public class EditorNet : MonoBehaviour
     private GameObject entityCanvas;                        // Obiekt zawierający skrypt EntityMenu
 
     private AudioClip clip;                                 // Plik audio
+    private int columnsAmount = 4;
 
     void Start()
     {
@@ -57,7 +60,7 @@ public class EditorNet : MonoBehaviour
     // Niszczenie poprzedniej siatki, resetowanie utworu
     private void DestroyOldNet()
     {
-        for (int i = 0; i < entitiesAmount; i++)
+        for (int i = 0; i < entityArray.Length; i++)
         {
             Destroy(entityArray[i]);
         }
@@ -72,23 +75,33 @@ public class EditorNet : MonoBehaviour
         // Obliczanie step i ilości obiektów nowej siatki
         float entitiesPerSecond = netDensity * BPM / 60f;
         step = 1f / entitiesPerSecond;
-        entitiesAmount = (int)Math.Ceiling(clip.length * entitiesPerSecond);  
-        entityArray = new GameObject[entitiesAmount];                       // Stworzenie tablicy obiektów 
-        entityEndTime = new double[entitiesAmount];                         // Stworzenie tablicy czasów końcowych wszystkich kratek
+        entitiesAmountInColumn = (int)Math.Ceiling(clip.length * entitiesPerSecond);
+        entitiesOverallAmount = entitiesAmountInColumn * columnsAmount;
+        entityArray = new GameObject[entitiesOverallAmount];                       // Stworzenie tablicy obiektów 
+        entityEndTime = new double[entitiesAmountInColumn];                        // Stworzenie tablicy czasów końcowych wszystkich kratek w kolumnie
 
         Vector3 positionToSpawnEntity = netPosition.transform.position;     // Worldspace pierwszego obiektu siatki
         GameObject createdEntity;                                           // Utworzony właśnie obiekt
+        int overallNumber;
+
         // Spawnowanie obiektów i dodawanie ich do tablicy
-        for (int i = 0; i < entitiesAmount; i++)
+        for (int j = 0; j < columnsAmount; j++)
         {
-            createdEntity = Instantiate(entity, positionToSpawnEntity, Quaternion.identity);
-            createdEntity.GetComponent<Entity>().entityNumber = i;
-            entityArray[i] = createdEntity;
-            positionToSpawnEntity.x += entity.transform.lossyScale.x * 1.05f;
+            if (j != 0)
+                positionToSpawnEntity = new Vector3(netPosition.transform.position.x, netPosition.transform.position.y, positionToSpawnEntity.z - 0.15f);
+
+            for (int i = 0; i < entitiesAmountInColumn; i++)
+            {
+                overallNumber = j * entitiesAmountInColumn + i;
+                createdEntity = Instantiate(entity, positionToSpawnEntity, Quaternion.identity);
+                createdEntity.GetComponent<Entity>().entityNumber = overallNumber;
+                entityArray[overallNumber] = createdEntity;
+                positionToSpawnEntity.x += entity.transform.lossyScale.x * 1.05f;
+            }
         }
 
-        // Dodawanie do tablicy wartości o czasie końcowym każdej kratki
-        for (int i = 0; i < entitiesAmount; i++)
+        // Dodawanie do tablicy wartości o czasie końcowym każdej kratki, potrzeba tylko jedna kolumna
+        for (int i = 0; i < entitiesAmountInColumn; i++)
         {
             entityEndTime[i] = Math.Round(step * (i + 1), 3);
         }
@@ -102,7 +115,7 @@ public class EditorNet : MonoBehaviour
         float BPMstep = 1 / (BPM / 60f);
 
         entityCanvas.GetComponent<EntityMenu>().Initialization();
-        GetComponent<EntityCurrentTimeHighlight>().Initialization(entityArray, entityEndTime, entitiesAmount, step);
+        GetComponent<EntityCurrentTimeHighlight>().Initialization(entityArray, entityEndTime, entitiesAmountInColumn, step);
         GetComponent<DrawWaveForm>().Waveform(); // Wyrenderowanie i synchronizacja waveformu
         MarkBeats(BPMstep);
     }
@@ -111,7 +124,7 @@ public class EditorNet : MonoBehaviour
     private void MarkBeats(float BPMstep)
     {
         int num;
-        for (int i = 0; i < entitiesAmount; i++)
+        for (int i = 0; i < entitiesAmountInColumn; i++)
         {
             //if (i == 0)
             //Instantiate(beatMarker, new Vector3(entityArray[i].transform.position.x, entityArray[i].transform.position.y, entityArray[i].transform.position.z + 0.075f), Quaternion.identity);

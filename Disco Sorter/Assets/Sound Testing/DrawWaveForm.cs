@@ -15,7 +15,7 @@ public class DrawWaveForm : MonoBehaviour
         MeshRenderer renderer = waveformObject.GetComponent<MeshRenderer>();
         GameObject[] entityArray = GetComponent<EditorNet>().entityArray;
         EditorNet editorNet = GetComponent<EditorNet>();
-        float sceneSongLength = editorNet.entitiesAmount * 0.1f + editorNet.entitiesAmount * 0.005f;
+        float sceneSongLength = editorNet.entitiesAmountInColumn * 0.1f + editorNet.entitiesAmountInColumn * 0.005f;
         Vector3 scaleVector = new Vector3(sceneSongLength, 1, 0.1f);
 
         // obliczenie długosci piosenki na scenie
