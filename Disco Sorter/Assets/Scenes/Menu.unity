@@ -2968,17 +2968,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48407733764fae347bb395385bf8fc4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttons:
-  - {fileID: 257018540}
-  - {fileID: 1553626170}
-  - {fileID: 9014887}
-  - {fileID: 2084293238}
-  - {fileID: 695013120}
-  - {fileID: 483261199}
-  - {fileID: 1453396218}
-  - {fileID: 1967833347}
-  - {fileID: 877601621}
-  - {fileID: 1109270525}
 --- !u!114 &1768630289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3768,5 +3757,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee3c961a73f51ee4bb3ec22ea13b860d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  editorPanel: {fileID: 346301762}
-  savesPanel: {fileID: 1768630287}
+  mainMenuEditorPanel: {fileID: 346301762}
+  allSavesPanel: {fileID: 1768630287}

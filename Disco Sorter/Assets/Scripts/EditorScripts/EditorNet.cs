@@ -46,7 +46,7 @@ public class EditorNet : MonoBehaviour
         DestroyOldNet();
         CreateNet();
 
-        Debug.Log("Ilość obiektów: " + entityArray.Length);
+        //Debug.Log("Ilość obiektów: " + entityArray.Length);
     }
 
     // Jeśli określony plik siatki został wczytany

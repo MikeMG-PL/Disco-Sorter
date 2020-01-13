@@ -39,13 +39,4 @@ public class SongSaveOrLoad : MonoBehaviour
             editorNet.entityArray[i].GetComponent<Entity>().ChangeTypeIcon();
         }
     }
-
-    // Aktywuje (lub zamyka) panel z zapisami i aktualizuje napisy na przyciskach
-    public void ShowSaves()
-    {
-        string[] songNames = SongFile.GetSavesNames();
-
-        savesPanel.SetActive(!savesPanel.activeSelf);
-        savesPanel.GetComponent<SavesManager>().UpdateSavesNames(songNames);
-    }
 }

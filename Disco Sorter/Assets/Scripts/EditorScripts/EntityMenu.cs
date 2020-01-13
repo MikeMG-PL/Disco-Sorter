@@ -38,12 +38,14 @@ public class EntityMenu : MonoBehaviour
     private Text actionWarning;             // Tekst mówiący, że tylko określonym obiektom można dostosować rodzaj akcji
 
     private GameObject[] entityArray;       // Tablica z entities
+    private MenuManager menuManager;
     private int currentEntity = -1;         // Aktualnie zaznaczony obiekt
     private int previousEntity;             // Poprzednio zaznaczony obiekt
 
     void Start()
     {
         menuPanel.SetActive(false);
+        menuManager = GetComponent<MenuManager>();
     }
 
     // Funkcja przypisuje 
@@ -63,8 +65,8 @@ public class EntityMenu : MonoBehaviour
     // Otwarcie menu po kliknięciu jakiegoś obiektu, wyróżnienie obiektu, który został wybrany, "odwyróżnienie" poprzedniego obiektu
     public void OpenMenu(int entityNumber)
     {
-        // Aktywowanie panelu z menu
-        menuPanel.SetActive(true);
+        // Panel z menu obiektu jest teraz aktywnym panelem
+        menuManager.ChangeActivePanel(menuPanel);
 
         previousEntity = currentEntity;
         currentEntity = entityNumber;
