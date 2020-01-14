@@ -133,7 +133,10 @@ public class EditorNet : MonoBehaviour
             {
                 num = i + netDensity - (int)Math.Ceiling((float)(netDensity / 2));
                 //entityArray[i].GetComponent<Renderer>().material.color = Color.blue;
-                Instantiate(beatMarker, new Vector3(entityArray[num].transform.position.x, entityArray[num].transform.position.y, entityArray[num].transform.position.z + 0.075f), Quaternion.identity, entityArray[num].transform);
+                Instantiate(beatMarker, new Vector3(entityArray[num].transform.position.x,
+                                                    entityArray[num].transform.position.y,
+                                                    entityArray[num].transform.position.z + 0.075f), 
+                                                    Quaternion.identity, entityArray[num].transform);
             }
         }
     }
