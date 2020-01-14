@@ -61,6 +61,14 @@ public class Entity : MonoBehaviour
         }
     }
 
+    public void OpenThisEntityMenu()
+    {
+        entityMenuScript.DeleteAllMarks();
+        entityMenuScript.markedEntities.Clear();
+        entityMenuScript.markedEntities.Add(gameObject);
+        entityMenuScript.OpenMenu(entityNumber);
+    }
+
     // Zmienia kolor obiektu w edytorze, na ustalony w skrypcie EntityMenu
     public void ChangeColor()
     {
