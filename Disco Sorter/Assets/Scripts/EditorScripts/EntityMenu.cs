@@ -44,10 +44,11 @@ public class EntityMenu : MonoBehaviour
     [SerializeField]
     private Sprite unsavedImage;
 
+    [HideInInspector]
+    public List<GameObject> markedEntities = new List<GameObject>();
+
     private GameObject[] entityArray;       // Tablica z entities
     private MenuManager menuManager;
-    private int currentEntity = -1;         // Aktualnie zaznaczony obiekt
-    private int previousEntity;             // Poprzednio zaznaczony obiekt
 
     void Start()
     {
@@ -60,40 +61,47 @@ public class EntityMenu : MonoBehaviour
     {
         entityArray = songController.GetComponent<EditorNet>().entityArray;
 
-        // Każdemu obiektowi z tablicy przypisujemy ten skrypt, aby mógł zarządzać menu jego właściwości
+        // Każdemu obiektowi z tablicy przypisujemy ten skrypt
         for (int i = 0; i < entityArray.Length; i++)
         {
             entityArray[i].GetComponent<Entity>().entityMenuScript = this;
         }
 
+        // Zamyka menu na wypadek gdyby było otwarte (np. po rebuildzie siatki)
         CloseMenu();
     }
 
-    // Otwarcie menu po kliknięciu jakiegoś obiektu, wyróżnienie obiektu, który został wybrany, "odwyróżnienie" poprzedniego obiektu
+    // Otwarcie menu po kliknięciu jakiegoś obiektu, wyróżnienie obiektu, który został wybrany
     public void OpenMenu(int entityNumber)
     {
         // Panel z menu obiektu jest teraz aktywnym panelem
         menuManager.ChangeActivePanel(menuPanel);
 
-        previousEntity = currentEntity;
-        currentEntity = entityNumber;
+        // Ustala wartości dropdown'ów w panelu na odpowiadające aktualnemu obiektowi, jeśli zaznaczone jest wiele obiektów, panel pokazuje domyślne wartości dropdown'ów (czyli "None")
+        if (markedEntities.Count == 1)
+            SetCurrentValues(entityNumber);
+        else SetBlank();
 
-        SetCurrentValues();
-
-        // Wyróżnianie nowego obiektu i odwyróżnianie poprzedniego (jeśli jakiś był)
-        if (previousEntity != -1)
-            entityArray[previousEntity].GetComponent<Entity>().Highlight(false);
-        entityArray[currentEntity].GetComponent<Entity>().Highlight(true);
+        // Zaznacza markerem wybrany obiekt
+        entityArray[entityNumber].GetComponent<Entity>().Highlight(true);
     }
 
-    // Zamykanie menu, odwyróżnianie obiektu i ustawianie currentEntity na -1
+    // Zamykanie menu, odwyróżnianie obiektów
     public void CloseMenu()
     {
         if (menuPanel.activeSelf)
         {
             menuPanel.SetActive(false);
-            entityArray[currentEntity].GetComponent<Entity>().Highlight(false);
-            currentEntity = -1;
+            DeleteAllMarks();
+        }
+    }
+
+    // Niszczy wszystkie markery
+    public void DeleteAllMarks()
+    {
+        for (int i = 0; i < markedEntities.Count; i++)
+        {
+            markedEntities[i].GetComponent<Entity>().Highlight(false);
         }
     }
 
@@ -102,49 +110,71 @@ public class EntityMenu : MonoBehaviour
     // Zmiana właściwości obiektu: typ
     public void ChangeType(int entityType)
     {
-        Entity entity = entityArray[currentEntity].GetComponent<Entity>();
-        if (entity.entityType == entityType) return;
-
         IsSavedChange(false);
-        entity.entityType = entityType;
-        entity.ChangeTypeIcon();
-        SetCurrentValues();
+
+        for (int i = 0; i < markedEntities.Count; i++)
+        {
+            Entity entity = markedEntities[i].GetComponent<Entity>();
+
+            entity.entityType = entityType;
+            entity.ChangeTypeIcon();
+            SetCurrentValues(entity.entityNumber);
+        }
     }
 
     // Zmiana właściwości obiektu: kolor
     public void ChangeColor(int color)
     {
-        Entity entity = entityArray[currentEntity].GetComponent<Entity>();
-        if (entity.color == color) return;
-
         IsSavedChange(false);
-        entity.color = color;
-        entity.ChangeColor();
-        SetCurrentValues();
+
+        for (int i = 0; i < markedEntities.Count; i++)
+        {
+            Entity entity = markedEntities[i].GetComponent<Entity>();
+
+            entity.color = color;
+            entity.ChangeColor();
+            SetCurrentValues(entity.entityNumber);
+        }
     }
 
     public void ChangeAction(int action)
     {
-        Entity entity = entityArray[currentEntity].GetComponent<Entity>();
-        if (entity.action == action) return;
-
         IsSavedChange(false);
-        entity.action = action;
-        SetCurrentValues();
+
+        for (int i = 0; i < markedEntities.Count; i++)
+        {
+            Entity entity = markedEntities[i].GetComponent<Entity>();
+
+            entity.action = action;
+            SetCurrentValues(entity.entityNumber);
+        }
     }
 
     // Funkcje pomocnicze
     // Panel menu jest jeden. Dla każdego obiektu tuż przed otwarciem ustawiane są w nim wartości, które odpowiadają wybranemu właśnie obiektowi.
-    private void SetCurrentValues()
+    private void SetCurrentValues(int entityNumber)
     {
-        Entity entity = entityArray[currentEntity].GetComponent<Entity>();
+        Entity entity = entityArray[entityNumber].GetComponent<Entity>();
 
         StillHasColor(entity);
         StillHasAction(entity);
 
-        typeDropdown.value = entity.entityType;
-        colorDropdown.value = entity.color;
-        actionDropdown.value = entity.action;
+        typeDropdown.SetValueWithoutNotify(entity.entityType);
+        colorDropdown.SetValueWithoutNotify(entity.color);
+        actionDropdown.SetValueWithoutNotify(entity.action);
+    }
+
+    // Ustawia wartości na domyślne (None) i blokuje, w związku z tym, niektóre opcje
+    private void SetBlank()
+    {
+        colorDropdown.interactable = false;
+        colorWarning.gameObject.SetActive(true);
+        actionDropdown.interactable = false;
+        actionWarning.gameObject.SetActive(true);
+
+        typeDropdown.SetValueWithoutNotify(0);
+        colorDropdown.SetValueWithoutNotify(0);
+        actionDropdown.SetValueWithoutNotify(0);
     }
 
     // Sprawdza czy obiektowi o wybranym typie można zmienić kolor
@@ -159,6 +189,7 @@ public class EntityMenu : MonoBehaviour
         else
         {
             entity.color = 0;
+            entity.ChangeColor();
             colorDropdown.interactable = false;
             colorWarning.gameObject.SetActive(true);
         }
@@ -181,6 +212,7 @@ public class EntityMenu : MonoBehaviour
         }
     }
 
+    // Zamienia ikonkę mówiącą użytkownikowi czy aktualna siatka jest zapisana, czy nie
     public void IsSavedChange(bool saved)
     {
         if (saved) isSavedImage.sprite = savedImage;

@@ -18,4 +18,9 @@ public class EditorCamera : MonoBehaviour
         scrollInput = Input.GetAxis("Mouse ScrollWheel");
         transform.Translate(0, 0, scrollInput * cameraSpeed, Space.Self);
     }
+
+    public void MoveToPoint(float x)
+    {
+        transform.position = new Vector3(x, transform.position.y, transform.position.z);
+    }
 }
