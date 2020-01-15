@@ -5,22 +5,22 @@ public class EditorCamera : MonoBehaviour
     [SerializeField]
     private float cameraSpeed = 3.5f;
     public GameObject songController;
-    public bool followMarkerSwitch;
+    public bool moveCamera;
     private float scrollInput;
     private Vector3 pos;
     private Vector3 newPos;
 
     void Update()
     {
-        if (followMarkerSwitch) // Jeśli gracz odznaczył podążanie kamery za znacznikiem
+        if (moveCamera) // Jeśli gracz sam chce poruszać kamerą
             CameraMove();
         else
-            FollowMarker(); // Jeśli gracz zaznaczył podążanie kamery za znacznikiem
+            FollowMarker(); // Jeśli kamera ma się centrować na znaczniku
     }
 
     public void SwitchBool()
     {
-        followMarkerSwitch = !followMarkerSwitch;
+        moveCamera = !moveCamera;
     }
 
     // Odpowiada za ruch kamery za pomocą scrolla

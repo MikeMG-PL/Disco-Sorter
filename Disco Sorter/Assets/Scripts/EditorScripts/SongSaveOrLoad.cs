@@ -81,7 +81,7 @@ public class SongSaveOrLoad : MonoBehaviour
     private void PointBadEntity()
     {
         toggle.GetComponent<Toggle>().isOn = false;     // można spróbować te 2 linijki napisać bardziej elegancko, jest tu obecnie podejście YOLO przy robieniu UI
-        CameraHolder.GetComponent<EditorCamera>().followMarkerSwitch = true;
+        CameraHolder.GetComponent<EditorCamera>().moveCamera = true;
 
         Entity entity = badEntities[0].GetComponent<Entity>();
 
