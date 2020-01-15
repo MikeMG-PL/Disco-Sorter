@@ -10,7 +10,7 @@ public class ClickOnBackground : MonoBehaviour
     private void OnMouseDown()
     {
         // EventSystem.current.IsPointerOverGameObject() sprawdza czy nie kliknęliśmy na UI
-        if (!EventSystem.current.IsPointerOverGameObject())
+        if (!EventSystem.current.IsPointerOverGameObject() && !Input.GetKey(KeyCode.LeftControl))
         {
             entityMenu.GetComponent<EntityMenu>().CloseMenu();
             savesPanel.SetActive(false);

@@ -41,11 +41,13 @@ public class SongSaveOrLoad : MonoBehaviour
 
         for (int i = 0; i < editorNet.entityArray.Length; i++)
         {
-            editorNet.entityArray[i].GetComponent<Entity>().entityType = songData.entityType[i];
-            editorNet.entityArray[i].GetComponent<Entity>().color = songData.color[i];
-            editorNet.entityArray[i].GetComponent<Entity>().action = songData.action[i];
-            editorNet.entityArray[i].GetComponent<Entity>().ChangeColor();
-            editorNet.entityArray[i].GetComponent<Entity>().ChangeTypeIcon();
+            Entity entity = editorNet.entityArray[i].GetComponent<Entity>();
+            entity.type = songData.entityType[i];
+            entity.color = songData.color[i];
+            entity.action = songData.action[i];
+            entity.ChangeColor();
+            entity.ChangeTypeIcon();
+            entity.ChangeActionIcon();
         }
     }
 
@@ -57,12 +59,12 @@ public class SongSaveOrLoad : MonoBehaviour
         {
             Entity entity = editorNet.entityArray[i].GetComponent<Entity>();
 
-            if (entity.entityType == 1 && (entity.color == 0 || entity.action == 0))
+            if (entity.type == 1 && (entity.color == 0 || entity.action == 0))
             {
                 badEntities.Add(editorNet.entityArray[i]);
             }
 
-            else if (entity.entityType == 2 && entity.action == 0)
+            else if (entity.type == 2 && entity.action == 0)
             {
                 badEntities.Add(editorNet.entityArray[i]);
             }

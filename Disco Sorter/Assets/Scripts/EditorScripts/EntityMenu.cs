@@ -22,6 +22,7 @@ public class EntityMenu : MonoBehaviour
     public GameObject apple;
     public GameObject rottenApple;
     public GameObject disco;
+    public GameObject releaseEntity;
 
     [Header("Obiekt zawierający skrypt SongController")]
     [SerializeField]
@@ -44,8 +45,15 @@ public class EntityMenu : MonoBehaviour
     [SerializeField]
     private Sprite unsavedImage;
 
+    [SerializeField]
+    private GameObject CameraHolder;
+
     [HideInInspector]
-    public List<GameObject> markedEntities = new List<GameObject>();
+    public List<GameObject> markedEntities = new List<GameObject>();        // Lista aktualnie zaznaczonych entities
+    [HideInInspector]
+    public bool isSettingRelease;                                           // Czy użytkownik aktualnie ustala punkt release
+    [HideInInspector]
+    public Entity catchEntity;                                              // Entity, dla którego użytkownik ustala punkt release (tzw. punkt catch)
 
     private GameObject[] entityArray;       // Tablica z entities
     private MenuManager menuManager;
@@ -93,6 +101,7 @@ public class EntityMenu : MonoBehaviour
         {
             menuPanel.SetActive(false);
             DeleteAllMarks();
+            markedEntities.Clear();
         }
     }
 
@@ -116,7 +125,7 @@ public class EntityMenu : MonoBehaviour
         {
             Entity entity = markedEntities[i].GetComponent<Entity>();
 
-            entity.entityType = entityType;
+            entity.type = entityType;
             entity.ChangeTypeIcon();
             SetCurrentValues(entity.entityNumber);
         }
@@ -145,9 +154,43 @@ public class EntityMenu : MonoBehaviour
         {
             Entity entity = markedEntities[i].GetComponent<Entity>();
 
+            // Jeśli użytkownik ustala punkt catch
+            if (action == 3)
+            {
+                // Punkt catch można ustalać tylko dla jednego obiektu jednocześnie
+                if (markedEntities.Count == 1)
+                {
+                    catchEntity = entity;
+                    GetComponent<LineRenderer>().enabled = true;
+                    isSettingRelease = true;
+                }
+
+                else
+                {
+                    SetCurrentValues(entity.entityNumber);
+                    return;
+                }
+            }
+
+            // Jeśli użytkownik "usuwa" punkt catch, tzn. entity miało wcześniej akcję Catch... release, musimy również usunąć punkt release
+            else if (entity.action == 3)
+            {
+                Entity linkedReleaseEntity = entityArray[entity.linkedReleaseEN].GetComponent<Entity>();
+                linkedReleaseEntity.action = 0;
+                linkedReleaseEntity.linkedCatchEN = -1;
+                linkedReleaseEntity.ChangeActionIcon();
+            }
+
             entity.action = action;
             SetCurrentValues(entity.entityNumber);
         }
+    }
+
+    public void PointCatchEntity(int entityNumber)
+    {
+        float pointPosition = entityArray[entityNumber].transform.position.x - 1.4f;
+        CameraHolder.GetComponent<EditorCamera>().MoveToPoint(pointPosition);
+        entityArray[entityNumber].GetComponent<Entity>().OpenThisEntityMenu();
     }
 
     // Funkcje pomocnicze
@@ -159,7 +202,7 @@ public class EntityMenu : MonoBehaviour
         StillHasColor(entity);
         StillHasAction(entity);
 
-        typeDropdown.SetValueWithoutNotify(entity.entityType);
+        typeDropdown.SetValueWithoutNotify(entity.type);
         colorDropdown.SetValueWithoutNotify(entity.color);
         actionDropdown.SetValueWithoutNotify(entity.action);
     }
@@ -180,7 +223,7 @@ public class EntityMenu : MonoBehaviour
     // Sprawdza czy obiektowi o wybranym typie można zmienić kolor
     private void StillHasColor(Entity entity)
     {
-        if (entity.entityType == 1)
+        if (entity.type == 1)
         {
             colorDropdown.interactable = true;
             colorWarning.gameObject.SetActive(false);
@@ -198,7 +241,7 @@ public class EntityMenu : MonoBehaviour
     // Sprawdza czy obiektowi o wybranym typie można zmienić akcję
     private void StillHasAction(Entity entity)
     {
-        if (entity.entityType == 1 || entity.entityType == 2)
+        if (entity.type == 1 || entity.type == 2)
         {
             actionDropdown.interactable = true;
             actionWarning.gameObject.SetActive(false);

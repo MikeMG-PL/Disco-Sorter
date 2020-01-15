@@ -8,8 +8,10 @@ public class Entity : MonoBehaviour
     // Zmienne określające dany obiekt, zapisywane są one do pliku
     public int action;                                  // Akcja, którą można wykonać na obiekcie
     public int entityNumber;                            // Numer (identyfikator) obiektu
-    public int entityType;                              // Typ obiektu
+    public int type;                                    // Typ obiektu
     public int color;                                   // Kolory jabłek, 0 - brak, 1 - zielony, 2 - czerwony
+    public int linkedReleaseEN = -1;                    // Numer entity, do którego należy wyrzucić ten obiekt
+    public int linkedCatchEN = -1;                      // Numer entity, który trzeba wyrzucić do tego obiektu
 
     [HideInInspector]
     public EntityMenu entityMenuScript;
@@ -17,7 +19,7 @@ public class Entity : MonoBehaviour
     [SerializeField]
     private GameObject markerPrefab;                    // Prefab znacznika
 
-    private GameObject marker, icon;
+    private GameObject marker, icon, actionIcon;
     private bool isHighlighted;                         // Czy obiekt jest aktualnie zaznaczony przez użytkownika
 
     private void OnMouseDown()
@@ -25,20 +27,44 @@ public class Entity : MonoBehaviour
         // EventSystem.current.IsPointerOverGameObject() upewnia się, że użytkownik nie kliknął na obiekt przez jakiś element UI
         if (!EventSystem.current.IsPointerOverGameObject())
         {
-            // Otwieranie menu obiektu, w którym można dostować jego właściwości
-
-            // Jeśli użytkownik trzyma lewy ctrl, zaznacza wiele obiektów do zmiany. Jeśli nie to znaczy, że zaznaczył nowy, pojedynczy obiekt
-            if (!Input.GetKey(KeyCode.LeftControl))
+            // Jeśli użytkownik ustala właśnie punkt release, oraz jeśli obiekt ten nie jest już punktem release dla innego entity
+            if (entityMenuScript.isSettingRelease && action != 4)
             {
-                entityMenuScript.DeleteAllMarks();
-                entityMenuScript.markedEntities.Clear();
+                entityMenuScript.gameObject.GetComponent<SetCatchRelease>().SetReleaseEntity(entityNumber);
             }
 
-            // Jeśli użytkownik zaznaczył obiekt, którego jeszcze nie ma na liście
-            if (!entityMenuScript.markedEntities.Contains(gameObject))
-                entityMenuScript.markedEntities.Add(gameObject);
+            else
+            {
+                // Jeśli obiekt, który wskazał użytkownik jest punktem release, kamera wskazuje mu obiekt catch, połączony z tym obiektem
+                if (action == 4)
+                {
+                    entityMenuScript.PointCatchEntity(linkedCatchEN);
+                }
 
-            entityMenuScript.OpenMenu(entityNumber);
+                // Jeśli żadna z powyższych opcji nie jest wywoływana
+                else
+                {
+                    // Jeśli użytkownik trzyma lewy ctrl - zaznacza wiele obiektów do zmiany. Jeśli nie to znaczy, że zaznaczył nowy, pojedynczy obiekt
+                    if (!Input.GetKey(KeyCode.LeftControl))
+                    {
+                        entityMenuScript.DeleteAllMarks();
+                        entityMenuScript.markedEntities.Clear();
+                    }
+
+                    // Jeśli użytkownik zaznaczył obiekt, który już jest na liście, obiekt ten jest usuwany z listy i odznaczany
+                    if (entityMenuScript.markedEntities.Contains(gameObject))
+                    {
+                        Highlight(false);
+                        entityMenuScript.markedEntities.Remove(gameObject);
+                        return;
+                    }
+
+                    entityMenuScript.markedEntities.Add(gameObject);
+
+                    // Otwieranie menu obiektu, w którym można dostować jego właściwości
+                    entityMenuScript.OpenMenu(entityNumber);
+                }
+            }
         }
     }
 
@@ -61,6 +87,7 @@ public class Entity : MonoBehaviour
         }
     }
 
+    // Zaznacza i otwiera menu tego konkretnie Entity, usuwając z listy pozostałe
     public void OpenThisEntityMenu()
     {
         entityMenuScript.DeleteAllMarks();
@@ -82,17 +109,29 @@ public class Entity : MonoBehaviour
         else GetComponent<Renderer>().material.color = entityMenuScript.noColor;
     }
 
-    // Zmienia ikonkę nad obiektem, na ustaloną w skrypcie EntityMenu
+    // Zmienia ikonkę nad obiektem, na ustaloną w skrypcie EntityMenu, biorąc pod uwagę typ entity
     public void ChangeTypeIcon()
     {
         Destroy(icon);
         Vector3 position = new Vector3(transform.position.x, transform.position.y + 0.05f, transform.position.z);
 
-        if (entityType == 1)
+        if (type == 1)
             icon = Instantiate(entityMenuScript.apple, position, entityMenuScript.apple.transform.rotation, transform);
-        else if (entityType == 2)
-            icon = Instantiate(entityMenuScript.rottenApple, position, entityMenuScript.apple.transform.rotation, transform);
-        else if (entityType == 3)
-            icon = Instantiate(entityMenuScript.disco, position, entityMenuScript.apple.transform.rotation, transform);
+        else if (type == 2)
+            icon = Instantiate(entityMenuScript.rottenApple, position, entityMenuScript.rottenApple.transform.rotation, transform);
+        else if (type == 3)
+            icon = Instantiate(entityMenuScript.disco, position, entityMenuScript.disco.transform.rotation, transform);
+    }
+
+    // Zmienia ikonkę nad obiektem, na ustaloną w skrypcie EntityMenu, biorąc pod uwagę action entity
+    public void ChangeActionIcon()
+    {
+        Destroy(actionIcon);
+        Vector3 position = new Vector3(transform.position.x, transform.position.y + 0.05f, transform.position.z);
+
+        if (action == 4)
+        {
+            actionIcon = Instantiate(entityMenuScript.releaseEntity, position, entityMenuScript.releaseEntity.transform.rotation, transform);
+        }
     }
 }
