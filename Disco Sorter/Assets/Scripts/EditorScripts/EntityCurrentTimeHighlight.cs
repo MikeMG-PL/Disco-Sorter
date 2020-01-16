@@ -13,6 +13,8 @@ public class EntityCurrentTimeHighlight : MonoBehaviour
     private float currentTime;                              // Aktualny czas granego audio
     private float step;                                     // Długość trwania jednej kratki
 
+    public GameObject currentEntity;
+
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -22,6 +24,7 @@ public class EntityCurrentTimeHighlight : MonoBehaviour
     {
         SetCurrentEntity();
         ChangeHighlightedObject();
+        currentEntity = entityArray[entityNumber];
     }
 
     // Klasa wymaga tablicy entities, które będzie podświetlać i pozostałych zmiennych

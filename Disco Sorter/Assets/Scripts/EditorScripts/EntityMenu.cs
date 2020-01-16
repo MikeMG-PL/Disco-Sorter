@@ -110,7 +110,8 @@ public class EntityMenu : MonoBehaviour
     {
         for (int i = 0; i < markedEntities.Count; i++)
         {
-            markedEntities[i].GetComponent<Entity>().Highlight(false);
+            if (markedEntities[i] != null)
+                markedEntities[i].GetComponent<Entity>().Highlight(false);
         }
     }
 
