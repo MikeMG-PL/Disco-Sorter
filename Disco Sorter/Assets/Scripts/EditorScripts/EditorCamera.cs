@@ -5,7 +5,7 @@ public class EditorCamera : MonoBehaviour
     [SerializeField]
     private float cameraSpeed = 3.5f;
     public GameObject songController;
-    public bool moveCamera;
+    public bool moveCamera, moveCamSwitch = true; // moveCamSwitch służy do wyłączania ruchu kamery wzdłuż za pomocą scrolla, gdy przybliżamy kamerę poprzez np. LSHIFT + SCROLL
     private float scrollInput;
     private Vector3 pos;
     private Vector3 newPos;
@@ -27,7 +27,8 @@ public class EditorCamera : MonoBehaviour
     void CameraMove()
     {
         scrollInput = Input.GetAxis("Mouse ScrollWheel");
-        transform.Translate(0, 0, scrollInput * cameraSpeed, Space.Self);
+        if (moveCamSwitch)                                                          // Jeśli nie ma kombinacji klawiszy np. LSHIFT + SCROLL, służącej do przybliżania, to można poruszać kamerą
+            transform.Translate(0, 0, scrollInput * cameraSpeed, Space.Self);
     }
 
     public void MoveToPoint(float x)
