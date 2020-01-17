@@ -27,10 +27,11 @@ public class Entity : MonoBehaviour
         // EventSystem.current.IsPointerOverGameObject() upewnia się, że użytkownik nie kliknął na obiekt przez jakiś element UI
         if (!EventSystem.current.IsPointerOverGameObject())
         {
-            // Jeśli użytkownik ustala właśnie punkt release, oraz jeśli obiekt ten nie jest już punktem release dla innego entity
-            if (entityMenuScript.isSettingRelease && action != 4)
+            // Jeśli użytkownik ustala właśnie punkt release, oraz jeśli obiekt ten nie jest już punktem release dla innego entity, ani punktem catch
+            if (entityMenuScript.isSettingRelease)
             {
-                entityMenuScript.gameObject.GetComponent<SetCatchRelease>().SetReleaseEntity(entityNumber);
+                if (action != 3 && action != 4)
+                    entityMenuScript.gameObject.GetComponent<SetCatchRelease>().SetReleaseEntity(this);
             }
 
             else
@@ -65,6 +66,15 @@ public class Entity : MonoBehaviour
                     entityMenuScript.OpenMenu(entityNumber);
                 }
             }
+        }
+    }
+
+    private void OnMouseOver()
+    {
+        // Jeśli kliknięto prawym przyciskiem myszy na punkt release
+        if (action == 4 && Input.GetMouseButtonDown(1))
+        {
+            entityMenuScript.gameObject.GetComponent<SetCatchRelease>().SetUnreleaseEntity(this);
         }
     }
 

@@ -55,7 +55,7 @@ public class EntityMenu : MonoBehaviour
     [HideInInspector]
     public Entity catchEntity;                                              // Entity, dla którego użytkownik ustala punkt release (tzw. punkt catch)
 
-    private GameObject[] entityArray;       // Tablica z entities
+    private GameObject[] entityArray;                                       // Tablica z entities
     private MenuManager menuManager;
 
     void Start()
@@ -110,9 +110,13 @@ public class EntityMenu : MonoBehaviour
     {
         for (int i = 0; i < markedEntities.Count; i++)
         {
-            if (markedEntities[i] != null)
-                markedEntities[i].GetComponent<Entity>().Highlight(false);
+            markedEntities[i].GetComponent<Entity>().Highlight(false);
         }
+    }
+
+    public void ClearMarkedEntities()
+    {
+        markedEntities.Clear();
     }
 
     // Funkcje wykorzystywane bezpośrednio przez menu
@@ -149,8 +153,6 @@ public class EntityMenu : MonoBehaviour
 
     public void ChangeAction(int action)
     {
-        IsSavedChange(false);
-
         for (int i = 0; i < markedEntities.Count; i++)
         {
             Entity entity = markedEntities[i].GetComponent<Entity>();
@@ -161,9 +163,13 @@ public class EntityMenu : MonoBehaviour
                 // Punkt catch można ustalać tylko dla jednego obiektu jednocześnie
                 if (markedEntities.Count == 1)
                 {
+                    IsSavedChange(false);
                     catchEntity = entity;
                     GetComponent<LineRenderer>().enabled = true;
                     isSettingRelease = true;
+                    entity.action = action;
+                    CloseMenu();
+                    return;
                 }
 
                 else
@@ -177,21 +183,21 @@ public class EntityMenu : MonoBehaviour
             else if (entity.action == 3)
             {
                 Entity linkedReleaseEntity = entityArray[entity.linkedReleaseEN].GetComponent<Entity>();
-                linkedReleaseEntity.action = 0;
-                linkedReleaseEntity.linkedCatchEN = -1;
-                linkedReleaseEntity.ChangeActionIcon();
+                GetComponent<SetCatchRelease>().SetUnreleaseEntity(linkedReleaseEntity);
             }
 
+            IsSavedChange(false);
             entity.action = action;
             SetCurrentValues(entity.entityNumber);
         }
     }
 
-    public void PointCatchEntity(int entityNumber)
+    // Wskazuje kamerą na punkt catch entity, połączony z punktem release
+    public void PointCatchEntity(int linkedCatchEN)
     {
-        float pointPosition = entityArray[entityNumber].transform.position.x - 1.4f;
-        CameraHolder.GetComponent<EditorCamera>().MoveToPoint(pointPosition);
-        entityArray[entityNumber].GetComponent<Entity>().OpenThisEntityMenu();
+        float catchPointPosition = entityArray[linkedCatchEN].transform.position.x;
+        CameraHolder.GetComponent<EditorCamera>().MoveToPoint(catchPointPosition);
+        entityArray[linkedCatchEN].GetComponent<Entity>().OpenThisEntityMenu();
     }
 
     // Funkcje pomocnicze
@@ -251,6 +257,8 @@ public class EntityMenu : MonoBehaviour
         else
         {
             entity.action = 0;
+            if (entity.linkedReleaseEN != -1)
+                GetComponent<SetCatchRelease>().SetUnreleaseEntity(entityArray[entity.linkedReleaseEN].GetComponent<Entity>());
             actionDropdown.interactable = false;
             actionWarning.gameObject.SetActive(true);
         }

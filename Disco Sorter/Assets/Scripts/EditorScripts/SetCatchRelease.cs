@@ -32,19 +32,28 @@ public class SetCatchRelease : MonoBehaviour
     }
 
     // Ustawianie entity jako punkt Release
-    public void SetReleaseEntity(int newReleaseEN)
+    public void SetReleaseEntity(Entity newReleaseEntity)
     {
-        Entity entity = editorNet.entityArray[newReleaseEN].GetComponent<Entity>();
-
-        entity.type = 0;
-        entity.color = 0;
-        entity.action = 4;
-        entity.linkedCatchEN = entityMenuScript.catchEntity.entityNumber;
-        entityMenuScript.catchEntity.linkedReleaseEN = newReleaseEN;
-        entity.ChangeColor();
-        entity.ChangeTypeIcon();
-        entity.ChangeActionIcon();
+        newReleaseEntity.type = 0;
+        newReleaseEntity.color = 0;
+        newReleaseEntity.action = 4;
+        newReleaseEntity.linkedCatchEN = entityMenuScript.catchEntity.entityNumber;
+        entityMenuScript.catchEntity.linkedReleaseEN = newReleaseEntity.entityNumber;
+        newReleaseEntity.ChangeColor();
+        newReleaseEntity.ChangeTypeIcon();
+        newReleaseEntity.ChangeActionIcon();
         entityMenuScript.isSettingRelease = false;
         lineRenderer.enabled = false;
+    }
+
+    public void SetUnreleaseEntity(Entity entityToUnrelease)
+    {
+        Entity linkedCatchEntity = editorNet.entityArray[entityToUnrelease.linkedCatchEN].GetComponent<Entity>();
+        linkedCatchEntity.action = 0;
+        linkedCatchEntity.linkedReleaseEN = -1;
+
+        entityToUnrelease.action = 0;
+        entityToUnrelease.linkedCatchEN = -1;
+        entityToUnrelease.ChangeActionIcon();
     }
 }

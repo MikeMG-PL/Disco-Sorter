@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class EditorCamera : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject toggle;
     [SerializeField]
     private float cameraSpeed = 3.5f;
     public GameObject songController;
@@ -24,7 +27,7 @@ public class EditorCamera : MonoBehaviour
     }
 
     // Odpowiada za ruch kamery za pomocą scrolla
-    void CameraMove()
+    private void CameraMove()
     {
         scrollInput = Input.GetAxis("Mouse ScrollWheel");
         if (moveCamSwitch)                                                          // Jeśli nie ma kombinacji klawiszy np. LSHIFT + SCROLL, służącej do przybliżania, to można poruszać kamerą
@@ -33,19 +36,20 @@ public class EditorCamera : MonoBehaviour
 
     public void MoveToPoint(float x)
     {
+        toggle.GetComponent<Toggle>().isOn = false;     // można spróbować te 2 linijki napisać bardziej elegancko, jest tu obecnie podejście YOLO przy robieniu UI
+        moveCamera = true;
         transform.position = new Vector3(x, transform.position.y, transform.position.z);
     }
 
     public void FollowMarker()
     {
         GameObject currentEntity = songController.GetComponent<EntityCurrentTimeHighlight>().currentEntity;
-        Transform child = gameObject.transform.GetChild(0);
 
         if (currentEntity != null)
             pos = currentEntity.transform.position;
 
-        newPos = new Vector3(pos.x, child.position.y, pos.z);
+        newPos = new Vector3(pos.x, transform.position.y, pos.z);
 
-        child.position = Vector3.Lerp(child.position, newPos, 0.1f);
+        transform.position = Vector3.Lerp(transform.position, newPos, 0.1f);
     }
 }

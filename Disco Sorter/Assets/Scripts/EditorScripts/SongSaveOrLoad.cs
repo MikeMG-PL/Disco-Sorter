@@ -8,7 +8,7 @@ public class SongSaveOrLoad : MonoBehaviour
     private GameObject CameraHolder;
 
     [SerializeField]
-    private GameObject savesPanel, entityMenu, toggle;       // Panel, w którym znajdują się przyciski do wyboru pliku, do wczytania. Obiekt zawierający skrypt entityMenu
+    private GameObject savesPanel, entityMenu;       // Panel, w którym znajdują się przyciski do wyboru pliku, do wczytania. Obiekt zawierający skrypt entityMenu
     private EditorNet editorNet;
     private List<GameObject> badEntities = new List<GameObject>();      // Lista źle ustawionych obiektów
 
@@ -82,15 +82,11 @@ public class SongSaveOrLoad : MonoBehaviour
     // Wskazuje pierwszy źle ustawiony obiekt i otwiera jego menu
     private void PointBadEntity()
     {
-        toggle.GetComponent<Toggle>().isOn = false;     // można spróbować te 2 linijki napisać bardziej elegancko, jest tu obecnie podejście YOLO przy robieniu UI
-        CameraHolder.GetComponent<EditorCamera>().moveCamera = true;
-
         Entity entity = badEntities[0].GetComponent<Entity>();
 
         // Wskazywanie kamerą na pierwszy źle ustawiony obiekt, nie na CameraHolder, ale na samą kamerę, wyłączenie podążania za markerem dla kamery
-
         float firstBadEntityPos = badEntities[0].transform.position.x;
-        CameraHolder.transform.GetChild(0).GetComponent<EditorCamera>().MoveToPoint(firstBadEntityPos);
+        CameraHolder.GetComponent<EditorCamera>().MoveToPoint(firstBadEntityPos);
 
         // Otwieranie menu tego konkretnego obiektu
         entity.OpenThisEntityMenu();

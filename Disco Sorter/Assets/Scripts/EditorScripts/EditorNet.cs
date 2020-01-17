@@ -60,6 +60,8 @@ public class EditorNet : MonoBehaviour
     // Niszczenie poprzedniej siatki, resetowanie utworu
     private void DestroyOldNet()
     {
+        entityCanvas.GetComponent<EntityMenu>().ClearMarkedEntities();
+
         for (int i = 0; i < entityArray.Length; i++)
         {
             Destroy(entityArray[i]);
