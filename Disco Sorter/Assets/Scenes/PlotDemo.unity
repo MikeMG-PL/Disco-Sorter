@@ -2886,10 +2886,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toggle: {fileID: 2106420993}
+  zoom: {fileID: 0}
   cameraSpeed: 3.5
   songController: {fileID: 1325650112}
   moveCamera: 0
   moveCamSwitch: 1
+  slider: {fileID: 1570380953}
 --- !u!4 &729933510
 Transform:
   m_ObjectHideFlags: 0
@@ -2918,6 +2920,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 1570380953}
+  scrollZoom: 0
 --- !u!1 &736764798
 GameObject:
   m_ObjectHideFlags: 0
@@ -3318,10 +3321,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toggle: {fileID: 0}
+  zoom: {fileID: 0}
   cameraSpeed: 3.5
   songController: {fileID: 0}
   moveCamera: 0
   moveCamSwitch: 1
+  slider: {fileID: 0}
 --- !u!1 &789459376
 GameObject:
   m_ObjectHideFlags: 0

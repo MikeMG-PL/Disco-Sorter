@@ -5,51 +5,59 @@ public class EditorCamera : MonoBehaviour
 {
     [SerializeField]
     private GameObject toggle;
-    [SerializeField]
-    private float cameraSpeed = 3.5f;
+    Zoom zoom;
+    [HideInInspector]
+    public float cameraSpeed = 3.5f;
     public GameObject songController;
-    public bool moveCamera, moveCamSwitch = true; // moveCamSwitch służy do wyłączania ruchu kamery wzdłuż za pomocą scrolla, gdy przybliżamy kamerę poprzez np. LSHIFT + SCROLL
-    private float scrollInput;
-    private Vector3 pos;
-    private Vector3 newPos;
+    public Slider slider;
+    float scrollInput;
+    Vector3 pos, newPos;
+
+    void Start()
+    {
+        zoom = GetComponent<Zoom>();
+        zoom.scrollZoom = false;
+        SwitchBool();
+    }
 
     void Update()
     {
-        if (moveCamera) // Jeśli gracz sam chce poruszać kamerą
-            CameraMove();
-        else
-            FollowMarker(); // Jeśli kamera ma się centrować na znaczniku
+        FollowMarker();
     }
 
+    /// FUNKCJA WYWOŁYWANA PRZY ZAZNACZENIU PTASZKA, ZMIENIAJĄCA DZIAŁANIE SCROLLA ///
     public void SwitchBool()
     {
-        moveCamera = !moveCamera;
+        zoom.scrollZoom = !zoom.scrollZoom;
     }
 
-    // Odpowiada za ruch kamery za pomocą scrolla
-    private void CameraMove()
-    {
-        scrollInput = Input.GetAxis("Mouse ScrollWheel");
-        if (moveCamSwitch)                                                          // Jeśli nie ma kombinacji klawiszy np. LSHIFT + SCROLL, służącej do przybliżania, to można poruszać kamerą
-            transform.Translate(0, 0, scrollInput * cameraSpeed, Space.Self);
-    }
-
+    /// FUNKCJA CENTRUJĄCA WIDOK NA ZNACZNIKU ///
     public void MoveToPoint(float x)
     {
-        toggle.GetComponent<Toggle>().isOn = false;     // można spróbować te 2 linijki napisać bardziej elegancko, jest tu obecnie podejście YOLO przy robieniu UI
-        moveCamera = true;
-        transform.position = new Vector3(x, transform.position.y, transform.position.z);
+        if (zoom.scrollZoom)
+        {
+            toggle.GetComponent<Toggle>().isOn = false;
+            transform.position = new Vector3(x, transform.position.y, transform.position.z);
+        }
     }
 
+    /// FUNKCJA POWODUJĄCA PODĄŻANIE ZA ZNACZNIKIEM ///
     public void FollowMarker()
     {
-        GameObject currentEntity = songController.GetComponent<EntityCurrentTimeHighlight>().currentEntity;
+        if (zoom.scrollZoom)
+        {
+            scrollInput = Input.GetAxis("Mouse ScrollWheel");
+            slider.value -= scrollInput * 0.5f;
 
-        if (currentEntity != null)
-            pos = currentEntity.transform.position;
 
-        newPos = new Vector3(pos.x, transform.position.y, pos.z);
+            GameObject currentEntity = songController.GetComponent<EntityCurrentTimeHighlight>().currentEntity;
 
-        transform.position = Vector3.Lerp(transform.position, newPos, 0.1f);
+            if (currentEntity != null)
+                pos = currentEntity.transform.position;
+
+            newPos = new Vector3(pos.x, transform.position.y, pos.z);
+
+            transform.position = Vector3.Lerp(transform.position, newPos, 0.1f);
+        }
     }
 }
