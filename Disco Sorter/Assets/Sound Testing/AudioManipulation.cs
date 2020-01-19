@@ -31,7 +31,7 @@ public class AudioManipulation : MonoBehaviour
         // Czas trwania utworu przedstawiony w postaci string i ustawienie początkowego czasu
         string minutes = Mathf.Floor(a.clip.length / 60).ToString("00");
         string seconds = Mathf.Floor(a.clip.length % 60).ToString("00");
-        clipLength = $"{minutes}.{seconds}";
+        clipLength = $"{minutes}:{seconds}";
         TimeTextUpdate();
     }
 
@@ -149,7 +149,7 @@ public class AudioManipulation : MonoBehaviour
     {
         string minutes = Mathf.Floor(a.time / 60).ToString("00");
         string seconds = Mathf.Floor(a.time % 60).ToString("00");
-        timeText.text = $"{minutes}.{seconds} / {clipLength}";
+        timeText.text = $"{minutes}:{seconds} / {clipLength}";
     }
 
     /// Funkcje odpowiedzialne za przewijanie o konkretną liczbę sekund ///
@@ -176,75 +176,27 @@ public class AudioManipulation : MonoBehaviour
         }
     }
 
-    public void Back1Second()
+    public void Back(float amountOfTime)
     {
         if (pausePressed)
         {
             Play();
-            Jump(false, 1f);
+            Jump(false, amountOfTime);
             Pause();
         }
         else
-            Jump(false, 1f);
+            Jump(false, amountOfTime);
     }
 
-    public void Back3Seconds()
+    public void Forward(float amountOfTime)
     {
         if (pausePressed)
         {
             Play();
-            Jump(false, 3f);
+            Jump(true, amountOfTime);
             Pause();
         }
         else
-            Jump(false, 3f);
-    }
-
-    public void Back5Seconds()
-    {
-        if (pausePressed)
-        {
-            Play();
-            Jump(false, 5f);
-            Pause();
-        }
-        else
-            Jump(false, 5f);
-    }
-
-    public void Forward1Second()
-    {
-        if (pausePressed)
-        {
-            Play();
-            Jump(true, 1f);
-            Pause();
-        }
-        else
-            Jump(true, 1f);
-    }
-
-    public void Forward3Seconds()
-    {
-        if (pausePressed)
-        {
-            Play();
-            Jump(true, 3f);
-            Pause();
-        }
-        else
-            Jump(true, 3f);
-    }
-
-    public void Forward5Seconds()
-    {
-        if (pausePressed)
-        {
-            Play();
-            Jump(true, 5f);
-            Pause();
-        }
-        else
-            Jump(true, 5f);
+            Jump(true, amountOfTime);
     }
 }
