@@ -9,9 +9,11 @@ public class AudioManipulation : MonoBehaviour
     public bool pausePressed = false;       // Zmienna mówiąca czy został wciśnięty przycisk pauzy
 
     [SerializeField]
-    private Slider slider;                   // Zmienna opisująca slider
+    private Slider slider;                  // Zmienna opisująca slider
     [SerializeField]
-    private Text timeText;                   // Tekst wyświetlający aktualny czas utworu
+    private Text timeText;                  // Tekst wyświetlający aktualny czas utworu
+    [SerializeField]
+    private Text songName;                  // Tekst wyświetlający nazwę piosenki, ustawiany na Starcie
 
     private AudioSource a;                  // Zmienna reprezentująca źródło dźwięku
     private bool virtualPause;              // Zmienna mówiąca czy jest włączona wirtualna pauza*
@@ -33,6 +35,8 @@ public class AudioManipulation : MonoBehaviour
         string seconds = Mathf.Floor(a.clip.length % 60).ToString("00");
         clipLength = $"{minutes}:{seconds}";
         TimeTextUpdate();
+
+        songName.text = a.clip.name;
     }
 
     /// Funkcja wykonująca co klatkę najważniejsze operacje ///
