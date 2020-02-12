@@ -15,7 +15,7 @@ public static class SongFile
         string filePath = Path.Combine(folderPath, editorNet.songName, name);
         Debug.Log(filePath);
         FileStream stream = new FileStream(filePath, FileMode.Create);
-        SongData songData = new SongData(editorNet, levelParameters);
+        SongData songData = new SongData(editorNet);
 
         formatter.Serialize(stream, songData);
         stream.Close();
