@@ -8,14 +8,14 @@ public static class SongFile
     private static string name = "song.data";
 
     // Zapisuje aktualny stan obiektów w siatce do pliku
-    public static void SaveSong(EditorNet editorNet)
+    public static void SaveSong(EditorNet editorNet, LevelParameters levelParameters)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         Directory.CreateDirectory(folderPath + "/" + editorNet.songName);
         string filePath = Path.Combine(folderPath, editorNet.songName, name);
         Debug.Log(filePath);
         FileStream stream = new FileStream(filePath, FileMode.Create);
-        SongData songData = new SongData(editorNet);
+        SongData songData = new SongData(editorNet, levelParameters);
 
         formatter.Serialize(stream, songData);
         stream.Close();

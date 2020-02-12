@@ -5,44 +5,59 @@ using UnityEngine.UI;
 public class LoadToScene : MonoBehaviour
 {
     [SerializeField]
-    private GameObject savesPanel, entityMenu;       // Panel, w którym znajdują się przyciski do wyboru pliku, do wczytania. Obiekt zawierający skrypt entityMenu
-    private EditorNet editorNet;
+    private GameObject savesPanel;                  // Panel, w którym znajdują się przyciski do wyboru pliku, do wczytania.
+    private LevelParameters levelParameters;
+    private string[] songNames;
+    [SerializeField]
+    private GameObject[] savesButtons;              // Poszczególne przyciski odpowiadające slotom zapisu piosenek
 
+    /// ZAKTUALIZOWANIE ZAWARTOŚCI PRZYCISKÓW, WCZYTANIE PRZYCISKÓW ///
     private void Awake()
     {
-        editorNet = GetComponent<EditorNet>();
+        levelParameters = GetComponent<LevelParameters>();
+
+        savesButtons = new GameObject[savesPanel.transform.childCount];
+        for (int i = 0; i < savesPanel.transform.childCount; i++)
+        {
+            savesButtons[i] = savesPanel.transform.GetChild(i).gameObject;
+        }
+
+        songNames = SongFile.GetSavesNames();
+        UpdateSavesNames(songNames);
     }
 
-    public void SaveSong(bool forceSave)
-    {
-        entityMenu.GetComponent<EntityMenu>().IsSavedChange(true);
-        SongFile.SaveSong(gameObject.GetComponent<EditorNet>());
-    }
-
-    // Wczytuje dany plik, na podstawie int przekazanego przez przycisk znajdujący się w savesPanel
+    /// PRZENIESIENIE DANYCH Z PLIKU DO SKRYPTU LEVELPARAMETERS ///
     public void LoadSong(int selectedButton)
     {
-        savesPanel.SetActive(false);
-        string[] songNames = SongFile.GetSavesNames();
-
         if (selectedButton >= songNames.Length)
             return;
 
+        // (!) Mikoś plz opisz co oznaczają poszczególne inty (!) :3
+
         SongData songData = SongFile.LoadSong(songNames[selectedButton]);
 
-        editorNet.BPM = songData.BPM;
-        editorNet.netDensity = songData.netDensity;
-        editorNet.BuildNet();
+        levelParameters.BPM = songData.BPM;
+        levelParameters.netDensity = songData.netDensity;
 
-        for (int i = 0; i < editorNet.entityArray.Length; i++)
+        for (int i = 0; i < songData.entityType.Count; i++)
         {
-            Entity entity = editorNet.entityArray[i].GetComponent<Entity>();
-            entity.type = songData.entityType[i];
-            entity.color = songData.color[i];
-            entity.action = songData.action[i];
-            entity.ChangeColor();
-            entity.ChangeTypeIcon();
-            entity.ChangeActionIcon();
+            levelParameters.entityType.Add(songData.entityType[i]);
+            levelParameters.color.Add(songData.color[i]);
+            levelParameters.action.Add(songData.action[i]);
+            levelParameters.linkedCatchEN.Add(songData.linkedCatchEN[i]);
+            levelParameters.linkedReleaseEN.Add(songData.linkedReleaseEN[i]);
+        }
+    }
+
+    /// UAKTUALNIANIE PRZYCISKÓW ///
+    private void UpdateSavesNames(string[] songNames)
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            if (i < songNames.Length)
+                savesButtons[i].GetComponentInChildren<Text>().text = songNames[i];
+            else
+                savesButtons[i].GetComponentInChildren<Text>().text = "Puste";
         }
     }
 }
