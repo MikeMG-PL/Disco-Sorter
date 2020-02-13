@@ -128,13 +128,9 @@ public class EditorNet : MonoBehaviour
         int num;
         for (int i = 0; i < entitiesAmountInColumn; i++)
         {
-            //if (i == 0)
-            //Instantiate(beatMarker, new Vector3(entityArray[i].transform.position.x, entityArray[i].transform.position.y, entityArray[i].transform.position.z + 0.075f), Quaternion.identity);
-
             if (entityEndTime[i] % BPMstep <= 0.01 && (i + netDensity - netDensity / 2 <= entityEndTime.Length - 1))
             {
                 num = i + netDensity - (int)Math.Ceiling((float)(netDensity / 2));
-                //entityArray[i].GetComponent<Renderer>().material.color = Color.blue;
                 Instantiate(beatMarker, new Vector3(entityArray[num].transform.position.x,
                                                     entityArray[num].transform.position.y,
                                                     entityArray[num].transform.position.z + 0.075f), 

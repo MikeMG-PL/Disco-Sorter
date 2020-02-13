@@ -147,18 +147,12 @@ public class AudioManipulation : MonoBehaviour
         a.time = 0f;
     }
 
-
-
     private void TimeTextUpdate()
     {
         string minutes = Mathf.Floor(a.time / 60).ToString("00");
         string seconds = Mathf.Floor(a.time % 60).ToString("00");
         timeText.text = $"{minutes}:{seconds} / {clipLength}";
     }
-
-    /// Funkcje odpowiedzialne za przewijanie o konkretną liczbę sekund ///
-    /// UWAGA! Zdaję sobie sprawę, że brzydko to wygląda, chciałem to zapisać bez redundancji kodu, ale te fukncje muszą działać ///
-    /// z przyciskami Unity, dlatego niemożliwe jest np. podesłanie jako argumentów funkcji w nagłówku jakichś zmiennych. Sorry :( </3 ///
 
     void Jump(bool forward, float timestep)
     {

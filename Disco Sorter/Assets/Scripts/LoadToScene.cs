@@ -32,7 +32,7 @@ public class LoadToScene : MonoBehaviour
         if (selectedButton >= songNames.Length)
             return;
 
-        // (!) Mikoś plz opisz co oznaczają poszczególne inty (!) :3
+        // (!) Mikoś plz opisz dokładniej co oznaczają poszczególne inty (!) :3
 
         SongData songData = SongFile.LoadSong(songNames[selectedButton]);
 
