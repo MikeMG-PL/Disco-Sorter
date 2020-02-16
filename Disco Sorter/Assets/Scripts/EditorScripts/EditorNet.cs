@@ -102,7 +102,7 @@ public class EditorNet : MonoBehaviour
             }
         }
 
-        // Dodawanie do tablicy wartości o czasie końcowym każdej kratki, potrzeba tylko jedna kolumna
+        // Dodawanie do tablicy wartości o czasie końcowym każdej kratki, potrzebna tylko jedna kolumna
         for (int i = 0; i < entitiesAmountInColumn; i++)
         {
             entityEndTime[i] = Math.Round(step * (i + 1), 3);

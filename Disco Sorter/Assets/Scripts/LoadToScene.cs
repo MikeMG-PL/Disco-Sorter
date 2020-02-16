@@ -38,6 +38,7 @@ public class LoadToScene : MonoBehaviour
 
         levelParameters.BPM = songData.BPM;
         levelParameters.netDensity = songData.netDensity;
+        levelParameters.clipLength = songData.clipLength;
 
         for (int i = 0; i < songData.entityType.Count; i++)
         {
@@ -47,6 +48,8 @@ public class LoadToScene : MonoBehaviour
             levelParameters.linkedCatchEN.Add(songData.linkedCatchEN[i]);
             levelParameters.linkedReleaseEN.Add(songData.linkedReleaseEN[i]);
         }
+
+        levelParameters.AddToPipeline();
     }
 
     /// UAKTUALNIANIE PRZYCISKÓW ///

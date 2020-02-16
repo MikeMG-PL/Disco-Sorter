@@ -19,6 +19,8 @@ public class AudioManipulation : MonoBehaviour
     private bool virtualPause;              // Zmienna mówiąca czy jest włączona wirtualna pauza*
     private float clampedLength;            // Zmienna opisująca porządany moment w piosence w przedziale <0; 1>
     private string clipLength;
+    [HideInInspector()]
+    public float floatClipLength;
 
     // * - wirtualna pauza - pauza piosenki mogąca pojawić się bez wciśnięcia przycisku pauzy (bo wymaga tego edytor do niektórych celów)
 
@@ -26,6 +28,7 @@ public class AudioManipulation : MonoBehaviour
     void Start()
     {
         a = GetComponent<AudioSource>();
+        floatClipLength = a.clip.length;
         a.time = time;
         pausePressed = true;
         virtualPause = true;

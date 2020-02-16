@@ -6,8 +6,6 @@ public class SongSaveOrLoad : MonoBehaviour
 {
     [SerializeField]
     private GameObject CameraHolder;
-    [SerializeField]
-    LevelParameters levelParameters;
 
     [SerializeField]
     private GameObject savesPanel, entityMenu;       // Panel, w którym znajdują się przyciski do wyboru pliku, do wczytania. Obiekt zawierający skrypt entityMenu
@@ -23,7 +21,7 @@ public class SongSaveOrLoad : MonoBehaviour
     {
         if (!forceSave && !IsGoodToSave()) return;
         entityMenu.GetComponent<EntityMenu>().IsSavedChange(true);
-        SongFile.SaveSong(gameObject.GetComponent<EditorNet>(), levelParameters);
+        SongFile.SaveSong(gameObject.GetComponent<EditorNet>());
     }
 
     // Wczytuje dany plik, na podstawie int przekazanego przez przycisk znajdujący się w savesPanel
