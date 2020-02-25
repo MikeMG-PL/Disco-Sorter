@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,12 +9,12 @@ public class LevelParameters : MonoBehaviour
     ///////////////////////// PREFABY OBIEKTÓW /////////////////////////
 
     public GameObject apple, rottenApple, disco, release;
-    GameObject queueDispenser;
+    public GameObject queueDispenser;
 
     ///////////////////////// SPAWN PIPELINE, CZYLI LISTA GAMEOBJECTÓW DO WYSPAWNOWANIA /////////////////////////
 
     public List<GameObject> preSpawnPipeline = new List<GameObject>();
-    public Queue<GameObject> spawnPipeline = new Queue<GameObject>();
+    public List<GameObject> spawnPipeline = new List<GameObject>();
 
     [Header("---------------------------------------------------------------------")]
 
@@ -45,7 +46,7 @@ public class LevelParameters : MonoBehaviour
                                                                  Najlepiej niech tolerance będzie zawsze większe od step */
 
 
-    public List<float> rollTime = new List<float>();          // Ile czasu zajmie określonym obiektom sturlanie się (z równi pochyłej wyliczy się wtedy moment spawnu obiektu)
+    public float rollTime = 2;                                // Ile czasu zajmuje obiektom sturlanie się (z równi pochyłej wyliczy się wtedy moment spawnu obiektu)
 
     public List<float> spawnTime = new List<float>();         // Moment spawnu.
 
@@ -58,11 +59,62 @@ public class LevelParameters : MonoBehaviour
     public List<float> linkedCatchTime = new List<float>();   /* Czas złapania wypuszczanego obiektu w ramach akcji Catch... release. Element reprezentuje ID kratki z akcją release,
                                                                  pole - czas złapania obiektu. */
 
+    // TRZEBA PRZESORTOWAĆ KOLEJKĘ CHRONOLOGICZNIE, WEDŁUG CZASU SPAWNU - ROSNĄCO
+
+    public void ConvertToPipeline()
+    {
+        for (int i = 0; i <= entityType.Count - 1; i++)
+        {
+            Debug.Log(i);
+            switch (entityType[i])
+            {
+                case 0:
+                    break;
+
+                case 1:
+                    queueDispenser = apple;
+                    queueDispenser.GetComponent<ObjectParameters>().actionTime = actionTime[i];
+                    //  SetDispenser(i);
+                    preSpawnPipeline.Add(queueDispenser);
+                    break;
+
+                case 2:
+                    queueDispenser = rottenApple;
+                    queueDispenser.GetComponent<ObjectParameters>().actionTime = actionTime[i];
+                    //   SetDispenser(i);
+                    preSpawnPipeline.Add(queueDispenser);
+                    break;
+
+                case 3:
+                    queueDispenser = disco;
+                    queueDispenser.GetComponent<ObjectParameters>().actionTime = actionTime[i];
+                    //   SetDispenser(i);
+                    preSpawnPipeline.Add(queueDispenser);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+        spawnPipeline = preSpawnPipeline.OrderBy(preSpawnPipeline => preSpawnPipeline.GetComponent<ObjectParameters>().actionTime).ToList();
+
+    }
+
     void Calculations()
     {
-        float entitiesPerSecond = netDensity * BPM / 60f;
-        float step = 1f / entitiesPerSecond;
-        float entitiesAmountInColumn = (int)Math.Ceiling(clipLength * entitiesPerSecond);
+        float entitiesPerSecond = netDensity * BPM / 60f;                                   // Ilość pojawiających się obiektów na sekundę
+        float step = 1f / entitiesPerSecond;                                                // Jednostkowy krok pomiędzy obiektami
+        float entitiesAmountInColumn = (int)Math.Ceiling(clipLength * entitiesPerSecond);   // Ilość obiektów w jednej wczytanej tablicy
+
+        // Trochę MaTeMaTyKi: sin 10 = 0,176 => h/b = 0,176 => h = 0,176b => h^2 = 0,030976 * b^2; 2 * h^2 = 0,061952 * b^2;
+        // Ze wzoru na czas toczenia się obiektu po równi wyprowadzamy wartość boku b trójkąta prostokątnego podstawy równi. Kąt równi na razie jest stały i wynosi 10 stopni.
+
+        float b = (Mathf.Pow(rollTime, 2) * Physics.gravity.y) / 6.034f;                    // Wartość 6.034 wynika z twierdzenia Pitagorasa i sinusa kąta nachylenia równi (10 st.)
+        float h = b * 0.176f;                                                               // Wysokość równi
+
+        /// WAŻNA UWAGA! Równia ma mieć rozmiary większe od tych tutaj wyliczanych (kąt musi się zgadzać). ///
+        /// W rzeczywistości obliczamy tutaj dokładne miejsce spawnu jabłka na równi ///
+        /// Odległość, którą pokonuje jabłko od miejsca spawnu do miejsca podniesienia jest w stałej relacji z czasem spawnu ///
 
 
 
@@ -74,7 +126,39 @@ public class LevelParameters : MonoBehaviour
 
 
 
-        /*entitiesOverallAmount = entitiesAmountInColumn * 4;
+
+    }
+
+    void SetDispenser(int j)
+    {
+        /*queueDispenser.GetComponent<ObjectParameters>().actionTime = actionTime[j];
+        queueDispenser.GetComponent<ObjectParameters>().actionStartTime = actionStartTime[j];
+        queueDispenser.GetComponent<ObjectParameters>().actionEndTime = actionEndTime[j];
+        queueDispenser.GetComponent<ObjectParameters>().linkedReleaseTime = linkedReleaseTime[j];
+        queueDispenser.GetComponent<ObjectParameters>().linkedCatchTime = linkedCatchTime[j];
+        queueDispenser.GetComponent<ObjectParameters>().spawnTime = spawnTime[j];
+        queueDispenser.GetComponent<ObjectParameters>().type = entityType[j];
+        queueDispenser.GetComponent<ObjectParameters>().color = color[j];
+        queueDispenser.GetComponent<ObjectParameters>().action = action[j];
+        queueDispenser.GetComponent<ObjectParameters>().ID = j;*/
+    }
+
+
+
+    // sprawdzaj pierwsze 8 elementów listy
+    void SpawnElements()
+    {
+        ; // WIP
+    }
+
+    void RythmCheck()
+    {
+        ; // WIP
+    }
+}
+
+
+/*entitiesOverallAmount = entitiesAmountInColumn * 4;
         entityArray = new GameObject[entitiesOverallAmount];                // Stworzenie tablicy obiektów 
         entityEndTime = new double[entitiesAmountInColumn];                 // Stworzenie tablicy czasów końcowych wszystkich kratek w kolumnie
 
@@ -103,68 +187,3 @@ public class LevelParameters : MonoBehaviour
         {
             entityEndTime[i] = Math.Round(step * (i + 1), 3);
         }*/
-
-    }
-
-    void SetDispenser(int j)
-    {
-        queueDispenser.GetComponent<ObjectParameters>().actionTime = actionTime[j];
-        queueDispenser.GetComponent<ObjectParameters>().actionStartTime = actionStartTime[j];
-        queueDispenser.GetComponent<ObjectParameters>().actionEndTime = actionEndTime[j];
-        queueDispenser.GetComponent<ObjectParameters>().linkedReleaseTime = linkedReleaseTime[j];
-        queueDispenser.GetComponent<ObjectParameters>().linkedCatchTime = linkedCatchTime[j];
-        queueDispenser.GetComponent<ObjectParameters>().spawnTime = spawnTime[j];
-        queueDispenser.GetComponent<ObjectParameters>().type = entityType[j];
-        queueDispenser.GetComponent<ObjectParameters>().color = color[j];
-        queueDispenser.GetComponent<ObjectParameters>().action = action[j];
-        queueDispenser.GetComponent<ObjectParameters>().ID = j;
-    }
-
-    // TRZEBA PRZESORTOWAĆ KOLEJKĘ CHRONOLOGICZNIE, WEDŁUG CZASU SPAWNU - ROSNĄCO
-    public void AddToPipeline()
-    {
-        List<GameObject> preSpawnPipeline = new List<GameObject>();
-        for (int i = 0; i <= entityType.Count; i++) // Index out of range, do naprawy
-        {
-            Debug.Log(i);
-            switch (entityType[i])
-            {
-                case 0:
-                    break;
-
-                case 1:
-                    queueDispenser = apple;
-                    SetDispenser(i);
-                    preSpawnPipeline.Add(apple);
-                    break;
-
-                case 2:
-                    queueDispenser = rottenApple;
-                    SetDispenser(i);
-                    preSpawnPipeline.Add(rottenApple);
-                    break;
-
-                case 3:
-                    queueDispenser = disco;
-                    SetDispenser(i);
-                    preSpawnPipeline.Add(disco);
-                    break;
-
-                default:
-                    break;
-            }
-        }
-        preSpawnPipeline.Sort();
-    }
-
-    // sprawdzaj pierwsze 8 elementów listy
-    void SpawnElements()
-    {
-        ; // WIP
-    }
-
-    void RythmCheck()
-    {
-        ; // WIP
-    }
-}
