@@ -42,7 +42,7 @@ public class LevelParameters : MonoBehaviour
                                                                  RELEASE w momencie podanego floata linkedReleaseTime (+/- tolerance) i sprawdza się, czy wypuszczono
                                                                  korespondujący z nim linkedCatchTime */
 
-    public float tolerance;                                   /* Tolerancja na reakcję gracza (o ile później lub wcześniej może wykonać określoną akcję i zostanie ona zaliczona)
+    public float tolerance = 0.24f;                                   /* Tolerancja na reakcję gracza (o ile później lub wcześniej może wykonać określoną akcję i zostanie ona zaliczona)
                                                                  Najlepiej niech tolerance będzie zawsze większe od step */
 
 
@@ -58,14 +58,60 @@ public class LevelParameters : MonoBehaviour
 
     public List<float> linkedCatchTime = new List<float>();   /* Czas złapania wypuszczanego obiektu w ramach akcji Catch... release. Element reprezentuje ID kratki z akcją release,
                                                                  pole - czas złapania obiektu. */
+    public void Calculations()
+    {
+        float entitiesPerSecond = netDensity * BPM / 60f;                                   // Ilość pojawiających się obiektów na sekundę
+        float step = 1f / entitiesPerSecond;                                                // Jednostkowy krok pomiędzy obiektami
+        int entitiesAmountInColumn = (int)Math.Ceiling(clipLength * entitiesPerSecond);     // Ilość obiektów w jednej wczytanej tablicy
 
+        /// !!! UWAGA !!! - DO ZROBIENIA: obliczenia poniżej zrobić później tylko na zmiennych w celu większej dokładności ///
+
+        // Trochę MaTeMaTyKi: sin 10 = 0,176 => h/b = 0,176 => h = 0,176b => h^2 = 0,030976 * b^2; 2 * h^2 = 0,061952 * b^2;
+        // Ze wzoru na czas toczenia się obiektu po równi wyprowadzamy wartość boku b trójkąta prostokątnego podstawy równi. Kąt równi na razie jest stały i wynosi 10 stopni.
+
+        float b = (Mathf.Pow(rollTime, 2) * Physics.gravity.y) / 6.034f;                    // Wartość 6.034 wynika z twierdzenia Pitagorasa i sinusa kąta nachylenia równi (10 st.)
+        float h = b * 0.176f;                                                               // Wysokość równi
+
+        /// WAŻNA UWAGA! Równia ma mieć rozmiary większe od tych tutaj wyliczanych (kąt musi się zgadzać). ///
+        /// W rzeczywistości obliczamy tutaj dokładne miejsce spawnu jabłka na równi ///
+        /// Odległość, którą pokonuje jabłko od miejsca spawnu do miejsca podniesienia jest w stałej relacji z czasem spawnu ///
+
+        ///OBLICZANIE CZASÓW:///
+
+        /// BAAAAAADZO BAAAAARDZO WAŻNA UWAGA! MOŻE SIĘ OKAZAĆ (I JEST TO BADZO PRAWDOPODOBNE), ŻE AKCJA W PIOSENCE NIE DZIEJE SIĘ NA ŚRODEK KRATKI ///
+
+        Debug.Log("entitiesAmountInColumn: " + entitiesAmountInColumn);
+
+        for (int j = 0; j < 4; j++)
+        {
+            for (int i = 0; i < entitiesAmountInColumn; i++)
+            {
+                actionTime.Add(0);
+                actionTime[i + entitiesAmountInColumn * j] = step / 2 * (i + 1);
+
+                actionStartTime.Add(0);
+                actionStartTime[i + entitiesAmountInColumn * j] = (step / 2 * (i + 1) - tolerance);
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+    }
     // TRZEBA PRZESORTOWAĆ KOLEJKĘ CHRONOLOGICZNIE, WEDŁUG CZASU SPAWNU - ROSNĄCO
 
     public void ConvertToPipeline()
     {
         for (int i = 0; i <= entityType.Count - 1; i++)
         {
-            Debug.Log(i);
+            //Debug.Log(i);
             switch (entityType[i])
             {
                 case 0:
@@ -73,21 +119,21 @@ public class LevelParameters : MonoBehaviour
 
                 case 1:
                     queueDispenser = apple;
-                    queueDispenser.GetComponent<ObjectParameters>().actionTime = actionTime[i];
+                    queueDispenser.GetComponent<ObjectParameters>().actionTime = 1f;// actionTime[i];
                     //  SetDispenser(i);
                     preSpawnPipeline.Add(queueDispenser);
                     break;
 
                 case 2:
                     queueDispenser = rottenApple;
-                    queueDispenser.GetComponent<ObjectParameters>().actionTime = actionTime[i];
+                    queueDispenser.GetComponent<ObjectParameters>().actionTime = 1f;// actionTime[i];
                     //   SetDispenser(i);
                     preSpawnPipeline.Add(queueDispenser);
                     break;
 
                 case 3:
                     queueDispenser = disco;
-                    queueDispenser.GetComponent<ObjectParameters>().actionTime = actionTime[i];
+                    queueDispenser.GetComponent<ObjectParameters>().actionTime = 1f;// actionTime[i];
                     //   SetDispenser(i);
                     preSpawnPipeline.Add(queueDispenser);
                     break;
@@ -100,34 +146,7 @@ public class LevelParameters : MonoBehaviour
 
     }
 
-    void Calculations()
-    {
-        float entitiesPerSecond = netDensity * BPM / 60f;                                   // Ilość pojawiających się obiektów na sekundę
-        float step = 1f / entitiesPerSecond;                                                // Jednostkowy krok pomiędzy obiektami
-        float entitiesAmountInColumn = (int)Math.Ceiling(clipLength * entitiesPerSecond);   // Ilość obiektów w jednej wczytanej tablicy
 
-        // Trochę MaTeMaTyKi: sin 10 = 0,176 => h/b = 0,176 => h = 0,176b => h^2 = 0,030976 * b^2; 2 * h^2 = 0,061952 * b^2;
-        // Ze wzoru na czas toczenia się obiektu po równi wyprowadzamy wartość boku b trójkąta prostokątnego podstawy równi. Kąt równi na razie jest stały i wynosi 10 stopni.
-
-        float b = (Mathf.Pow(rollTime, 2) * Physics.gravity.y) / 6.034f;                    // Wartość 6.034 wynika z twierdzenia Pitagorasa i sinusa kąta nachylenia równi (10 st.)
-        float h = b * 0.176f;                                                               // Wysokość równi
-
-        /// WAŻNA UWAGA! Równia ma mieć rozmiary większe od tych tutaj wyliczanych (kąt musi się zgadzać). ///
-        /// W rzeczywistości obliczamy tutaj dokładne miejsce spawnu jabłka na równi ///
-        /// Odległość, którą pokonuje jabłko od miejsca spawnu do miejsca podniesienia jest w stałej relacji z czasem spawnu ///
-
-
-
-
-
-
-
-
-
-
-
-
-    }
 
     void SetDispenser(int j)
     {

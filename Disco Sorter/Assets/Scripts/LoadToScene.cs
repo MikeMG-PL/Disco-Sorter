@@ -49,7 +49,9 @@ public class LoadToScene : MonoBehaviour
             levelParameters.linkedReleaseEN.Add(songData.linkedReleaseEN[i]);
         }
 
+        levelParameters.Calculations();
         levelParameters.ConvertToPipeline();
+
     }
 
     /// UAKTUALNIANIE PRZYCISKÓW ///

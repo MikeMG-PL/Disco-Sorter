@@ -105,7 +105,8 @@ public class EditorNet : MonoBehaviour
         // Dodawanie do tablicy wartości o czasie końcowym każdej kratki, potrzebna tylko jedna kolumna
         for (int i = 0; i < entitiesAmountInColumn; i++)
         {
-            entityEndTime[i] = Math.Round(step * (i + 1), 3);
+            //entityEndTime[i] = Math.Round(step * (i + 1), 5);
+            entityEndTime[i] = step * (i + 1);
         }
 
         InitializeOther();
@@ -128,12 +129,14 @@ public class EditorNet : MonoBehaviour
         int num;
         for (int i = 0; i < entitiesAmountInColumn; i++)
         {
-            if (entityEndTime[i] % BPMstep <= 0.01 && (i + netDensity - netDensity / 2 <= entityEndTime.Length - 1))
+            Debug.Log(Math.Ceiling(entityEndTime[0] * 100000) / 100000);
+            Debug.Log(Math.Floor(BPMstep*100000)/100000);
+            if (Math.Ceiling(entityEndTime[i] * 100000) / 100000 % (Math.Floor(BPMstep * 100000) / 100000) <= 0.01 && (i + netDensity - netDensity / 2 <= entityEndTime.Length - 1))
             {
                 num = i + netDensity - (int)Math.Ceiling((float)(netDensity / 2));
                 Instantiate(beatMarker, new Vector3(entityArray[num].transform.position.x,
                                                     entityArray[num].transform.position.y,
-                                                    entityArray[num].transform.position.z + 0.075f), 
+                                                    entityArray[num].transform.position.z + 0.075f),
                                                     Quaternion.identity, entityArray[num].transform);
             }
         }
