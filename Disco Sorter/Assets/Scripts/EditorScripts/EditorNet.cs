@@ -133,6 +133,5 @@ public class EditorNet : MonoBehaviour
         }
 
         // To jak kretyńsko dało się uprościć i udoskonalić ten skrypt względem starej przekombinowanej wersji to jest jakiś kabaret xD
-
     }
 }

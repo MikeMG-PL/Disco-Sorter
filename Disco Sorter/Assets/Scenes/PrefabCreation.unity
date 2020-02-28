@@ -6705,6 +6705,7 @@ MonoBehaviour:
   slider: {fileID: 4487409}
   timeText: {fileID: 582267205}
   songName: {fileID: 905925104}
+  floatClipLength: 0
 --- !u!114 &1325650117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6743,7 +6744,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CameraHolder: {fileID: 729933508}
-  levelParameters: {fileID: 0}
   savesPanel: {fileID: 2058378727}
   entityMenu: {fileID: 988572330}
 --- !u!114 &1325650119
@@ -11739,16 +11739,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 326522024641262596, guid: acfa7f47d1817534a9434054393b16c5,
-        type: 3}
-      propertyPath: savesPanel
-      value: 
-      objectReference: {fileID: 2058378727}
     - target: {fileID: 3198469487241163713, guid: acfa7f47d1817534a9434054393b16c5,
         type: 3}
       propertyPath: m_Name
       value: LevelData
       objectReference: {fileID: 0}
+    - target: {fileID: 326522024641262596, guid: acfa7f47d1817534a9434054393b16c5,
+        type: 3}
+      propertyPath: savesPanel
+      value: 
+      objectReference: {fileID: 2058378727}
     - target: {fileID: 8392063006013954928, guid: acfa7f47d1817534a9434054393b16c5,
         type: 3}
       propertyPath: m_LocalPosition.x

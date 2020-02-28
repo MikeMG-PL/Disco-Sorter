@@ -9,6 +9,7 @@ public class LevelParameters : MonoBehaviour
     ///////////////////////// PREFABY OBIEKTÓW /////////////////////////
 
     public GameObject apple, rottenApple, disco, release;
+    [HideInInspector()]
     public GameObject queueDispenser;
 
     ///////////////////////// SPAWN PIPELINE, CZYLI LISTA GAMEOBJECTÓW DO WYSPAWNOWANIA /////////////////////////
@@ -36,21 +37,24 @@ public class LevelParameters : MonoBehaviour
     [Header("---------------------------------------------------------------------")]
 
     ///////////////////////// DANE WYLICZANE NA BAZIE TYCH Z PLIKU /////////////////////////
+    ///// WSZYSTKIE DANE Z UWZGLĘDNIENIEM MARGINESU NA TOCZENIE I TOLERANCJĘ UDERZENIA /////
+
+    public float margin = 10f;                                // Początkowy czas bez żadnych akcji, margines przed piosenką
+
+    public float tolerance = 0.24f;                           /* Tolerancja na reakcję gracza (o ile później lub wcześniej może wykonać określoną akcję i zostanie ona zaliczona)
+                                                                 Najlepiej niech step < tolerance < margin */
+
+    public float rollTime = 2;                                // Ile czasu zajmuje obiektom sturlanie się (z równi pochyłej wyliczy się wtedy moment spawnu obiektu) (rolltime < margin)
+
+    public List<float> spawnTime = new List<float>();         // Moment spawnu.
 
     public List<float> actionTime = new List<float>();        /* Moment, w którym idealnie do rytmu powinniśmy wykonać akcję dla konkretnego elementu. Jeśli akcja
                                                                  to Catch... release, później brany jest linkedReleaseTime dla danego elementu i oczekuje się na akcję 
                                                                  RELEASE w momencie podanego floata linkedReleaseTime (+/- tolerance) i sprawdza się, czy wypuszczono
                                                                  korespondujący z nim linkedCatchTime */
 
-    public float tolerance = 0.24f;                                   /* Tolerancja na reakcję gracza (o ile później lub wcześniej może wykonać określoną akcję i zostanie ona zaliczona)
-                                                                 Najlepiej niech tolerance będzie zawsze większe od step */
-
-
-    public float rollTime = 2;                                // Ile czasu zajmuje obiektom sturlanie się (z równi pochyłej wyliczy się wtedy moment spawnu obiektu)
-
-    public List<float> spawnTime = new List<float>();         // Moment spawnu.
-
     public List<float> actionStartTime = new List<float>();   // Początek wykonania akcji z uwzględnieniem tolerancji
+
     public List<float> actionEndTime = new List<float>();     // Koniec wykonania akcji z uwzględnieniem tolerancji
 
     public List<float> linkedReleaseTime = new List<float>(); /* Czas wypuszczenia trzymanego obiektu w ramach akcji Catch... release. Element reprezentuje ID obiektu,
@@ -58,6 +62,7 @@ public class LevelParameters : MonoBehaviour
 
     public List<float> linkedCatchTime = new List<float>();   /* Czas złapania wypuszczanego obiektu w ramach akcji Catch... release. Element reprezentuje ID kratki z akcją release,
                                                                  pole - czas złapania obiektu. */
+
     public void Calculations()
     {
         float entitiesPerSecond = netDensity * BPM / 60f;                                   // Ilość pojawiających się obiektów na sekundę
@@ -77,8 +82,10 @@ public class LevelParameters : MonoBehaviour
         /// Odległość, którą pokonuje jabłko od miejsca spawnu do miejsca podniesienia jest w stałej relacji z czasem spawnu ///
 
         ///OBLICZANIE CZASÓW:///
-
-        /// BAAAAAADZO BAAAAARDZO WAŻNA UWAGA! MOŻE SIĘ OKAZAĆ (I JEST TO BADZO PRAWDOPODOBNE), ŻE AKCJA W PIOSENCE NIE DZIEJE SIĘ NA ŚRODEK KRATKI ///
+        // Każda akcja dzieje się na początku danej kratki.
+        // Tolerancja w takim razie będzie uwzględniała czas "ujemny", kiedy akcja zostanie wykonana przed właściwym czasem piosenki
+        // Nie ma to znaczenia. Dodana zostanie lista "pipelineTime", która określa czas akcji z marginesem (właściwe nagranie zostaje odtworzone po czasie margin,
+        // przez co czas akcji nigdy nie będzie ujemny. Tolerance < margin)
 
         Debug.Log("entitiesAmountInColumn: " + entitiesAmountInColumn);
 
@@ -86,32 +93,32 @@ public class LevelParameters : MonoBehaviour
         {
             for (int i = 0; i < entitiesAmountInColumn; i++)
             {
+                // Czas akcji dla kratki o określonym ID
                 actionTime.Add(0);
-                actionTime[i + entitiesAmountInColumn * j] = step / 2 * (i + 1);
+                actionTime[i + entitiesAmountInColumn * j] = step * i + margin;
 
                 actionStartTime.Add(0);
-                actionStartTime[i + entitiesAmountInColumn * j] = (step / 2 * (i + 1) - tolerance);
+                actionStartTime[i + entitiesAmountInColumn * j] = (step * i) - tolerance + margin;
+
+                actionEndTime.Add(0);
+                actionEndTime[i + entitiesAmountInColumn * j] = (step * i) + tolerance + margin;
+
+                spawnTime.Add(0);
+                spawnTime[i + entitiesAmountInColumn * j] = actionTime[i + entitiesAmountInColumn * j] - rollTime;
             }
         }
-
-
-
-
-
-
-
-
-
-
-
     }
-    // TRZEBA PRZESORTOWAĆ KOLEJKĘ CHRONOLOGICZNIE, WEDŁUG CZASU SPAWNU - ROSNĄCO
 
+
+    ///////////////////////////////////////////////////////////////////////////////////////
+    /// TU SKOŃCZYŁEM: JESTEM BLISKO. SORTOWANIE DZIAŁA, ALE TRZEBA DOKOŃCZYĆ SPAWNPIPELINE
+
+
+    // TRZEBA PRZESORTOWAĆ KOLEJKĘ CHRONOLOGICZNIE, WEDŁUG CZASU SPAWNU - ROSNĄCO
     public void ConvertToPipeline()
     {
         for (int i = 0; i <= entityType.Count - 1; i++)
         {
-            //Debug.Log(i);
             switch (entityType[i])
             {
                 case 0:
@@ -119,60 +126,64 @@ public class LevelParameters : MonoBehaviour
 
                 case 1:
                     queueDispenser = apple;
-                    queueDispenser.GetComponent<ObjectParameters>().actionTime = 1f;// actionTime[i];
-                    //  SetDispenser(i);
+                    SetDispenser(i);
                     preSpawnPipeline.Add(queueDispenser);
+                    //Debug.Log(queueDispenser.GetComponent<ObjectParameters>().spawnTime + " // jabłko");
                     break;
 
                 case 2:
                     queueDispenser = rottenApple;
-                    queueDispenser.GetComponent<ObjectParameters>().actionTime = 1f;// actionTime[i];
-                    //   SetDispenser(i);
+                    SetDispenser(i);
                     preSpawnPipeline.Add(queueDispenser);
+                    //Debug.Log(queueDispenser.GetComponent<ObjectParameters>().spawnTime + " // zgniłe jabłko");
                     break;
 
                 case 3:
                     queueDispenser = disco;
-                    queueDispenser.GetComponent<ObjectParameters>().actionTime = 1f;// actionTime[i];
-                    //   SetDispenser(i);
+                    SetDispenser(i);
                     preSpawnPipeline.Add(queueDispenser);
+                    //Debug.Log(queueDispenser.GetComponent<ObjectParameters>().spawnTime + " // kula disco");
                     break;
 
                 default:
                     break;
             }
         }
-        spawnPipeline = preSpawnPipeline.OrderBy(preSpawnPipeline => preSpawnPipeline.GetComponent<ObjectParameters>().actionTime).ToList();
+        //spawnPipeline = preSpawnPipeline.OrderBy(preSpawnPipeline => preSpawnPipeline.GetComponent<ObjectParameters>().spawnTime).ToList();
 
-    }
-
-
-
-    void SetDispenser(int j)
-    {
-        /*queueDispenser.GetComponent<ObjectParameters>().actionTime = actionTime[j];
-        queueDispenser.GetComponent<ObjectParameters>().actionStartTime = actionStartTime[j];
-        queueDispenser.GetComponent<ObjectParameters>().actionEndTime = actionEndTime[j];
-        queueDispenser.GetComponent<ObjectParameters>().linkedReleaseTime = linkedReleaseTime[j];
-        queueDispenser.GetComponent<ObjectParameters>().linkedCatchTime = linkedCatchTime[j];
-        queueDispenser.GetComponent<ObjectParameters>().spawnTime = spawnTime[j];
-        queueDispenser.GetComponent<ObjectParameters>().type = entityType[j];
-        queueDispenser.GetComponent<ObjectParameters>().color = color[j];
-        queueDispenser.GetComponent<ObjectParameters>().action = action[j];
-        queueDispenser.GetComponent<ObjectParameters>().ID = j;*/
-    }
+        for (int i = 0; i < preSpawnPipeline.Count; i++)
+        {
+            Debug.Log(preSpawnPipeline[i].GetComponent<ObjectParameters>().spawnTime);
+        }
 
 
 
-    // sprawdzaj pierwsze 8 elementów listy
-    void SpawnElements()
-    {
-        ; // WIP
-    }
+        void SetDispenser(int j)
+        {
+            queueDispenser.GetComponent<ObjectParameters>().actionTime = actionTime[j];
+            queueDispenser.GetComponent<ObjectParameters>().actionStartTime = actionStartTime[j];
+            queueDispenser.GetComponent<ObjectParameters>().actionEndTime = actionEndTime[j];
+            //queueDispenser.GetComponent<ObjectParameters>().linkedReleaseTime = linkedReleaseTime[j];
+            //queueDispenser.GetComponent<ObjectParameters>().linkedCatchTime = linkedCatchTime[j];
+            queueDispenser.GetComponent<ObjectParameters>().spawnTime = spawnTime[j];
+            queueDispenser.GetComponent<ObjectParameters>().type = entityType[j];
+            queueDispenser.GetComponent<ObjectParameters>().color = color[j];
+            queueDispenser.GetComponent<ObjectParameters>().action = action[j];
+            queueDispenser.GetComponent<ObjectParameters>().ID = j;
+        }
 
-    void RythmCheck()
-    {
-        ; // WIP
+
+
+        // sprawdzaj pierwsze 8 elementów listy
+        void SpawnElements()
+        {
+            ; // WIP
+        }
+
+        void RythmCheck()
+        {
+            ; // WIP
+        }
     }
 }
 
