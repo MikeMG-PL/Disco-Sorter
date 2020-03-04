@@ -105,14 +105,13 @@ public class LevelParameters : MonoBehaviour
 
                 spawnTime.Add(0);
                 spawnTime[i + entitiesAmountInColumn * j] = actionTime[i + entitiesAmountInColumn * j] - rollTime;
+                
             }
         }
     }
 
-
     ///////////////////////////////////////////////////////////////////////////////////////
-    /// TU SKOŃCZYŁEM: JESTEM BLISKO. SORTOWANIE DZIAŁA, ALE TRZEBA DOKOŃCZYĆ SPAWNPIPELINE
-
+    /// TU SKOŃCZYŁEM: JESTEM BLISKO. SORTOWANIE OGARNĄĆ
 
     // TRZEBA PRZESORTOWAĆ KOLEJKĘ CHRONOLOGICZNIE, WEDŁUG CZASU SPAWNU - ROSNĄCO
     public void ConvertToPipeline()
@@ -128,6 +127,7 @@ public class LevelParameters : MonoBehaviour
                     queueDispenser = apple;
                     SetDispenser(i);
                     preSpawnPipeline.Add(queueDispenser);
+
                     //Debug.Log(queueDispenser.GetComponent<ObjectParameters>().spawnTime + " // jabłko");
                     break;
 
@@ -135,6 +135,7 @@ public class LevelParameters : MonoBehaviour
                     queueDispenser = rottenApple;
                     SetDispenser(i);
                     preSpawnPipeline.Add(queueDispenser);
+
                     //Debug.Log(queueDispenser.GetComponent<ObjectParameters>().spawnTime + " // zgniłe jabłko");
                     break;
 
@@ -142,50 +143,67 @@ public class LevelParameters : MonoBehaviour
                     queueDispenser = disco;
                     SetDispenser(i);
                     preSpawnPipeline.Add(queueDispenser);
+
                     //Debug.Log(queueDispenser.GetComponent<ObjectParameters>().spawnTime + " // kula disco");
                     break;
 
                 default:
                     break;
             }
+            //preSpawnPipeline = preSpawnPipeline.OrderBy(x => x.GetComponent<ObjectParameters>().spawnTime).ToList();
         }
-        //spawnPipeline = preSpawnPipeline.OrderBy(preSpawnPipeline => preSpawnPipeline.GetComponent<ObjectParameters>().spawnTime).ToList();
+
+        /*Debug.Log(apple.GetComponent<ObjectParameters>().spawnTime + "<---");
+        Debug.Log(rottenApple.GetComponent<ObjectParameters>().spawnTime + "<---");
+        Debug.Log(disco.GetComponent<ObjectParameters>().spawnTime + "<---");
+
+        //spawnPipeline = preSpawnPipeline.OrderBy(s => s.GetComponent<ObjectParameters>().spawnTime).ToList();*/
+        //spawnPipeline = preSpawnPipeline;
+        //spawnPipeline.Sort((t1, t2) => t1.GetComponent<ObjectParameters>().spawnTime.CompareTo(t2.GetComponent<ObjectParameters>().spawnTime));
+
+        //spawnPipeline = preSpawnPipeline.OrderBy(x => x.GetComponent<ObjectParameters>().spawnTime).ToList();
 
         for (int i = 0; i < preSpawnPipeline.Count; i++)
         {
             Debug.Log(preSpawnPipeline[i].GetComponent<ObjectParameters>().spawnTime);
         }
-
-
-
-        void SetDispenser(int j)
-        {
-            queueDispenser.GetComponent<ObjectParameters>().actionTime = actionTime[j];
-            queueDispenser.GetComponent<ObjectParameters>().actionStartTime = actionStartTime[j];
-            queueDispenser.GetComponent<ObjectParameters>().actionEndTime = actionEndTime[j];
-            //queueDispenser.GetComponent<ObjectParameters>().linkedReleaseTime = linkedReleaseTime[j];
-            //queueDispenser.GetComponent<ObjectParameters>().linkedCatchTime = linkedCatchTime[j];
-            queueDispenser.GetComponent<ObjectParameters>().spawnTime = spawnTime[j];
-            queueDispenser.GetComponent<ObjectParameters>().type = entityType[j];
-            queueDispenser.GetComponent<ObjectParameters>().color = color[j];
-            queueDispenser.GetComponent<ObjectParameters>().action = action[j];
-            queueDispenser.GetComponent<ObjectParameters>().ID = j;
-        }
-
-
-
-        // sprawdzaj pierwsze 8 elementów listy
-        void SpawnElements()
-        {
-            ; // WIP
-        }
-
-        void RythmCheck()
-        {
-            ; // WIP
-        }
     }
+
+
+
+
+
+
+
+
+
+    void SetDispenser(int j)
+    {
+        queueDispenser.GetComponent<ObjectParameters>().actionTime = actionTime[j];
+        queueDispenser.GetComponent<ObjectParameters>().actionStartTime = actionStartTime[j];
+        queueDispenser.GetComponent<ObjectParameters>().actionEndTime = actionEndTime[j];
+        //queueDispenser.GetComponent<ObjectParameters>().linkedReleaseTime = linkedReleaseTime[j];
+        //queueDispenser.GetComponent<ObjectParameters>().linkedCatchTime = linkedCatchTime[j];
+        queueDispenser.GetComponent<ObjectParameters>().spawnTime = spawnTime[j];
+        queueDispenser.GetComponent<ObjectParameters>().type = entityType[j];
+        queueDispenser.GetComponent<ObjectParameters>().color = color[j];
+        queueDispenser.GetComponent<ObjectParameters>().action = action[j];
+        queueDispenser.GetComponent<ObjectParameters>().ID = j;
+    }
+
+    // sprawdzaj pierwsze 8 elementów listy
+    void SpawnElements()
+    {
+        ; // WIP
+    }
+
+    void RythmCheck()
+    {
+        ; // WIP
+    }
+
 }
+
 
 
 /*entitiesOverallAmount = entitiesAmountInColumn * 4;
