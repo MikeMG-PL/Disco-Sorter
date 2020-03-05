@@ -39,6 +39,8 @@ public class LevelParameters : MonoBehaviour
     ///////////////////////// DANE WYLICZANE NA BAZIE TYCH Z PLIKU /////////////////////////
     ///// WSZYSTKIE DANE Z UWZGLĘDNIENIEM MARGINESU NA TOCZENIE I TOLERANCJĘ UDERZENIA /////
 
+    int entitiesAmountInColumn;
+
     public float margin = 10f;                                // Początkowy czas bez żadnych akcji, margines przed piosenką
 
     public float tolerance = 0.24f;                           /* Tolerancja na reakcję gracza (o ile później lub wcześniej może wykonać określoną akcję i zostanie ona zaliczona)
@@ -67,7 +69,7 @@ public class LevelParameters : MonoBehaviour
     {
         float entitiesPerSecond = netDensity * BPM / 60f;                                   // Ilość pojawiających się obiektów na sekundę
         float step = 1f / entitiesPerSecond;                                                // Jednostkowy krok pomiędzy obiektami
-        int entitiesAmountInColumn = (int)Math.Ceiling(clipLength * entitiesPerSecond);     // Ilość obiektów w jednej wczytanej tablicy
+        entitiesAmountInColumn = (int)Math.Ceiling(clipLength * entitiesPerSecond);         // Ilość obiektów w jednej wczytanej tablicy
 
         /// !!! UWAGA !!! - DO ZROBIENIA: obliczenia poniżej zrobić później tylko na zmiennych w celu większej dokładności ///
 
@@ -83,11 +85,8 @@ public class LevelParameters : MonoBehaviour
 
         ///OBLICZANIE CZASÓW:///
         // Każda akcja dzieje się na początku danej kratki.
-        // Tolerancja w takim razie będzie uwzględniała czas "ujemny", kiedy akcja zostanie wykonana przed właściwym czasem piosenki
-        // Nie ma to znaczenia. Dodana zostanie lista "pipelineTime", która określa czas akcji z marginesem (właściwe nagranie zostaje odtworzone po czasie margin,
-        // przez co czas akcji nigdy nie będzie ujemny. Tolerance < margin)
-
-        Debug.Log("entitiesAmountInColumn: " + entitiesAmountInColumn);
+        // Tolerancja w takim razie będzie uwzględniała czas "ujemny", kiedy akcja zostanie wykonana przed właściwym czasem piosenki.
+        // Wszystkie czasy zawierają już ten margines (margin).
 
         for (int j = 0; j < 4; j++)
         {
@@ -105,77 +104,56 @@ public class LevelParameters : MonoBehaviour
 
                 spawnTime.Add(0);
                 spawnTime[i + entitiesAmountInColumn * j] = actionTime[i + entitiesAmountInColumn * j] - rollTime;
-                
+
             }
         }
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    /// TU SKOŃCZYŁEM: JESTEM BLISKO. SORTOWANIE OGARNĄĆ
-
-    // TRZEBA PRZESORTOWAĆ KOLEJKĘ CHRONOLOGICZNIE, WEDŁUG CZASU SPAWNU - ROSNĄCO
     public void ConvertToPipeline()
     {
-        for (int i = 0; i <= entityType.Count - 1; i++)
+        int row = 0, column = 0, index;
+        while (row < entitiesAmountInColumn)
         {
-            switch (entityType[i])
+            index = entitiesAmountInColumn * column + row;
+            switch (entityType[index])
             {
                 case 0:
                     break;
 
                 case 1:
-                    queueDispenser = apple;
-                    SetDispenser(i);
+                    queueDispenser = Instantiate(apple);
+                    SetDispenser(index);
                     preSpawnPipeline.Add(queueDispenser);
 
-                    //Debug.Log(queueDispenser.GetComponent<ObjectParameters>().spawnTime + " // jabłko");
                     break;
 
                 case 2:
-                    queueDispenser = rottenApple;
-                    SetDispenser(i);
+                    queueDispenser = Instantiate(rottenApple);
+                    SetDispenser(index);
                     preSpawnPipeline.Add(queueDispenser);
 
-                    //Debug.Log(queueDispenser.GetComponent<ObjectParameters>().spawnTime + " // zgniłe jabłko");
                     break;
 
                 case 3:
-                    queueDispenser = disco;
-                    SetDispenser(i);
+                    queueDispenser = Instantiate(disco);
+                    SetDispenser(index);
                     preSpawnPipeline.Add(queueDispenser);
 
-                    //Debug.Log(queueDispenser.GetComponent<ObjectParameters>().spawnTime + " // kula disco");
                     break;
 
                 default:
                     break;
             }
-            //preSpawnPipeline = preSpawnPipeline.OrderBy(x => x.GetComponent<ObjectParameters>().spawnTime).ToList();
-        }
 
-        /*Debug.Log(apple.GetComponent<ObjectParameters>().spawnTime + "<---");
-        Debug.Log(rottenApple.GetComponent<ObjectParameters>().spawnTime + "<---");
-        Debug.Log(disco.GetComponent<ObjectParameters>().spawnTime + "<---");
+            if (column == 3)
+            {
+                column = -1;
+                row++;
+            }
 
-        //spawnPipeline = preSpawnPipeline.OrderBy(s => s.GetComponent<ObjectParameters>().spawnTime).ToList();*/
-        //spawnPipeline = preSpawnPipeline;
-        //spawnPipeline.Sort((t1, t2) => t1.GetComponent<ObjectParameters>().spawnTime.CompareTo(t2.GetComponent<ObjectParameters>().spawnTime));
-
-        //spawnPipeline = preSpawnPipeline.OrderBy(x => x.GetComponent<ObjectParameters>().spawnTime).ToList();
-
-        for (int i = 0; i < preSpawnPipeline.Count; i++)
-        {
-            Debug.Log(preSpawnPipeline[i].GetComponent<ObjectParameters>().spawnTime);
+            column++;
         }
     }
-
-
-
-
-
-
-
-
 
     void SetDispenser(int j)
     {
