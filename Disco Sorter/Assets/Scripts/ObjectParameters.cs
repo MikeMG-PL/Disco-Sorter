@@ -15,4 +15,9 @@ public class ObjectParameters : MonoBehaviour
     public int color;
     public int action;
     public int ID;
+
+    void Update()
+    {
+        gameObject.GetComponent<Rigidbody>().maxAngularVelocity = 10000f;
+    }
 }
