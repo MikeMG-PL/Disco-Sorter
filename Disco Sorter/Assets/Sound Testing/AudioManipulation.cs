@@ -15,7 +15,8 @@ public class AudioManipulation : MonoBehaviour
     [SerializeField]
     private Text songName;                  // Tekst wyświetlający nazwę piosenki, ustawiany na Starcie
 
-    private AudioSource a;                  // Zmienna reprezentująca źródło dźwięku
+    [HideInInspector()]
+    public AudioSource a;                  // Zmienna reprezentująca źródło dźwięku
     private bool virtualPause;              // Zmienna mówiąca czy jest włączona wirtualna pauza*
     private float clampedLength;            // Zmienna opisująca porządany moment w piosence w przedziale <0; 1>
     private string clipLength;

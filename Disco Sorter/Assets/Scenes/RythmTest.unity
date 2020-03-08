@@ -7190,18 +7190,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5795599382398318018}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1325650113 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5795599383723566339, guid: a0543332415e83842bf45c23fe43820b,
-    type: 3}
-  m_PrefabInstance: {fileID: 5795599382398318018}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1325650112}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ed2c36dc1422cb41a642438927225ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1325650116 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5795599383723566342, guid: a0543332415e83842bf45c23fe43820b,
@@ -12412,12 +12400,13 @@ PrefabInstance:
         type: 3}
       propertyPath: level
       value: 
-      objectReference: {fileID: 6317172698313822904}
+      objectReference: {fileID: 2608869535248042842, guid: f3e1bc5ea6dec914da662aa76567b169,
+        type: 3}
     - target: {fileID: 7437021264787854613, guid: 40a7ed54b5130e14eb8325fa554944cb,
         type: 3}
       propertyPath: songController
       value: 
-      objectReference: {fileID: 1325650113}
+      objectReference: {fileID: 1325650116}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40a7ed54b5130e14eb8325fa554944cb, type: 3}
 --- !u!1001 &5795599382398318018
@@ -12537,6 +12526,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5795599383723566337, guid: a0543332415e83842bf45c23fe43820b,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 63089493fea90074cbc92330b5a8271d, type: 3}
     - target: {fileID: 5795599383723566342, guid: a0543332415e83842bf45c23fe43820b,
         type: 3}
       propertyPath: slider
@@ -12590,6 +12584,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LevelData
+      objectReference: {fileID: 0}
+    - target: {fileID: 3198469487241163713, guid: acfa7f47d1817534a9434054393b16c5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 326522024641262596, guid: acfa7f47d1817534a9434054393b16c5,
         type: 3}
@@ -12686,6 +12685,11 @@ PrefabInstance:
       propertyPath: testBallPrefab
       value: 
       objectReference: {fileID: 603470370}
+    - target: {fileID: 1500127388452664661, guid: acfa7f47d1817534a9434054393b16c5,
+        type: 3}
+      propertyPath: margin
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: acfa7f47d1817534a9434054393b16c5, type: 3}
 --- !u!114 &6317172698313822904 stripped

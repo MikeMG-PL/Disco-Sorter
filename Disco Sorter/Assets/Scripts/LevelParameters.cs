@@ -121,21 +121,24 @@ public class LevelParameters : MonoBehaviour
                     break;
 
                 case 1:
-                    queueDispenser = Instantiate(apple, pos, Quaternion.identity);
+                    //queueDispenser = Instantiate(apple, pos, Quaternion.identity);
+                    queueDispenser = (GameObject)Resources.Load("Apple");
                     SetDispenser(index);
                     spawnPipeline.Add(queueDispenser);
 
                     break;
 
                 case 2:
-                    queueDispenser = Instantiate(rottenApple, pos, Quaternion.identity);
+                    //queueDispenser = Instantiate(rottenApple, pos, Quaternion.identity);
+                    queueDispenser = (GameObject)Resources.Load("RottenApple");
                     SetDispenser(index);
                     spawnPipeline.Add(queueDispenser);
 
                     break;
 
                 case 3:
-                    queueDispenser = Instantiate(disco, pos, Quaternion.identity);
+                    //queueDispenser = Instantiate(disco, pos, Quaternion.identity);
+                    queueDispenser = (GameObject)Resources.Load("Disco");
                     SetDispenser(index);
                     spawnPipeline.Add(queueDispenser);
 
