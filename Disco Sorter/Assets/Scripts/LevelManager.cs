@@ -45,7 +45,7 @@ public class LevelManager : MonoBehaviour
             spawnPipeline.Enqueue(level.spawnPipeline[i]);
         }
 
-        for()
+        //for()
     }
 
     void RythmCheck()
@@ -57,14 +57,15 @@ public class LevelManager : MonoBehaviour
     {
         if (timerStarted)
         {
-            timer += Time.deltaTime;
-            PlayMusic();
+            //timer += Time.deltaTime; testing
+            //PlayMusic();
         }
 
         if (Input.GetKeyDown(KeyCode.Return)) // START
         {
             timerStarted = true;
             SpawnObjects();
+            Instantiate(testBallPrefab, C, Quaternion.identity); // testing
         }
 
         
