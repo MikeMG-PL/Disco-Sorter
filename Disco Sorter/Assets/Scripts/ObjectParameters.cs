@@ -11,7 +11,7 @@ public class ObjectParameters : MonoBehaviour
     public float linkedCatchTime;                  // Opcjonalnie, jeśli akcja to Catch... release (release)
     public float spawnTime;
 
-    public int type;
+    public ObjectType type;
     public int color;
     public int action;
     public int ID;

@@ -122,7 +122,7 @@ public class EntityMenu : MonoBehaviour
     // Funkcje wykorzystywane bezpośrednio przez menu
     // Po wybraniu konkretnej opcji można zmieniać wygląd kostki aby w jakiś sposób to zasygnalizować
     // Zmiana właściwości obiektu: typ
-    public void ChangeType(int entityType)
+    public void ChangeType(ObjectType entityType)
     {
         IsSavedChange(false);
 
@@ -209,7 +209,7 @@ public class EntityMenu : MonoBehaviour
         StillHasColor(entity);
         StillHasAction(entity);
 
-        typeDropdown.SetValueWithoutNotify(entity.type);
+        typeDropdown.SetValueWithoutNotify((int)entity.type);
         colorDropdown.SetValueWithoutNotify(entity.color);
         actionDropdown.SetValueWithoutNotify(entity.action);
     }
@@ -230,7 +230,7 @@ public class EntityMenu : MonoBehaviour
     // Sprawdza czy obiektowi o wybranym typie można zmienić kolor
     private void StillHasColor(Entity entity)
     {
-        if (entity.type == 1)
+        if (entity.type == ObjectType.Apple)
         {
             colorDropdown.interactable = true;
             colorWarning.gameObject.SetActive(false);
@@ -248,7 +248,7 @@ public class EntityMenu : MonoBehaviour
     // Sprawdza czy obiektowi o wybranym typie można zmienić akcję
     private void StillHasAction(Entity entity)
     {
-        if (entity.type == 1 || entity.type == 2)
+        if (entity.type == ObjectType.Apple || entity.type == ObjectType.RottenApple)
         {
             actionDropdown.interactable = true;
             actionWarning.gameObject.SetActive(false);
