@@ -102,10 +102,11 @@ public class EditorNet : MonoBehaviour
             }
         }
 
-        // Dodawanie do tablicy wartości o czasie końcowym każdej kratki, potrzeba tylko jedna kolumna
+        // Dodawanie do tablicy wartości o czasie końcowym każdej kratki, potrzebna tylko jedna kolumna
         for (int i = 0; i < entitiesAmountInColumn; i++)
         {
-            entityEndTime[i] = Math.Round(step * (i + 1), 3);
+            //entityEndTime[i] = Math.Round(step * (i + 1), 5);
+            entityEndTime[i] = step * (i + 1);
         }
 
         InitializeOther();
@@ -114,32 +115,23 @@ public class EditorNet : MonoBehaviour
     // Inicializuje pozostałe skrypty, które wymagają do działania danych z tego skryptu
     private void InitializeOther()
     {
-        float BPMstep = 1 / (BPM / 60f);
-
         entityCanvas.GetComponent<EntityMenu>().Initialization();
         GetComponent<EntityCurrentTimeHighlight>().Initialization(entityArray, entityEndTime, entitiesAmountInColumn, step);
         GetComponent<DrawWaveForm>().Waveform(); // Wyrenderowanie i synchronizacja waveformu
-        MarkBeats(BPMstep);
+        MarkBeats();
     }
 
     // Tworzenie znaczników, które wskazują, który obiekt w siatce odpowiada beatowi
-    private void MarkBeats(float BPMstep)
+    private void MarkBeats()
     {
-        int num;
-        for (int i = 0; i < entitiesAmountInColumn; i++)
+        for (int i = 0; i < entitiesAmountInColumn / netDensity; i++)
         {
-            //if (i == 0)
-            //Instantiate(beatMarker, new Vector3(entityArray[i].transform.position.x, entityArray[i].transform.position.y, entityArray[i].transform.position.z + 0.075f), Quaternion.identity);
-
-            if (entityEndTime[i] % BPMstep <= 0.01 && (i + netDensity - netDensity / 2 <= entityEndTime.Length - 1))
-            {
-                num = i + netDensity - (int)Math.Ceiling((float)(netDensity / 2));
-                //entityArray[i].GetComponent<Renderer>().material.color = Color.blue;
-                Instantiate(beatMarker, new Vector3(entityArray[num].transform.position.x,
-                                                    entityArray[num].transform.position.y,
-                                                    entityArray[num].transform.position.z + 0.075f), 
-                                                    Quaternion.identity, entityArray[num].transform);
-            }
+            Instantiate(beatMarker, new Vector3(entityArray[i * netDensity].transform.position.x,
+                                                                entityArray[i * netDensity].transform.position.y,
+                                                                entityArray[i * netDensity].transform.position.z + 0.075f),
+                                                                Quaternion.identity, entityArray[i * netDensity].transform);
         }
+
+        // To jak kretyńsko dało się uprościć i udoskonalić ten skrypt względem starej przekombinowanej wersji to jest jakiś kabaret xD
     }
 }

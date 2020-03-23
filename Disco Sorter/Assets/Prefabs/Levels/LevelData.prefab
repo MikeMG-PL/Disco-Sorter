@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3198469487241163713
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8392063006013954928}
+  - component: {fileID: 1500127388452664661}
+  - component: {fileID: 326522024641262596}
+  m_Layer: 0
+  m_Name: LevelData
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8392063006013954928
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3198469487241163713}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.598, y: 4.102, z: 1.811}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1500127388452664661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3198469487241163713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b154b10da50893740b8a3e40a75445af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  apple: {fileID: 7181914308200693853, guid: cd102fb4a5786c948b249d59531315aa, type: 3}
+  rottenApple: {fileID: 7943203755827956147, guid: be421fbdb9cf8da418a1b3ca62779d99,
+    type: 3}
+  disco: {fileID: 1320297642133616573, guid: 168288884bf08c9429d682700d761edb, type: 3}
+  release: {fileID: 2174226949125507776, guid: c7a6a01693226764f9859ef871452d55, type: 3}
+  queueDispenser: {fileID: 0}
+  preSpawnPipeline: []
+  spawnPipeline: []
+  entityType: 
+  color: 
+  action: 
+  linkedReleaseEN: 
+  linkedCatchEN: 
+  BPM: 0
+  netDensity: 0
+  clipLength: 0
+  margin: 10
+  tolerance: 0.24
+  rollTime: 2
+  spawnTime: []
+  actionTime: []
+  actionStartTime: []
+  actionEndTime: []
+  linkedReleaseTime: []
+  linkedCatchTime: []
+--- !u!114 &326522024641262596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3198469487241163713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bda4399a05204d47bf3f2cfe8154e73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  savesPanel: {fileID: 0}
+  savesButtons: []

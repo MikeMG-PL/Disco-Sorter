@@ -6829,7 +6829,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 28b5059dacfc7c34588dcb4956f5d9fe, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 63089493fea90074cbc92330b5a8271d, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.12
   m_Pitch: 1
@@ -6932,6 +6932,7 @@ MonoBehaviour:
   slider: {fileID: 4487409}
   timeText: {fileID: 582267205}
   songName: {fileID: 905925104}
+  floatClipLength: 0
 --- !u!114 &1325650117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6945,7 +6946,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   netDensity: 1
-  BPM: 125
+  BPM: 128
   entityArray: []
   entityEndTime: []
   entitiesOverallAmount: 0

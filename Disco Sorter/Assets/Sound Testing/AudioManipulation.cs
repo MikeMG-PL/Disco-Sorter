@@ -15,10 +15,13 @@ public class AudioManipulation : MonoBehaviour
     [SerializeField]
     private Text songName;                  // Tekst wyświetlający nazwę piosenki, ustawiany na Starcie
 
-    private AudioSource a;                  // Zmienna reprezentująca źródło dźwięku
+    [HideInInspector()]
+    public AudioSource a;                  // Zmienna reprezentująca źródło dźwięku
     private bool virtualPause;              // Zmienna mówiąca czy jest włączona wirtualna pauza*
     private float clampedLength;            // Zmienna opisująca porządany moment w piosence w przedziale <0; 1>
     private string clipLength;
+    [HideInInspector()]
+    public float floatClipLength;
 
     // * - wirtualna pauza - pauza piosenki mogąca pojawić się bez wciśnięcia przycisku pauzy (bo wymaga tego edytor do niektórych celów)
 
@@ -26,6 +29,7 @@ public class AudioManipulation : MonoBehaviour
     void Start()
     {
         a = GetComponent<AudioSource>();
+        floatClipLength = a.clip.length;
         a.time = time;
         pausePressed = true;
         virtualPause = true;
@@ -147,18 +151,12 @@ public class AudioManipulation : MonoBehaviour
         a.time = 0f;
     }
 
-
-
     private void TimeTextUpdate()
     {
         string minutes = Mathf.Floor(a.time / 60).ToString("00");
         string seconds = Mathf.Floor(a.time % 60).ToString("00");
         timeText.text = $"{minutes}:{seconds} / {clipLength}";
     }
-
-    /// Funkcje odpowiedzialne za przewijanie o konkretną liczbę sekund ///
-    /// UWAGA! Zdaję sobie sprawę, że brzydko to wygląda, chciałem to zapisać bez redundancji kodu, ale te fukncje muszą działać ///
-    /// z przyciskami Unity, dlatego niemożliwe jest np. podesłanie jako argumentów funkcji w nagłówku jakichś zmiennych. Sorry :( </3 ///
 
     void Jump(bool forward, float timestep)
     {
