@@ -122,7 +122,7 @@ public class EntityMenu : MonoBehaviour
     // Funkcje wykorzystywane bezpośrednio przez menu
     // Po wybraniu konkretnej opcji można zmieniać wygląd kostki aby w jakiś sposób to zasygnalizować
     // Zmiana właściwości obiektu: typ
-    public void ChangeType(EntityType entityType)
+    public void ChangeType(int entityType)
     {
         IsSavedChange(false);
 
@@ -130,14 +130,14 @@ public class EntityMenu : MonoBehaviour
         {
             Entity entity = markedEntities[i].GetComponent<Entity>();
 
-            entity.type = entityType;
+            entity.type = (EntityType)entityType;
             entity.ChangeTypeIcon();
             SetCurrentValues(entity.entityNumber);
         }
     }
 
     // Zmiana właściwości obiektu: kolor
-    public void ChangeColor(EntityColour color)
+    public void ChangeColor(int color)
     {
         IsSavedChange(false);
 
@@ -145,7 +145,7 @@ public class EntityMenu : MonoBehaviour
         {
             Entity entity = markedEntities[i].GetComponent<Entity>();
 
-            entity.color = color;
+            entity.color = (EntityColour)color;
             entity.ChangeColor();
             SetCurrentValues(entity.entityNumber);
         }
