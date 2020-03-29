@@ -21,9 +21,9 @@ public class LevelParameters : MonoBehaviour
     ///////////////////////// DANE WCZYTYWANE Z PLIKU /////////////////////////
 
     [HideInInspector()]
-    public List<ObjectType> entityType = new List<ObjectType>();
+    public List<EntityType> entityType = new List<EntityType>();
     [HideInInspector()]
-    public List<int> color = new List<int>();
+    public List<EntityColour> color = new List<EntityColour>();
     [HideInInspector()]
     public List<int> action = new List<int>();
 
@@ -117,7 +117,7 @@ public class LevelParameters : MonoBehaviour
             index = entitiesAmountInColumn * column + row;
             switch (entityType[index])
             {
-                case ObjectType.Apple:
+                case EntityType.Apple:
                     //queueDispenser = Instantiate(apple, pos, Quaternion.identity);
                     queueDispenser = (GameObject)Resources.Load("Apple");
                     SetDispenser(index);
@@ -125,7 +125,7 @@ public class LevelParameters : MonoBehaviour
 
                     break;
 
-                case ObjectType.RottenApple:
+                case EntityType.RottenApple:
                     //queueDispenser = Instantiate(rottenApple, pos, Quaternion.identity);
                     queueDispenser = (GameObject)Resources.Load("RottenApple");
                     SetDispenser(index);
@@ -133,7 +133,7 @@ public class LevelParameters : MonoBehaviour
 
                     break;
 
-                case ObjectType.Disco:
+                case EntityType.Disco:
                     //queueDispenser = Instantiate(disco, pos, Quaternion.identity);
                     queueDispenser = (GameObject)Resources.Load("Disco");
                     SetDispenser(index);

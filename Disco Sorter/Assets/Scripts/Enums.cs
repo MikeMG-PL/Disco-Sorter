@@ -3,5 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum ObjectType { Apple, RottenApple, Disco, Release };
+public enum EntityType { Apple, RottenApple, Disco, Release };
+public enum EntityColour { None, Green, Red };
+
 
