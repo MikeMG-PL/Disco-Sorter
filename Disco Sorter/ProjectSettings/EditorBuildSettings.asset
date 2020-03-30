@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: 935f6fd87b3975040bb248dc28beb396
   - enabled: 1
-    path: Assets/Scenes/PlotDemo.unity
+    path: Assets/Scenes/1.EDITOR.unity
     guid: 63180a6b7fd72cd4b9055f209cce704f
   - enabled: 1
     path: Assets/Scenes/VR Ready.unity
