@@ -13,7 +13,7 @@ public class LevelParameters : MonoBehaviour
     GameObject queueDispenser;
 
     ///////////////////////// SPAWN PIPELINE, CZYLI LISTA GAMEOBJECTÓW DO WYSPAWNOWANIA /////////////////////////
-    [HideInInspector()]
+    //[HideInInspector()]
     public List<GameObject> spawnPipeline = new List<GameObject>();
 
 
@@ -118,24 +118,21 @@ public class LevelParameters : MonoBehaviour
             switch (entityType[index])
             {
                 case EntityType.Apple:
-                    //queueDispenser = Instantiate(apple, pos, Quaternion.identity);
-                    queueDispenser = (GameObject)Resources.Load("Apple");
+                    queueDispenser = Instantiate(apple, pos, Quaternion.identity);
                     SetDispenser(index);
                     spawnPipeline.Add(queueDispenser);
 
                     break;
 
                 case EntityType.RottenApple:
-                    //queueDispenser = Instantiate(rottenApple, pos, Quaternion.identity);
-                    queueDispenser = (GameObject)Resources.Load("RottenApple");
+                    queueDispenser = Instantiate(rottenApple, pos, Quaternion.identity);
                     SetDispenser(index);
                     spawnPipeline.Add(queueDispenser);
 
                     break;
 
                 case EntityType.Disco:
-                    //queueDispenser = Instantiate(disco, pos, Quaternion.identity);
-                    queueDispenser = (GameObject)Resources.Load("Disco");
+                    queueDispenser = Instantiate(disco, pos, Quaternion.identity);
                     SetDispenser(index);
                     spawnPipeline.Add(queueDispenser);
 

@@ -11,11 +11,18 @@ public enum EntityType
     Disco,
     Release
 };
+
 public enum EntityColour
 {
     None,
     Green,
     Red
+};
+
+public enum LoadedLevel
+{
+    Kylie,
+    Pictures
 };
 
 

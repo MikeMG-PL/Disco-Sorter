@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
+    [HideInInspector()]
+    public int levelIndex = 0;
+    [HideInInspector()]
+    public List<string> LevelList = new List<string>();
     public AudioManipulation songController;
-    public LevelParameters level;
+    LevelParameters level;
+
+
 
     float timer; bool timerStarted = false;
 
@@ -14,6 +20,30 @@ public class LevelManager : MonoBehaviour
     public GameObject testBallPrefab;
 
     public Queue<GameObject> spawnPipeline = new Queue<GameObject>();
+
+
+    void LoadLevel()
+    {
+        level = GetComponent<LevelParameters>();
+
+        if (timerStarted)
+        {
+            timer += Time.deltaTime;
+            PlayMusic();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Return) && levelIndex < LevelList.Count - 1)
+        {
+            GetComponent<LoadToScene>().LoadSong(levelIndex);
+
+            timerStarted = true;
+
+            Calculations();
+            SpawnObjects();
+
+            Instantiate(testBallPrefab, C, Quaternion.identity);
+        }
+    }
 
     void Calculations()
     {
@@ -29,7 +59,6 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
-        Calculations();
     }
 
     void PlayMusic()
@@ -40,7 +69,7 @@ public class LevelManager : MonoBehaviour
 
     void SpawnObjects()
     {
-        for(int i = 0; i < level.spawnPipeline.Count; i++)
+        for (int i = 0; i < level.spawnPipeline.Count; i++)
         {
             spawnPipeline.Enqueue(level.spawnPipeline[i]);
         }
@@ -55,20 +84,21 @@ public class LevelManager : MonoBehaviour
 
     void Update()
     {
-        if (timerStarted)
+        LoadLevel();
+        // if (timerStarted)
         {
             //timer += Time.deltaTime; testing
             //PlayMusic();
         }
 
-        if (Input.GetKeyDown(KeyCode.Return)) // START
+        //if (Input.GetKeyDown(KeyCode.Return)) // START
         {
-            timerStarted = true;
-            SpawnObjects();
-            Instantiate(testBallPrefab, C, Quaternion.identity); // testing
+            //  timerStarted = true;
+            //  SpawnObjects();
+            //  Instantiate(testBallPrefab, C, Quaternion.identity); // testing
         }
 
-        
-            
+
+
     }
 }
