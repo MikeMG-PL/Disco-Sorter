@@ -7,6 +7,7 @@ public class LoadToScene : MonoBehaviour
     [SerializeField]
     private GameObject savesPanel;                  // Panel, w którym znajdują się przyciski do wyboru pliku, do wczytania.
     private LevelParameters levelParameters;
+    private LevelManager levelManager;
     private string[] songNames;
     [SerializeField]
     private GameObject[] savesButtons;              // Poszczególne przyciski odpowiadające slotom zapisu piosenek
@@ -15,6 +16,7 @@ public class LoadToScene : MonoBehaviour
     private void Awake()
     {
         levelParameters = GetComponent<LevelParameters>();
+        levelManager = GetComponent<LevelManager>();
 
         savesButtons = new GameObject[savesPanel.transform.childCount];
         for (int i = 0; i < savesPanel.transform.childCount; i++)
@@ -24,6 +26,12 @@ public class LoadToScene : MonoBehaviour
 
         songNames = SongFile.GetSavesNames();
         UpdateSavesNames(songNames);
+
+        for (int i = 0; i < savesPanel.transform.childCount; i++)
+        {
+            levelManager.LevelList.Add(savesPanel.transform.GetChild(i).GetComponentInChildren<Text>().text);
+        }
+
     }
 
     /// PRZENIESIENIE DANYCH Z PLIKU DO SKRYPTU LEVELPARAMETERS ///
@@ -62,7 +70,7 @@ public class LoadToScene : MonoBehaviour
             if (i < songNames.Length)
                 savesButtons[i].GetComponentInChildren<Text>().text = songNames[i];
             else
-                savesButtons[i].GetComponentInChildren<Text>().text = "Puste";
+                savesButtons[i].GetComponentInChildren<Text>().text = "[PUSTE]";
         }
     }
 }
