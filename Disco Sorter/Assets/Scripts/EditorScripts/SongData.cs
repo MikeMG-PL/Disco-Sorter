@@ -3,8 +3,8 @@
 [System.Serializable]
 public class SongData
 {
-    public List<int> entityType = new List<int>();
-    public List<int> color = new List<int>();
+    public List<EntityType> entityType = new List<EntityType>();
+    public List<EntityColour> color = new List<EntityColour>();
     public List<int> action = new List<int>();
     public List<int> linkedReleaseEN = new List<int>();
     public List<int> linkedCatchEN = new List<int>();

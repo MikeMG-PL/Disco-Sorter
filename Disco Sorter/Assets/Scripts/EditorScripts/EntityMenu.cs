@@ -130,7 +130,7 @@ public class EntityMenu : MonoBehaviour
         {
             Entity entity = markedEntities[i].GetComponent<Entity>();
 
-            entity.type = entityType;
+            entity.type = (EntityType)entityType;
             entity.ChangeTypeIcon();
             SetCurrentValues(entity.entityNumber);
         }
@@ -145,7 +145,7 @@ public class EntityMenu : MonoBehaviour
         {
             Entity entity = markedEntities[i].GetComponent<Entity>();
 
-            entity.color = color;
+            entity.color = (EntityColour)color;
             entity.ChangeColor();
             SetCurrentValues(entity.entityNumber);
         }
@@ -209,8 +209,8 @@ public class EntityMenu : MonoBehaviour
         StillHasColor(entity);
         StillHasAction(entity);
 
-        typeDropdown.SetValueWithoutNotify(entity.type);
-        colorDropdown.SetValueWithoutNotify(entity.color);
+        typeDropdown.SetValueWithoutNotify((int)entity.type);
+        colorDropdown.SetValueWithoutNotify((int)entity.color);
         actionDropdown.SetValueWithoutNotify(entity.action);
     }
 
@@ -230,7 +230,7 @@ public class EntityMenu : MonoBehaviour
     // Sprawdza czy obiektowi o wybranym typie można zmienić kolor
     private void StillHasColor(Entity entity)
     {
-        if (entity.type == 1)
+        if (entity.type == EntityType.Apple)
         {
             colorDropdown.interactable = true;
             colorWarning.gameObject.SetActive(false);
@@ -248,7 +248,7 @@ public class EntityMenu : MonoBehaviour
     // Sprawdza czy obiektowi o wybranym typie można zmienić akcję
     private void StillHasAction(Entity entity)
     {
-        if (entity.type == 1 || entity.type == 2)
+        if (entity.type == EntityType.Apple || entity.type == EntityType.RottenApple)
         {
             actionDropdown.interactable = true;
             actionWarning.gameObject.SetActive(false);

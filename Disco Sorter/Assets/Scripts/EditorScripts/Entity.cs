@@ -8,8 +8,8 @@ public class Entity : MonoBehaviour
     // Zmienne określające dany obiekt, zapisywane są one do pliku
     public int action;                                  // Akcja, którą można wykonać na obiekcie
     public int entityNumber;                            // Numer (identyfikator) obiektu
-    public int type;                                    // Typ obiektu
-    public int color;                                   // Kolory jabłek, 0 - brak, 1 - zielony, 2 - czerwony
+    public EntityType type;                             // Typ obiektu
+    public EntityColour color;                          // Kolory jabłek, 0 - brak, 1 - zielony, 2 - czerwony
     public int linkedReleaseEN = -1;                    // Numer entity, do którego należy wyrzucić ten obiekt
     public int linkedCatchEN = -1;                      // Numer entity, który trzeba wyrzucić do tego obiektu
 
@@ -110,11 +110,11 @@ public class Entity : MonoBehaviour
     public void ChangeColor()
     {
         // Jeśli obiekt jest typem none, lub nie ma wybranego koloru zwracany jest kolor biały
-        if (color == 0)
+        if (color == EntityColour.None)
             GetComponent<Renderer>().material.color = entityMenuScript.noColor;
-        else if (color == 1)
+        else if (color == EntityColour.Green)
             GetComponent<Renderer>().material.color = entityMenuScript.apple1Color;
-        else if (color == 2)
+        else if (color == EntityColour.Red)
             GetComponent<Renderer>().material.color = entityMenuScript.apple2Color;
         else GetComponent<Renderer>().material.color = entityMenuScript.noColor;
     }
@@ -125,11 +125,11 @@ public class Entity : MonoBehaviour
         Destroy(icon);
         Vector3 position = new Vector3(transform.position.x, transform.position.y + 0.05f, transform.position.z);
 
-        if (type == 1)
+        if (type == EntityType.Apple)
             icon = Instantiate(entityMenuScript.apple, position, entityMenuScript.apple.transform.rotation, transform);
-        else if (type == 2)
+        else if (type == EntityType.RottenApple)
             icon = Instantiate(entityMenuScript.rottenApple, position, entityMenuScript.rottenApple.transform.rotation, transform);
-        else if (type == 3)
+        else if (type == EntityType.Disco)
             icon = Instantiate(entityMenuScript.disco, position, entityMenuScript.disco.transform.rotation, transform);
     }
 
