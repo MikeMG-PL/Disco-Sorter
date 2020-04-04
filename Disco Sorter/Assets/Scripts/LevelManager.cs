@@ -10,10 +10,10 @@ public class LevelManager : MonoBehaviour
     public List<string> LevelList = new List<string>();
     public AudioManipulation songController;
     LevelParameters level;
+    int iterator = 0, iterator2 = 0;
 
 
-
-    float timer; bool timerStarted = false;
+    float spawnTime, timer; bool timerStarted = false;
 
     Vector3 A, B, C;
     public Transform TransformOfB;
@@ -26,22 +26,23 @@ public class LevelManager : MonoBehaviour
     {
         level = GetComponent<LevelParameters>();
 
-        if (timerStarted)
+        if (timerStarted && iterator == 0)
+        {
+            GetComponent<LoadToScene>().LoadSong(levelIndex);
+            SetPipeline();
+            iterator++;
+        }
+        else if (timerStarted)
         {
             timer += Time.deltaTime;
             PlayMusic();
+            SpawnObjects();
         }
-
         if (Input.GetKeyDown(KeyCode.Return) && levelIndex < LevelList.Count - 1)
         {
-            GetComponent<LoadToScene>().LoadSong(levelIndex);
-
             timerStarted = true;
-
             Calculations();
-            SpawnObjects();
-
-            Instantiate(testBallPrefab, C, Quaternion.identity);
+            //Instantiate(testBallPrefab, C, Quaternion.identity);
         }
     }
 
@@ -53,8 +54,6 @@ public class LevelManager : MonoBehaviour
         B = TransformOfB.position;
         A = new Vector3 { x = B.x, y = B.y, z = B.z + b };
         C = new Vector3 { x = A.x, y = A.y + h, z = A.z };
-
-        //Instantiate(testBallPrefab, C, Quaternion.identity); // testing
     }
 
     void Start()
@@ -67,14 +66,26 @@ public class LevelManager : MonoBehaviour
             songController.a.Play();
     }
 
-    void SpawnObjects()
+    void SetPipeline()
     {
         for (int i = 0; i < level.spawnPipeline.Count; i++)
         {
             spawnPipeline.Enqueue(level.spawnPipeline[i]);
         }
+    }
 
-        //for()
+    void SpawnObjects()
+    {
+        if (songController.a.isPlaying && iterator2 < level.spawnPipeline.Count)
+            spawnTime = level.spawnPipeline[iterator2].GetComponent<ObjectParameters>().spawnTime;
+
+        if (timer >= spawnTime - 0.01f && timer <= spawnTime + 0.01f && timerStarted)
+        {
+            Instantiate(testBallPrefab, C, Quaternion.identity); // 
+            //spawnPipeline.Dequeue();
+            iterator2++;
+        }
+        Debug.Log(timer + " | SPAWNTIME: " +  spawnTime);
     }
 
     void RythmCheck()
@@ -85,6 +96,7 @@ public class LevelManager : MonoBehaviour
     void Update()
     {
         LoadLevel();
+        //Debug.Log(timer);
         // if (timerStarted)
         {
             //timer += Time.deltaTime; testing
