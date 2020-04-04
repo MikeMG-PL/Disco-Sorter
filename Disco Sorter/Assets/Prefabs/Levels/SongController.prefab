@@ -70,7 +70,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 28b5059dacfc7c34588dcb4956f5d9fe, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.12
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -171,6 +171,7 @@ MonoBehaviour:
   slider: {fileID: 0}
   timeText: {fileID: 0}
   songName: {fileID: 0}
+  a: {fileID: 0}
   floatClipLength: 0
 --- !u!114 &5795599383723566340
 MonoBehaviour:
