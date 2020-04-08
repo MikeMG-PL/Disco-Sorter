@@ -43,7 +43,7 @@ public class LevelParameters : MonoBehaviour
     ///////////////////////// DANE WYLICZANE NA BAZIE TYCH Z PLIKU /////////////////////////
     ///// WSZYSTKIE DANE Z UWZGLĘDNIENIEM MARGINESU NA TOCZENIE I TOLERANCJĘ UDERZENIA /////
 
-    int entitiesAmountInColumn;
+    public int entitiesAmountInColumn;
 
     [Header("------------------------------------------------------------------")]
     public float margin = 10f;                                // Początkowy czas bez żadnych akcji, margines przed piosenką
@@ -114,32 +114,31 @@ public class LevelParameters : MonoBehaviour
         int row = 0, column = 0, index;
         while (row < entitiesAmountInColumn)
         {
+            bool addToPipeline = true; // Czy dodać element do pipeline, domyślnie tak
             index = entitiesAmountInColumn * column + row;
             switch (entityType[index])
             {
                 case EntityType.Apple:
                     queueDispenser = Instantiate(apple, pos, Quaternion.identity);
-                    SetDispenser(index);
-                    spawnPipeline.Add(queueDispenser);
-
                     break;
 
                 case EntityType.RottenApple:
                     queueDispenser = Instantiate(rottenApple, pos, Quaternion.identity);
-                    SetDispenser(index);
-                    spawnPipeline.Add(queueDispenser);
-
                     break;
 
                 case EntityType.Disco:
                     queueDispenser = Instantiate(disco, pos, Quaternion.identity);
-                    SetDispenser(index);
-                    spawnPipeline.Add(queueDispenser);
-
                     break;
 
                 default:
+                    addToPipeline = false;
                     break;
+            }
+
+            if (addToPipeline)
+            {
+                SetParameters(index);
+                spawnPipeline.Add(queueDispenser);
             }
 
             if (column == 3)
@@ -152,7 +151,7 @@ public class LevelParameters : MonoBehaviour
         }
     }
 
-    void SetDispenser(int j)
+    void SetParameters(int j)
     {
         ObjectParameters q = queueDispenser.GetComponent<ObjectParameters>();
 

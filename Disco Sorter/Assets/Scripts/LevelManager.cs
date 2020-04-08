@@ -8,7 +8,7 @@ public class LevelManager : MonoBehaviour
     public int levelIndex;
     [HideInInspector()]
     public List<string> LevelList = new List<string>();
-    public AudioManipulation songController;
+    public GameAudioManipulation songController;
     LevelParameters level;
     int iterator;
 
@@ -30,13 +30,13 @@ public class LevelManager : MonoBehaviour
 
         for(int i = 0; i < spawnPipeline.Count; i++)
         {
-            Debug.Log(spawnPipeline[i].GetComponent<ObjectParameters>().spawnTime);
+            //Debug.Log(spawnPipeline[i].GetComponent<ObjectParameters>().spawnTime);
         }
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return) && levelIndex < LevelList.Count - 1 && !songController.a.isPlaying)
+        if (Input.GetKeyDown(KeyCode.Return) && levelIndex < LevelList.Count - 1 && !songController.aSrc.isPlaying)
         {
             timerStarted = true;
         }
@@ -63,8 +63,8 @@ public class LevelManager : MonoBehaviour
 
     void PlayMusic()
     {
-        if (timer >= level.margin - 0.01f && timer <= level.margin + 0.01f && !songController.a.isPlaying)
-            songController.a.Play();
+        if (timer >= level.margin - 0.01f && timer <= level.margin + 0.01f && !songController.aSrc.isPlaying)
+            songController.aSrc.Play();
     }
 
     void SpawnObjects()
@@ -75,9 +75,31 @@ public class LevelManager : MonoBehaviour
 
             if (timer >= spawnTime - 0.01f && timer <= spawnTime + 0.01f && timerStarted)
             {
-                Instantiate(testBallPrefab, C, Quaternion.identity);
+                spawnPipeline[iterator].transform.position = SetRowPosition(id: spawnPipeline[iterator].GetComponent<ObjectParameters>().ID, pos: C);
+                spawnPipeline[iterator].transform.rotation = Quaternion.identity;
+                spawnPipeline[iterator].GetComponent<Rigidbody>().velocity = Vector3.zero;
                 iterator++;
             }
         }
+    }
+
+    Vector3 SetRowPosition(int id, Vector3 pos)
+    {
+        int entitiesInColumn = GetComponent<LevelParameters>().entitiesAmountInColumn;
+        Vector3 finalPos = pos;
+
+        if (id < entitiesInColumn)
+            return finalPos;
+
+        else if (id < entitiesInColumn * 2)
+            finalPos = new Vector3(finalPos.x + 0.5f, finalPos.y, finalPos.z);
+
+        else if (id < entitiesInColumn * 3)
+            finalPos = new Vector3(finalPos.x + 1f, finalPos.y, finalPos.z);
+
+        else if (id < entitiesInColumn * 4)
+            finalPos = new Vector3(finalPos.x + 1.5f, finalPos.y, finalPos.z);
+
+        return finalPos;
     }
 }
