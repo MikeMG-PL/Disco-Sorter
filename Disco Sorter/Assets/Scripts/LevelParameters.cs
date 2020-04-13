@@ -164,6 +164,22 @@ public class LevelParameters : MonoBehaviour
         q.action = action[j];
         q.ID = j;
 
+        if(q.type == EntityType.Apple)
+        {
+            switch(q.color)
+            {
+                case EntityColour.Red:
+                    break;
+
+                case EntityColour.Green:
+                    q.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = q.gameObject.GetComponent<MeshRenderer>().material;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
         // Niedokończone: w przypadku, gdy akcja to "catch... release" - należy ustawić te parametry
         //q.linkedReleaseTime = linkedReleaseTime[j];
         //q.linkedCatchTime = linkedCatchTime[j];

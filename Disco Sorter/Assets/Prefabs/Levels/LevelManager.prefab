@@ -45,11 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b1b6b1ace1edae4dae16943ec4a4748, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  listIdx: 0
+  levelIndex: 0
   LevelList: []
   songController: {fileID: 0}
   TransformOfB: {fileID: 0}
   testBallPrefab: {fileID: 0}
+  spawnPipeline: []
 --- !u!114 &7214126554702194147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,10 +63,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b154b10da50893740b8a3e40a75445af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  apple: {fileID: 7181914308200693853, guid: cd102fb4a5786c948b249d59531315aa, type: 3}
-  rottenApple: {fileID: 7943203755827956147, guid: be421fbdb9cf8da418a1b3ca62779d99,
+  apple: {fileID: 6320401737951602221, guid: 2064db32ea9aa7548844abb94b8a2739, type: 3}
+  rottenApple: {fileID: 6320401737951602221, guid: 002e7599bec3b4d48bb92d79be15b810,
     type: 3}
-  disco: {fileID: 1320297642133616573, guid: 168288884bf08c9429d682700d761edb, type: 3}
+  disco: {fileID: 8908264986510012346, guid: 5384527610821d546b4e4915f9c3508d, type: 3}
   release: {fileID: 2174226949125507776, guid: c7a6a01693226764f9859ef871452d55, type: 3}
   spawnPipeline: []
   entityType: 
@@ -76,6 +77,7 @@ MonoBehaviour:
   BPM: 0
   netDensity: 0
   clipLength: 0
+  entitiesAmountInColumn: 0
   margin: 3
   tolerance: 0.24
   rollTime: 2
