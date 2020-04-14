@@ -6932,6 +6932,7 @@ MonoBehaviour:
   slider: {fileID: 4487409}
   timeText: {fileID: 582267205}
   songName: {fileID: 905925104}
+  a: {fileID: 0}
   floatClipLength: 0
 --- !u!114 &1325650117
 MonoBehaviour:
@@ -6945,7 +6946,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b13849375f29db54eb6064cb736f1082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  netDensity: 1
+  netDensity: 2
   BPM: 128
   entityArray: []
   entityEndTime: []
