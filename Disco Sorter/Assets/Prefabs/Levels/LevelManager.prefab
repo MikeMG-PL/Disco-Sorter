@@ -78,9 +78,9 @@ MonoBehaviour:
   netDensity: 0
   clipLength: 0
   entitiesAmountInColumn: 0
-  margin: 3
+  margin: 4
   tolerance: 0.24
-  rollTime: 2
+  rollTime: 3.5
 --- !u!114 &6862720497453972305
 MonoBehaviour:
   m_ObjectHideFlags: 0
