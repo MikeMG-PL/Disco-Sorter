@@ -324,8 +324,8 @@ PlayerSettings:
     m_Enabled: 1
     m_Devices:
     - None
-    - Oculus
     - OpenVR
+    - Oculus
   - m_BuildTarget: Tizen
     m_Enabled: 0
     m_Devices: []
