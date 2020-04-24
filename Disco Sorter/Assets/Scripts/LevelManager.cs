@@ -17,27 +17,20 @@ public class LevelManager : MonoBehaviour
 
     Vector3 A, B, C;
     public Transform TransformOfB;
-    public GameObject testBallPrefab;
 
-    public List<GameObject> spawnPipeline = new List<GameObject>();
+    List<GameObject> spawnPipeline = new List<GameObject>();
 
-    void Start()
-    {
-        level = GetComponent<LevelParameters>();
-        GetComponent<LoadToScene>().LoadSong(levelIndex);
-        spawnPipeline = level.spawnPipeline;
-        Calculations();
-
-        for(int i = 0; i < spawnPipeline.Count; i++)
-        {
-            //Debug.Log(spawnPipeline[i].GetComponent<ObjectParameters>().spawnTime);
-        }
-    }
 
     void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.Return) && levelIndex < LevelList.Count - 1 && !songController.aSrc.isPlaying)
         {
+            level = GetComponent<LevelParameters>();
+            GetComponent<LoadToScene>().LoadSong(levelIndex);
+            spawnPipeline = level.spawnPipeline;
+            Calculations();
+
             timerStarted = true;
         }
 
