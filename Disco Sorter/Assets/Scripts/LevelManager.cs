@@ -9,11 +9,12 @@ public class LevelManager : MonoBehaviour
     [HideInInspector()]
     public List<string> LevelList = new List<string>();
     public GameAudioManipulation songController;
+    public float timer;
+
     LevelParameters level;
     int iterator;
-
-
-    float spawnTime, timer; bool timerStarted;
+    float spawnTime;
+    bool timerStarted;
 
     Vector3 A, B, C;
     public Transform TransformOfB;
