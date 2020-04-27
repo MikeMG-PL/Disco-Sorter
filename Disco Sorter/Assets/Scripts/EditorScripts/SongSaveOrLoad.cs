@@ -22,6 +22,7 @@ public class SongSaveOrLoad : MonoBehaviour
         if (!forceSave && !IsGoodToSave()) return;
         entityMenu.GetComponent<EntityMenu>().IsSavedChange(true);
         SongFile.SaveSong(gameObject.GetComponent<EditorNet>());
+        GetComponent<ScriptableObjectFactory>().CreateSO();
     }
 
     // Wczytuje dany plik, na podstawie int przekazanego przez przycisk znajdujący się w savesPanel

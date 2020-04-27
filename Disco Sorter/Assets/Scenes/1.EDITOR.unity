@@ -6629,6 +6629,7 @@ GameObject:
   - component: {fileID: 1325650114}
   - component: {fileID: 1325650113}
   - component: {fileID: 1325650115}
+  - component: {fileID: 1325650121}
   - component: {fileID: 1325650116}
   - component: {fileID: 1325650118}
   - component: {fileID: 1325650117}
@@ -6857,6 +6858,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   highlightColor: {r: 0.3480331, g: 0.7822073, b: 0.9339623, a: 1}
   currentEntity: {fileID: 0}
+--- !u!114 &1325650121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1325650112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ebefa1e40f96154ea2c975c26b4ff2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelTemplate: {fileID: 11400000, guid: 11d45e5bc408d56459562546857c8ffc, type: 2}
 --- !u!1 &1348796583
 GameObject:
   m_ObjectHideFlags: 0
