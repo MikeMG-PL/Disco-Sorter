@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.UI;
 
 public class SongSaveOrLoad : MonoBehaviour
@@ -21,31 +22,34 @@ public class SongSaveOrLoad : MonoBehaviour
     {
         if (!forceSave && !IsGoodToSave()) return;
         entityMenu.GetComponent<EntityMenu>().IsSavedChange(true);
-        SongFile.SaveSong(gameObject.GetComponent<EditorNet>());
+        //SongFile.SaveSong(gameObject.GetComponent<EditorNet>());
         GetComponent<ScriptableObjectFactory>().CreateSO();
     }
 
     // Wczytuje dany plik, na podstawie int przekazanego przez przycisk znajdujący się w savesPanel
     public void LoadSong(int selectedButton)
     {
+        
+
+
         savesPanel.SetActive(false);
         string[] songNames = SongFile.GetSavesNames();
 
         if (selectedButton >= songNames.Length)
             return;
 
-        SongData songData = SongFile.LoadSong(songNames[selectedButton]);
+        //SongData songData = SongFile.LoadSong(songNames[selectedButton]);
 
-        editorNet.BPM = songData.BPM;
+        /*editorNet.BPM = songData.BPM;
         editorNet.netDensity = songData.netDensity;
-        editorNet.BuildNet();
+        editorNet.BuildNet();*/
 
         for (int i = 0; i < editorNet.entityArray.Length; i++)
         {
             Entity entity = editorNet.entityArray[i].GetComponent<Entity>();
-            entity.type = songData.entityType[i];
-            entity.color = songData.color[i];
-            entity.action = songData.action[i];
+           // entity.type = songData.entityType[i];
+            //entity.color = songData.color[i];
+           // entity.action = songData.action[i];
             entity.ChangeColor();
             entity.ChangeTypeIcon();
             entity.ChangeActionIcon();

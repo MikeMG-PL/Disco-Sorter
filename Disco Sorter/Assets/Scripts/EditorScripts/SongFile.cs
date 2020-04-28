@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityEditor;
 
 public static class SongFile
 {
@@ -8,7 +9,7 @@ public static class SongFile
     private static string name = "song.data";
 
     // Zapisuje aktualny stan obiektów w siatce do pliku
-    public static void SaveSong(EditorNet editorNet)
+    /*public static void SaveSong(EditorNet editorNet)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         Directory.CreateDirectory(folderPath + "/" + editorNet.songName);
@@ -19,7 +20,7 @@ public static class SongFile
 
         formatter.Serialize(stream, songData);
         stream.Close();
-    }
+    }*/
 
     // Wczytuje dany plik (danych siatki)
     public static SongData LoadSong(string songName)
@@ -43,15 +44,14 @@ public static class SongFile
     // Zwraca tablicę nazw zapisanych plików
     public static string[] GetSavesNames()
     {
-        DirectoryInfo dir = new DirectoryInfo(folderPath);
-        DirectoryInfo[] info = dir.GetDirectories();
-
-        string[] savesNames = new string[Directory.GetDirectories(folderPath).Length];
-        for (int i = 0; i < savesNames.Length; i++)
+        string[] guids = AssetDatabase.FindAssets("t: ScriptableObject", new[] { "Assets/LEVELS" });
+        string[] savesNames = guids;
+        for (int i = 0; i < guids.Length; i++)
         {
-            savesNames[i] = info[i].Name;
+            savesNames[i] = AssetDatabase.GUIDToAssetPath(guids[i]);
+            savesNames[i] = savesNames[i].Remove(0, 14);
+            savesNames[i] = savesNames[i].Remove(savesNames[i].IndexOf(".asset"), 6);
         }
-
         return savesNames;
     }
 }
