@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.UI;
 
 public class LoadToScene : MonoBehaviour
@@ -24,7 +25,7 @@ public class LoadToScene : MonoBehaviour
             savesButtons[i] = savesPanel.transform.GetChild(i).gameObject;
         }
 
-        songNames = SongFile.GetSavesNames();
+        songNames = GetSavesNames();
         UpdateSavesNames(songNames);
 
         for (int i = 0; i < savesPanel.transform.childCount; i++)
@@ -60,6 +61,19 @@ public class LoadToScene : MonoBehaviour
         levelParameters.Calculations();
         levelParameters.ConvertToPipeline();
 
+    }
+
+    public static string[] GetSavesNames()
+    {
+        string[] guids = AssetDatabase.FindAssets("t: ScriptableObject", new[] { "Assets/LEVELS" });
+        string[] savesNames = guids;
+        for (int i = 0; i < guids.Length; i++)
+        {
+            savesNames[i] = AssetDatabase.GUIDToAssetPath(guids[i]);
+            savesNames[i] = savesNames[i].Remove(0, 14);
+            savesNames[i] = savesNames[i].Remove(savesNames[i].IndexOf(".asset"), 6);
+        }
+        return savesNames;
     }
 
     /// UAKTUALNIANIE PRZYCISKÓW ///

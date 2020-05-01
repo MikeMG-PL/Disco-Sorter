@@ -29,14 +29,19 @@ public class SongSaveOrLoad : MonoBehaviour
     // Wczytuje dany plik, na podstawie int przekazanego przez przycisk znajdujący się w savesPanel
     public void LoadSong(int selectedButton)
     {
-        
+
 
 
         savesPanel.SetActive(false);
-        string[] songNames = SongFile.GetSavesNames();
+        string[] songNames = GetSavesNames();
 
         if (selectedButton >= songNames.Length)
             return;
+
+        AssetDatabase.Refresh();
+        string[] assetGUID = AssetDatabase.FindAssets("t: ScriptableObject", new[] { "Assets/LEVELS/" + songNames[selectedButton] });
+        string assetPath = assetGUID[0];
+        assetPath = AssetDatabase.GUIDToAssetPath(assetPath);
 
         //SongData songData = SongFile.LoadSong(songNames[selectedButton]);
 
@@ -47,13 +52,27 @@ public class SongSaveOrLoad : MonoBehaviour
         for (int i = 0; i < editorNet.entityArray.Length; i++)
         {
             Entity entity = editorNet.entityArray[i].GetComponent<Entity>();
-           // entity.type = songData.entityType[i];
+            // entity.type = songData.entityType[i];
             //entity.color = songData.color[i];
-           // entity.action = songData.action[i];
+            // entity.action = songData.action[i];
             entity.ChangeColor();
             entity.ChangeTypeIcon();
             entity.ChangeActionIcon();
         }
+    }
+
+    // Zwraca tablicę nazw zapisanych plików
+    public static string[] GetSavesNames()
+    {
+        string[] guids = AssetDatabase.FindAssets("t: ScriptableObject", new[] { "Assets/LEVELS" });
+        string[] savesNames = guids;
+        for (int i = 0; i < guids.Length; i++)
+        {
+            savesNames[i] = AssetDatabase.GUIDToAssetPath(guids[i]);
+            savesNames[i] = savesNames[i].Remove(0, 14);
+            savesNames[i] = savesNames[i].Remove(savesNames[i].IndexOf(".asset"), 6);
+        }
+        return savesNames;
     }
 
     private bool IsGoodToSave()
