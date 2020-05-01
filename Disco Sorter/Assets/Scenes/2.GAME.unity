@@ -48,7 +48,7 @@ LightmapSettings:
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
-    m_IndirectOutputScale: 0.0001
+    m_IndirectOutputScale: 1
     m_AlbedoBoost: 1
     m_EnvironmentLightingMode: 1
     m_EnableBakedLightmaps: 1
@@ -1945,7 +1945,7 @@ Light:
   serializedVersion: 9
   m_Type: 0
   m_Color: {r: 1, g: 0.3537736, b: 0.3537736, a: 1}
-  m_Intensity: 1
+  m_Intensity: 3
   m_Range: 30
   m_SpotAngle: 10.8
   m_InnerSpotAngle: 1
@@ -11972,9 +11972,9 @@ Light:
   serializedVersion: 9
   m_Type: 0
   m_Color: {r: 0.35294116, g: 1, b: 0.51220423, a: 1}
-  m_Intensity: 1
-  m_Range: 5.91
-  m_SpotAngle: 47.4
+  m_Intensity: 3
+  m_Range: 7.59
+  m_SpotAngle: 42
   m_InnerSpotAngle: 18.5
   m_CookieSize: 10
   m_Shadows:
@@ -12019,7 +12019,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
-  m_ShadowRadius: 0
+  m_ShadowRadius: 10
   m_ShadowAngle: 0
 --- !u!1 &481296809
 GameObject:
@@ -28487,7 +28487,7 @@ Light:
   serializedVersion: 9
   m_Type: 0
   m_Color: {r: 0.35294116, g: 1, b: 0.51220423, a: 1}
-  m_Intensity: 1
+  m_Intensity: 3
   m_Range: 30
   m_SpotAngle: 10.8
   m_InnerSpotAngle: 1
@@ -34065,9 +34065,9 @@ Light:
   serializedVersion: 9
   m_Type: 0
   m_Color: {r: 1, g: 0.3537736, b: 0.3537736, a: 1}
-  m_Intensity: 1
-  m_Range: 5.91
-  m_SpotAngle: 47.4
+  m_Intensity: 3
+  m_Range: 7.59
+  m_SpotAngle: 42
   m_InnerSpotAngle: 18.5
   m_CookieSize: 10
   m_Shadows:
@@ -34112,7 +34112,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
-  m_ShadowRadius: 0
+  m_ShadowRadius: 10
   m_ShadowAngle: 0
 --- !u!43 &1346122909
 Mesh:
@@ -48097,7 +48097,12 @@ PrefabInstance:
     - target: {fileID: 2139168411337576124, guid: cc32ff9f302a2884998562541c057365,
         type: 3}
       propertyPath: m_Intensity
-      value: 1
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2139168411337576124, guid: cc32ff9f302a2884998562541c057365,
+        type: 3}
+      propertyPath: m_SpotAngle
+      value: 38.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc32ff9f302a2884998562541c057365, type: 3}
@@ -48397,6 +48402,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1635179795}
+    - target: {fileID: 7692397607322723360, guid: 9af9964c4561e444eac2d4d757ba0e50,
+        type: 3}
+      propertyPath: m_SelectedEditorRenderState
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9af9964c4561e444eac2d4d757ba0e50, type: 3}
 --- !u!4 &4855559614694116773 stripped
