@@ -43,19 +43,20 @@ public class LoadToScene : MonoBehaviour
 
         // (!) Mikoś plz opisz dokładniej co oznaczają poszczególne inty (!) :3
 
-        SongData songData = SongFile.LoadSong(songNames[selectedButton]);
+        string songPath = "Assets/LEVELS/" + songNames[selectedButton] + ".asset";
+        Level level = (Level)AssetDatabase.LoadAssetAtPath(songPath, typeof(Level));
 
-        levelParameters.BPM = songData.BPM;
-        levelParameters.netDensity = songData.netDensity;
-        levelParameters.clipLength = songData.clipLength;
+        levelParameters.BPM = level.BPM;
+        levelParameters.netDensity = level.netDensity;
+        levelParameters.clipLength = level.clipLength;
 
-        for (int i = 0; i < songData.entityType.Count; i++)
+        for (int i = 0; i < level.entityType.Count; i++)
         {
-            levelParameters.entityType.Add(songData.entityType[i]);
-            levelParameters.color.Add(songData.color[i]);
-            levelParameters.action.Add(songData.action[i]);
-            levelParameters.linkedCatchEN.Add(songData.linkedCatchEN[i]);
-            levelParameters.linkedReleaseEN.Add(songData.linkedReleaseEN[i]);
+            levelParameters.entityType.Add(level.entityType[i]);
+            levelParameters.color.Add(level.color[i]);
+            levelParameters.action.Add(level.action[i]);
+            levelParameters.linkedCatchEN.Add(level.linkedCatchEN[i]);
+            levelParameters.linkedReleaseEN.Add(level.linkedReleaseEN[i]);
         }
 
         levelParameters.Calculations();

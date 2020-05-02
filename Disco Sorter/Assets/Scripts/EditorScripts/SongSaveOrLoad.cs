@@ -13,6 +13,8 @@ public class SongSaveOrLoad : MonoBehaviour
     private EditorNet editorNet;
     private List<GameObject> badEntities = new List<GameObject>();      // Lista źle ustawionych obiektów
 
+    Level level;
+
     private void Awake()
     {
         editorNet = GetComponent<EditorNet>();
@@ -29,32 +31,27 @@ public class SongSaveOrLoad : MonoBehaviour
     // Wczytuje dany plik, na podstawie int przekazanego przez przycisk znajdujący się w savesPanel
     public void LoadSong(int selectedButton)
     {
-
-
-
         savesPanel.SetActive(false);
+        
+        AssetDatabase.Refresh();
         string[] songNames = GetSavesNames();
 
         if (selectedButton >= songNames.Length)
             return;
 
-        AssetDatabase.Refresh();
-        string[] assetGUID = AssetDatabase.FindAssets("t: ScriptableObject", new[] { "Assets/LEVELS/" + songNames[selectedButton] });
-        string assetPath = assetGUID[0];
-        assetPath = AssetDatabase.GUIDToAssetPath(assetPath);
+        string songPath = "Assets/LEVELS/" + songNames[selectedButton] + ".asset";
+        Level level = (Level)AssetDatabase.LoadAssetAtPath(songPath, typeof(Level));
 
-        //SongData songData = SongFile.LoadSong(songNames[selectedButton]);
-
-        /*editorNet.BPM = songData.BPM;
-        editorNet.netDensity = songData.netDensity;
-        editorNet.BuildNet();*/
+        editorNet.BPM = level.BPM;
+        editorNet.netDensity = level.netDensity;
+        editorNet.BuildNet();
 
         for (int i = 0; i < editorNet.entityArray.Length; i++)
         {
             Entity entity = editorNet.entityArray[i].GetComponent<Entity>();
-            // entity.type = songData.entityType[i];
-            //entity.color = songData.color[i];
-            // entity.action = songData.action[i];
+            entity.type = level.entityType[i];
+            entity.color = level.color[i];
+            entity.action = level.action[i];
             entity.ChangeColor();
             entity.ChangeTypeIcon();
             entity.ChangeActionIcon();
