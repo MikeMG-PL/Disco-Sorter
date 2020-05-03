@@ -8,6 +8,16 @@ TagManager:
   - Marker
   - ExcludeTeleport
   - Canvas
+  - Leg
+  - SnapCube
+  - Arm
+  - SnapCylinder
+  - Saucers
+  - Torso
+  - Head
+  - Apple
+  - RottenApple
+  - DiscoBall
   layers:
   - Default
   - TransparentFX
