@@ -16,6 +16,7 @@ public class ScriptableObjectFactory : MonoBehaviour
 
     public void CreateSO()
     {
+        pathName = GetComponent<AudioSource>().clip.name;
         temp = Instantiate(levelTemplate);
 
         SetValues(temp, GetComponent<EditorNet>());

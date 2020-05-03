@@ -36,14 +36,21 @@ public class SongSaveOrLoad : MonoBehaviour
         AssetDatabase.Refresh();
         string[] songNames = GetSavesNames();
 
-        if (selectedButton >= songNames.Length)
+        if (selectedButton >= songNames.Length || selectedButton < 0)
             return;
+        
+        string songPath = "Assets/SONGS/" + songNames[selectedButton] + ".mp3";
+        AudioClip c = (AudioClip)AssetDatabase.LoadAssetAtPath(songPath, typeof(AudioClip));
+        GetComponent<AudioSource>().clip = c;
 
-        string songPath = "Assets/LEVELS/" + songNames[selectedButton] + ".asset";
-        Level level = (Level)AssetDatabase.LoadAssetAtPath(songPath, typeof(Level));
+        string levelPath = "Assets/LEVELS/" + songNames[selectedButton] + ".asset";
+        Level level = (Level)AssetDatabase.LoadAssetAtPath(levelPath, typeof(Level));
+        
+        
 
         editorNet.BPM = level.BPM;
         editorNet.netDensity = level.netDensity;
+        editorNet.songName = level.name;
         editorNet.BuildNet();
 
         for (int i = 0; i < editorNet.entityArray.Length; i++)
@@ -56,6 +63,8 @@ public class SongSaveOrLoad : MonoBehaviour
             entity.ChangeTypeIcon();
             entity.ChangeActionIcon();
         }
+
+        
     }
 
     // Zwraca tablicę nazw zapisanych plików

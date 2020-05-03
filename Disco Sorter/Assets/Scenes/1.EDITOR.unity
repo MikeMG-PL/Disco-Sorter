@@ -2400,7 +2400,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Czas:'
+  m_Text: '[CZAS]'
 --- !u!222 &582267206
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3795,7 +3795,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Piosenka:'
+  m_Text: '[NOWA PIOSENKA]'
 --- !u!222 &905925105
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4354,7 +4354,7 @@ GameObject:
   - component: {fileID: 988572337}
   m_Layer: 5
   m_Name: Entity Canvas
-  m_TagString: Untagged
+  m_TagString: Canvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6686,7 +6686,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 63089493fea90074cbc92330b5a8271d, type: 3}
+  m_audioClip: {fileID: 8300000, guid: e93bed9030d6e8248a7d073b03df3ef8, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.12
   m_Pitch: 1
@@ -6804,7 +6804,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   netDensity: 2
-  BPM: 128
+  BPM: 150
   entityArray: []
   entityEndTime: []
   entitiesOverallAmount: 0

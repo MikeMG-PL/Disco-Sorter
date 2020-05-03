@@ -38,14 +38,15 @@ public class LoadToScene : MonoBehaviour
     /// PRZENIESIENIE DANYCH Z PLIKU DO SKRYPTU LEVELPARAMETERS ///
     public void LoadSong(int selectedButton)
     {
-        if (selectedButton >= songNames.Length)
+        if (selectedButton >= songNames.Length || selectedButton < 0)
             return;
 
         // (!) Mikoś plz opisz dokładniej co oznaczają poszczególne inty (!) :3
 
-        string songPath = "Assets/LEVELS/" + songNames[selectedButton] + ".asset";
-        Level level = (Level)AssetDatabase.LoadAssetAtPath(songPath, typeof(Level));
+        string levelPath = "Assets/LEVELS/" + songNames[selectedButton] + ".asset";
+        Level level = (Level)AssetDatabase.LoadAssetAtPath(levelPath, typeof(Level));
 
+        levelParameters.name = level.name;
         levelParameters.BPM = level.BPM;
         levelParameters.netDensity = level.netDensity;
         levelParameters.clipLength = level.clipLength;
@@ -62,6 +63,9 @@ public class LoadToScene : MonoBehaviour
         levelParameters.Calculations();
         levelParameters.ConvertToPipeline();
 
+        string songPath = "Assets/SONGS/" + songNames[selectedButton] + ".mp3";
+        AudioClip c = (AudioClip)AssetDatabase.LoadAssetAtPath(songPath, typeof(AudioClip));
+        GetComponent<AudioSource>().clip = c;
     }
 
     public static string[] GetSavesNames()
