@@ -16,7 +16,7 @@ public class AudioManipulation : MonoBehaviour
     private Text songName;                  // Tekst wyświetlający nazwę piosenki, ustawiany na Starcie
 
     [HideInInspector()]
-    public AudioSource a;                  // Zmienna reprezentująca źródło dźwięku
+    public AudioSource a;                   // Zmienna reprezentująca źródło dźwięku
     private bool virtualPause;              // Zmienna mówiąca czy jest włączona wirtualna pauza*
     private float clampedLength;            // Zmienna opisująca porządany moment w piosence w przedziale <0; 1>
     private string clipLength;
@@ -49,8 +49,16 @@ public class AudioManipulation : MonoBehaviour
         Clamp();
         Slider();
         OnClipEnd();
+
+        songName.text = a.clip.name;
         if (!pausePressed)
+        {
             TimeTextUpdate();
+        }
+
+        string minutes = Mathf.Floor(a.clip.length / 60).ToString("00");
+        string seconds = Mathf.Floor(a.clip.length % 60).ToString("00");
+        clipLength = $"{minutes}:{seconds}";
     }
 
     /// Funkcja opisująca odtwarzanie linii poprzez wciśnięcie przycisku ///

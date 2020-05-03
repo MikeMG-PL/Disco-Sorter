@@ -8,36 +8,35 @@ public class LevelManager : MonoBehaviour
     public int levelIndex;
     [HideInInspector()]
     public List<string> LevelList = new List<string>();
-    public GameAudioManipulation songController;
+    GameAudioManipulation songController;
+    [HideInInspector()]
+    public float timer;
+
     LevelParameters level;
     int iterator;
-
-
-    float spawnTime, timer; bool timerStarted;
+    float spawnTime;
+    bool timerStarted;
 
     Vector3 A, B, C;
     public Transform TransformOfB;
-    public GameObject testBallPrefab;
 
-    public List<GameObject> spawnPipeline = new List<GameObject>();
+    List<GameObject> spawnPipeline = new List<GameObject>();
 
-    void Start()
+    private void Start()
     {
-        level = GetComponent<LevelParameters>();
-        GetComponent<LoadToScene>().LoadSong(levelIndex);
-        spawnPipeline = level.spawnPipeline;
-        Calculations();
-
-        for(int i = 0; i < spawnPipeline.Count; i++)
-        {
-            //Debug.Log(spawnPipeline[i].GetComponent<ObjectParameters>().spawnTime);
-        }
+        songController = GetComponent<GameAudioManipulation>();
     }
 
     void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.Return) && levelIndex < LevelList.Count - 1 && !songController.aSrc.isPlaying)
         {
+            level = GetComponent<LevelParameters>();
+            GetComponent<LoadToScene>().LoadSong(levelIndex);
+            spawnPipeline = level.spawnPipeline;
+            Calculations();
+
             timerStarted = true;
         }
 
