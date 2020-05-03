@@ -101,6 +101,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 1867442034410331234, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
+        type: 3}
+      propertyPath: m_TagString
+      value: DiscoBall
+      objectReference: {fileID: 0}
     - target: {fileID: 3048727672643982173, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
         type: 3}
       propertyPath: m_LocalPosition.x
