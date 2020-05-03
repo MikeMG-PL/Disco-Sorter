@@ -8,7 +8,8 @@ public class LevelManager : MonoBehaviour
     public int levelIndex;
     [HideInInspector()]
     public List<string> LevelList = new List<string>();
-    public GameAudioManipulation songController;
+    GameAudioManipulation songController;
+    [HideInInspector()]
     public float timer;
 
     LevelParameters level;
@@ -21,6 +22,10 @@ public class LevelManager : MonoBehaviour
 
     List<GameObject> spawnPipeline = new List<GameObject>();
 
+    private void Start()
+    {
+        songController = GetComponent<GameAudioManipulation>();
+    }
 
     void Update()
     {

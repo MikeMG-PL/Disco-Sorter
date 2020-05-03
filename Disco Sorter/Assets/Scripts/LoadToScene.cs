@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.UI;
 
 public class LoadToScene : MonoBehaviour
@@ -24,7 +25,7 @@ public class LoadToScene : MonoBehaviour
             savesButtons[i] = savesPanel.transform.GetChild(i).gameObject;
         }
 
-        songNames = SongFile.GetSavesNames();
+        songNames = GetSavesNames();
         UpdateSavesNames(songNames);
 
         for (int i = 0; i < savesPanel.transform.childCount; i++)
@@ -37,29 +38,47 @@ public class LoadToScene : MonoBehaviour
     /// PRZENIESIENIE DANYCH Z PLIKU DO SKRYPTU LEVELPARAMETERS ///
     public void LoadSong(int selectedButton)
     {
-        if (selectedButton >= songNames.Length)
+        if (selectedButton >= songNames.Length || selectedButton < 0)
             return;
 
         // (!) Mikoś plz opisz dokładniej co oznaczają poszczególne inty (!) :3
 
-        SongData songData = SongFile.LoadSong(songNames[selectedButton]);
+        string levelPath = "Assets/LEVELS/" + songNames[selectedButton] + ".asset";
+        Level level = (Level)AssetDatabase.LoadAssetAtPath(levelPath, typeof(Level));
 
-        levelParameters.BPM = songData.BPM;
-        levelParameters.netDensity = songData.netDensity;
-        levelParameters.clipLength = songData.clipLength;
+        levelParameters.name = level.name;
+        levelParameters.BPM = level.BPM;
+        levelParameters.netDensity = level.netDensity;
+        levelParameters.clipLength = level.clipLength;
 
-        for (int i = 0; i < songData.entityType.Count; i++)
+        for (int i = 0; i < level.entityType.Count; i++)
         {
-            levelParameters.entityType.Add(songData.entityType[i]);
-            levelParameters.color.Add(songData.color[i]);
-            levelParameters.action.Add(songData.action[i]);
-            levelParameters.linkedCatchEN.Add(songData.linkedCatchEN[i]);
-            levelParameters.linkedReleaseEN.Add(songData.linkedReleaseEN[i]);
+            levelParameters.entityType.Add(level.entityType[i]);
+            levelParameters.color.Add(level.color[i]);
+            levelParameters.action.Add(level.action[i]);
+            levelParameters.linkedCatchEN.Add(level.linkedCatchEN[i]);
+            levelParameters.linkedReleaseEN.Add(level.linkedReleaseEN[i]);
         }
 
         levelParameters.Calculations();
         levelParameters.ConvertToPipeline();
 
+        string songPath = "Assets/SONGS/" + songNames[selectedButton] + ".mp3";
+        AudioClip c = (AudioClip)AssetDatabase.LoadAssetAtPath(songPath, typeof(AudioClip));
+        GetComponent<AudioSource>().clip = c;
+    }
+
+    public static string[] GetSavesNames()
+    {
+        string[] guids = AssetDatabase.FindAssets("t: ScriptableObject", new[] { "Assets/LEVELS" });
+        string[] savesNames = guids;
+        for (int i = 0; i < guids.Length; i++)
+        {
+            savesNames[i] = AssetDatabase.GUIDToAssetPath(guids[i]);
+            savesNames[i] = savesNames[i].Remove(0, 14);
+            savesNames[i] = savesNames[i].Remove(savesNames[i].IndexOf(".asset"), 6);
+        }
+        return savesNames;
     }
 
     /// UAKTUALNIANIE PRZYCISKÓW ///

@@ -13,6 +13,8 @@ public class SongSaveOrLoad : MonoBehaviour
     private EditorNet editorNet;
     private List<GameObject> badEntities = new List<GameObject>();      // Lista źle ustawionych obiektów
 
+    Level level;
+
     private void Awake()
     {
         editorNet = GetComponent<EditorNet>();
@@ -29,31 +31,54 @@ public class SongSaveOrLoad : MonoBehaviour
     // Wczytuje dany plik, na podstawie int przekazanego przez przycisk znajdujący się w savesPanel
     public void LoadSong(int selectedButton)
     {
+        savesPanel.SetActive(false);
+        
+        AssetDatabase.Refresh();
+        string[] songNames = GetSavesNames();
+
+        if (selectedButton >= songNames.Length || selectedButton < 0)
+            return;
+        
+        string songPath = "Assets/SONGS/" + songNames[selectedButton] + ".mp3";
+        AudioClip c = (AudioClip)AssetDatabase.LoadAssetAtPath(songPath, typeof(AudioClip));
+        GetComponent<AudioSource>().clip = c;
+
+        string levelPath = "Assets/LEVELS/" + songNames[selectedButton] + ".asset";
+        Level level = (Level)AssetDatabase.LoadAssetAtPath(levelPath, typeof(Level));
+        
         
 
-
-        savesPanel.SetActive(false);
-        string[] songNames = SongFile.GetSavesNames();
-
-        if (selectedButton >= songNames.Length)
-            return;
-
-        //SongData songData = SongFile.LoadSong(songNames[selectedButton]);
-
-        /*editorNet.BPM = songData.BPM;
-        editorNet.netDensity = songData.netDensity;
-        editorNet.BuildNet();*/
+        editorNet.BPM = level.BPM;
+        editorNet.netDensity = level.netDensity;
+        editorNet.songName = level.name;
+        editorNet.BuildNet();
 
         for (int i = 0; i < editorNet.entityArray.Length; i++)
         {
             Entity entity = editorNet.entityArray[i].GetComponent<Entity>();
-           // entity.type = songData.entityType[i];
-            //entity.color = songData.color[i];
-           // entity.action = songData.action[i];
+            entity.type = level.entityType[i];
+            entity.color = level.color[i];
+            entity.action = level.action[i];
             entity.ChangeColor();
             entity.ChangeTypeIcon();
             entity.ChangeActionIcon();
         }
+
+        
+    }
+
+    // Zwraca tablicę nazw zapisanych plików
+    public static string[] GetSavesNames()
+    {
+        string[] guids = AssetDatabase.FindAssets("t: ScriptableObject", new[] { "Assets/LEVELS" });
+        string[] savesNames = guids;
+        for (int i = 0; i < guids.Length; i++)
+        {
+            savesNames[i] = AssetDatabase.GUIDToAssetPath(guids[i]);
+            savesNames[i] = savesNames[i].Remove(0, 14);
+            savesNames[i] = savesNames[i].Remove(savesNames[i].IndexOf(".asset"), 6);
+        }
+        return savesNames;
     }
 
     private bool IsGoodToSave()

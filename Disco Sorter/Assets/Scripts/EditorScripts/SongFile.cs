@@ -8,6 +8,8 @@ public static class SongFile
     private static string folderPath = Application.persistentDataPath + "/saves";
     private static string name = "song.data";
 
+
+
     // Zapisuje aktualny stan obiektów w siatce do pliku
     /*public static void SaveSong(EditorNet editorNet)
     {
@@ -25,6 +27,9 @@ public static class SongFile
     // Wczytuje dany plik (danych siatki)
     public static SongData LoadSong(string songName)
     {
+
+
+
         string filePath = Path.Combine(folderPath, songName, name);
 
         if (!File.Exists(filePath))
@@ -41,17 +46,5 @@ public static class SongFile
         return songData;
     }
 
-    // Zwraca tablicę nazw zapisanych plików
-    public static string[] GetSavesNames()
-    {
-        string[] guids = AssetDatabase.FindAssets("t: ScriptableObject", new[] { "Assets/LEVELS" });
-        string[] savesNames = guids;
-        for (int i = 0; i < guids.Length; i++)
-        {
-            savesNames[i] = AssetDatabase.GUIDToAssetPath(guids[i]);
-            savesNames[i] = savesNames[i].Remove(0, 14);
-            savesNames[i] = savesNames[i].Remove(savesNames[i].IndexOf(".asset"), 6);
-        }
-        return savesNames;
-    }
+    
 }
