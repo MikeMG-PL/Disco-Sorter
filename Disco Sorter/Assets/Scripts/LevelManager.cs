@@ -46,6 +46,12 @@ public class LevelManager : MonoBehaviour
             SpawnObjects();
             timer += Time.deltaTime;
         }
+
+        //********** For Debugginh, spawn all the each time you press enter ***********
+        if (songController.aSrc.isPlaying && Input.GetKeyDown(KeyCode.Return))
+        {
+            Restart();
+        }
     }
 
     void Calculations()
@@ -65,6 +71,27 @@ public class LevelManager : MonoBehaviour
     {
         if (timer >= level.margin - 0.01f && timer <= level.margin + 0.01f && !songController.aSrc.isPlaying)
             songController.aSrc.Play();
+    }
+
+    void StopMusic()
+    {
+        if (songController.aSrc.isPlaying)
+            songController.aSrc.Stop();
+    }
+
+    //********** For Debugginh, spawn all the each time you press enter ***********
+    void Restart()
+    {
+        iterator = 0;
+        spawnPipeline = level.spawnPipeline;
+        Calculations();
+        timerStarted = false;
+        StopMusic();
+        timer = 0;
+        timerStarted = true;
+        PlayMusic();
+        SpawnObjects();
+        timer += Time.deltaTime;
     }
 
     void SpawnObjects()
