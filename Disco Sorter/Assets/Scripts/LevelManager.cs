@@ -6,11 +6,22 @@ public class LevelManager : MonoBehaviour
 {
     [HideInInspector()]
     public int levelIndex;
+    int index;
     [HideInInspector()]
     public List<string> LevelList = new List<string>();
     GameAudioManipulation songController;
     [HideInInspector()]
     public float timer;
+
+    /// SPECJALNE ZMIENNE UŻYWANE WYŁĄCZNIE PRZEZ BUILDA ///
+    bool ableToStartLevel = false;
+
+    [Header("------BUILD------")]
+    public int buildLevelIndex;
+    public List<ScriptableObject> buildLevels;
+    public List<AudioClip> buildSongs;
+
+
 
     LevelParameters level;
     int iterator;
@@ -18,25 +29,42 @@ public class LevelManager : MonoBehaviour
     bool timerStarted;
 
     Vector3 A, B, C;
+
+    [Header("------EDYTOR------")]
+    [Header("")]
     public Transform TransformOfB;
 
     List<GameObject> spawnPipeline = new List<GameObject>();
 
     private void Start()
     {
+        
+        CheckPlatform();
         songController = GetComponent<GameAudioManipulation>();
+    }
+
+    void CheckPlatform()
+    {
+        if (Application.platform != RuntimePlatform.WindowsEditor)
+        {
+            ableToStartLevel = true;
+            index = buildLevelIndex;
+        }
+        else if (levelIndex < LevelList.Count - 1)
+        {
+            ableToStartLevel = true;
+            index = levelIndex;
+        }
     }
 
     void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.Return) && levelIndex < LevelList.Count - 1 && !songController.aSrc.isPlaying)
+        if (Input.GetKeyDown(KeyCode.Return) && ableToStartLevel && !songController.aSrc.isPlaying)
         {
             level = GetComponent<LevelParameters>();
-            GetComponent<LoadToScene>().LoadSong(levelIndex);
+            GetComponent<LoadToScene>().LoadSong(index);
             spawnPipeline = level.spawnPipeline;
             Calculations();
-
             timerStarted = true;
         }
 

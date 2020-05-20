@@ -84,21 +84,26 @@ public class MenuManager : MonoBehaviour
         UpdateSavesNames(songNames);
     }
 
+
     public static string[] GetSavesNames()
     {
+        string[] savesNames = null;
+#if UNITY_EDITOR
         string[] guids = AssetDatabase.FindAssets("t: ScriptableObject", new[] { "Assets/LEVELS" });
-        string[] savesNames = guids;
+        savesNames = guids;
         for (int i = 0; i < guids.Length; i++)
         {
             savesNames[i] = AssetDatabase.GUIDToAssetPath(guids[i]);
             savesNames[i] = savesNames[i].Remove(0, 14);
             savesNames[i] = savesNames[i].Remove(savesNames[i].IndexOf(".asset"), 6);
         }
+#endif
         return savesNames;
     }
 
-        // Zmienia tekst każdego przycisku, na odpowiadającą nazwę piosenki
-        private void UpdateSavesNames(string[] songNames)
+
+    // Zmienia tekst każdego przycisku, na odpowiadającą nazwę piosenki
+    private void UpdateSavesNames(string[] songNames)
     {
         for (int i = 0; i < 10; i++)
         {

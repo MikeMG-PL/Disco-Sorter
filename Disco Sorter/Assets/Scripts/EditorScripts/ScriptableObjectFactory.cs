@@ -14,8 +14,10 @@ public class ScriptableObjectFactory : MonoBehaviour
         pathName = GetComponent<AudioSource>().clip.name;
     }
 
+
     public void CreateSO()
     {
+#if UNITY_EDITOR
         pathName = GetComponent<AudioSource>().clip.name;
         temp = Instantiate(levelTemplate);
 
@@ -24,7 +26,9 @@ public class ScriptableObjectFactory : MonoBehaviour
         AssetDatabase.CreateAsset(temp, "Assets/LEVELS/" + pathName + ".asset");
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
+#endif
     }
+
 
     public void SetValues(Level level, EditorNet editorNet)
     {

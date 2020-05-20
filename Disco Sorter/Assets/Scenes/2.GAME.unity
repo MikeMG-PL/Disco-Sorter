@@ -38808,31 +38808,31 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6647476662855390698, guid: 2064db32ea9aa7548844abb94b8a2739,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647476662855390698, guid: 2064db32ea9aa7548844abb94b8a2739,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4865487080997690639, guid: 2064db32ea9aa7548844abb94b8a2739,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 4865487080997690639, guid: 2064db32ea9aa7548844abb94b8a2739,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6609446644638067155, guid: 2064db32ea9aa7548844abb94b8a2739,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 5fe838fb332eb2d429f8f728ce2b663b, type: 2}
-    - target: {fileID: 6647476662855390698, guid: 2064db32ea9aa7548844abb94b8a2739,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 6647476662855390698, guid: 2064db32ea9aa7548844abb94b8a2739,
-        type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4865487080997690639, guid: 2064db32ea9aa7548844abb94b8a2739,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 4865487080997690639, guid: 2064db32ea9aa7548844abb94b8a2739,
-        type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2064db32ea9aa7548844abb94b8a2739, type: 3}
 --- !u!1001 &1676545347
@@ -46418,6 +46418,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7437021264787854613, guid: 40a7ed54b5130e14eb8325fa554944cb,
         type: 3}
+      propertyPath: buildLevels.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7437021264787854613, guid: 40a7ed54b5130e14eb8325fa554944cb,
+        type: 3}
+      propertyPath: buildSongs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7437021264787854613, guid: 40a7ed54b5130e14eb8325fa554944cb,
+        type: 3}
       propertyPath: levelData
       value: 
       objectReference: {fileID: 0}
@@ -46442,6 +46452,17 @@ PrefabInstance:
       propertyPath: songController
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7437021264787854613, guid: 40a7ed54b5130e14eb8325fa554944cb,
+        type: 3}
+      propertyPath: buildLevels.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 79f8ee72a46a8ca47a14b8d951535a4f,
+        type: 2}
+    - target: {fileID: 7437021264787854613, guid: 40a7ed54b5130e14eb8325fa554944cb,
+        type: 3}
+      propertyPath: buildSongs.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: e93bed9030d6e8248a7d073b03df3ef8, type: 3}
     - target: {fileID: 6862720497453972305, guid: 40a7ed54b5130e14eb8325fa554944cb,
         type: 3}
       propertyPath: savesPanel

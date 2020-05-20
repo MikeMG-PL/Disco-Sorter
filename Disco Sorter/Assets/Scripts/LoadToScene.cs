@@ -38,13 +38,32 @@ public class LoadToScene : MonoBehaviour
     /// PRZENIESIENIE DANYCH Z PLIKU DO SKRYPTU LEVELPARAMETERS ///
     public void LoadSong(int selectedButton)
     {
+#if UNITY_EDITOR
         if (selectedButton >= songNames.Length || selectedButton < 0)
             return;
+#endif
 
-        // (!) Mikoś plz opisz dokładniej co oznaczają poszczególne inty (!) :3
+        string levelPath;
+        Level level;
 
-        string levelPath = "Assets/LEVELS/" + songNames[selectedButton] + ".asset";
-        Level level = (Level)AssetDatabase.LoadAssetAtPath(levelPath, typeof(Level));
+        if (Application.platform == RuntimePlatform.WindowsEditor)
+        {
+            level = (Level)levelManager.buildLevels[levelManager.buildLevelIndex];
+#if UNITY_EDITOR
+            levelPath = "Assets/LEVELS/" + songNames[selectedButton] + ".asset";
+            level = (Level)AssetDatabase.LoadAssetAtPath(levelPath, typeof(Level));
+
+            string songPath = "Assets/SONGS/" + songNames[selectedButton] + ".mp3";
+            AudioClip c = (AudioClip)AssetDatabase.LoadAssetAtPath(songPath, typeof(AudioClip));
+            GetComponent<AudioSource>().clip = c;
+#endif
+        }
+        else
+        {
+            level = (Level)levelManager.buildLevels[levelManager.buildLevelIndex];
+            AudioClip c = levelManager.buildSongs[levelManager.buildLevelIndex];
+            GetComponent<AudioSource>().clip = c;
+        }
 
         levelParameters.name = level.name;
         levelParameters.BPM = level.BPM;
@@ -62,24 +81,25 @@ public class LoadToScene : MonoBehaviour
 
         levelParameters.Calculations();
         levelParameters.ConvertToPipeline();
-
-        string songPath = "Assets/SONGS/" + songNames[selectedButton] + ".mp3";
-        AudioClip c = (AudioClip)AssetDatabase.LoadAssetAtPath(songPath, typeof(AudioClip));
-        GetComponent<AudioSource>().clip = c;
     }
+
 
     public static string[] GetSavesNames()
     {
+        string[] savesNames = null;
+#if UNITY_EDITOR
         string[] guids = AssetDatabase.FindAssets("t: ScriptableObject", new[] { "Assets/LEVELS" });
-        string[] savesNames = guids;
+        savesNames = guids;
         for (int i = 0; i < guids.Length; i++)
         {
             savesNames[i] = AssetDatabase.GUIDToAssetPath(guids[i]);
             savesNames[i] = savesNames[i].Remove(0, 14);
             savesNames[i] = savesNames[i].Remove(savesNames[i].IndexOf(".asset"), 6);
         }
+#endif
         return savesNames;
     }
+
 
     /// UAKTUALNIANIE PRZYCISKÓW ///
     private void UpdateSavesNames(string[] songNames)
