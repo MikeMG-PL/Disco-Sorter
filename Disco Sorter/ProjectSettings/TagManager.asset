@@ -18,6 +18,8 @@ TagManager:
   - Apple
   - RottenApple
   - DiscoBall
+  - Lightbar
+  - Maluch
   layers:
   - Default
   - TransparentFX
