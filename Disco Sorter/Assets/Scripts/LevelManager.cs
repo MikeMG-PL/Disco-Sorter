@@ -38,9 +38,17 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        
         CheckPlatform();
         songController = GetComponent<GameAudioManipulation>();
+
+        if (ableToStartLevel && !songController.aSrc.isPlaying)
+        {
+            level = GetComponent<LevelParameters>();
+            GetComponent<LoadToScene>().LoadSong(index);
+            spawnPipeline = level.spawnPipeline;
+            Calculations();
+            timerStarted = true;
+        }
     }
 
     void CheckPlatform()
@@ -59,15 +67,6 @@ public class LevelManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return) && ableToStartLevel && !songController.aSrc.isPlaying)
-        {
-            level = GetComponent<LevelParameters>();
-            GetComponent<LoadToScene>().LoadSong(index);
-            spawnPipeline = level.spawnPipeline;
-            Calculations();
-            timerStarted = true;
-        }
-
         if (timerStarted)
         {
             PlayMusic();
