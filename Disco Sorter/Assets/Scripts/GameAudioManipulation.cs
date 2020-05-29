@@ -7,7 +7,7 @@ public class GameAudioManipulation : MonoBehaviour
     [HideInInspector()]
     public AudioSource aSrc;
 
-    void Start()
+    void Awake()
     {
         aSrc = GetComponent<AudioSource>();
         aSrc.time = 0f;
