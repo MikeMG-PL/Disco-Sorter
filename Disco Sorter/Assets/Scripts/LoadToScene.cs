@@ -13,6 +13,9 @@ public class LoadToScene : MonoBehaviour
     [SerializeField]
     private GameObject[] savesButtons;              // Poszczególne przyciski odpowiadające slotom zapisu piosenek
 
+    [HideInInspector()]
+    public Level level;
+
     /// ZAKTUALIZOWANIE ZAWARTOŚCI PRZYCISKÓW, WCZYTANIE PRZYCISKÓW ///
     private void Awake()
     {
@@ -44,9 +47,9 @@ public class LoadToScene : MonoBehaviour
 #endif
 
         string levelPath;
-        Level level;
+        
 
-        if (Application.platform == RuntimePlatform.WindowsEditor)
+        if (Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.WindowsPlayer)
         {
             level = (Level)levelManager.buildLevels[levelManager.buildLevelIndex];
 #if UNITY_EDITOR

@@ -53,7 +53,7 @@ public class LevelManager : MonoBehaviour
 
     void CheckPlatform()
     {
-        if (Application.platform != RuntimePlatform.WindowsEditor)
+        if (Application.platform != RuntimePlatform.WindowsEditor && Application.platform != RuntimePlatform.WindowsPlayer)
         {
             ableToStartLevel = true;
             index = buildLevelIndex;

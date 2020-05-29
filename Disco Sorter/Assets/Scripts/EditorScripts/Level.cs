@@ -6,6 +6,7 @@ using UnityEngine;
 public class Level : ScriptableObject
 {
     public new string name;
+    public string artist;
     public List<EntityType> entityType = new List<EntityType>();
     public List<EntityColour> color = new List<EntityColour>();
     public List<int> action = new List<int>();
