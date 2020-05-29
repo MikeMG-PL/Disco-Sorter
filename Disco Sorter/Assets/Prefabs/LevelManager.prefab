@@ -49,8 +49,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelIndex: 0
   LevelList: []
-  songController: {fileID: 0}
   timer: 0
+  buildLevelIndex: 0
+  buildLevels:
+  - {fileID: 11400000, guid: 79f8ee72a46a8ca47a14b8d951535a4f, type: 2}
+  buildSongs:
+  - {fileID: 8300000, guid: e93bed9030d6e8248a7d073b03df3ef8, type: 3}
   TransformOfB: {fileID: 0}
 --- !u!114 &7214126554702194147
 MonoBehaviour:

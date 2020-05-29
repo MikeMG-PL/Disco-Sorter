@@ -53,7 +53,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 23cb37ef94ae3fc4ca053795486eb2ef,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 23cb37ef94ae3fc4ca053795486eb2ef,
         type: 3}
@@ -120,6 +120,11 @@ PrefabInstance:
       propertyPath: m_ReceiveShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 23cb37ef94ae3fc4ca053795486eb2ef,
+        type: 3}
+      propertyPath: m_ReceiveGI
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 23cb37ef94ae3fc4ca053795486eb2ef, type: 3}
 --- !u!1001 &5646651117144439375
@@ -143,6 +148,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1867442034410331234, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
+        type: 3}
+      propertyPath: m_TagString
+      value: Apple
       objectReference: {fileID: 0}
     - target: {fileID: 3048727672643982173, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
         type: 3}
@@ -223,6 +233,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1611012757184730072, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
+        type: 3}
+      propertyPath: precisionGrab
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8402051711649985921, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
         type: 3}

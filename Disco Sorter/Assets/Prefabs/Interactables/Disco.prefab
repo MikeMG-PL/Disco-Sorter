@@ -22,6 +22,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: aa156543479c11a4ea70d96007bdf020,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: aa156543479c11a4ea70d96007bdf020,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -82,6 +87,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 6dc5550d1fcee3c488c47f2945230952, type: 2}
+    - target: {fileID: -1504981713932161579, guid: aa156543479c11a4ea70d96007bdf020,
+        type: 3}
+      propertyPath: m_ReceiveGI
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa156543479c11a4ea70d96007bdf020, type: 3}
 --- !u!1001 &7082754205434491864
@@ -100,6 +110,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1867442034410331234, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
+        type: 3}
+      propertyPath: m_TagString
+      value: DiscoBall
       objectReference: {fileID: 0}
     - target: {fileID: 3048727672643982173, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
         type: 3}
@@ -156,6 +171,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3048727672643982173, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3048727672643982173, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3048727672643982173, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5861289943795818154, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -171,10 +201,25 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.4
       objectReference: {fileID: 0}
+    - target: {fileID: 4754699222902330729, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
+        type: 3}
+      propertyPath: isGrabbable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4754699222902330729, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
+        type: 3}
+      propertyPath: holdButtonToGrab
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1305053816106069925, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
         type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1611012757184730072, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
+        type: 3}
+      propertyPath: precisionGrab
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8402051711649985921, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
         type: 3}

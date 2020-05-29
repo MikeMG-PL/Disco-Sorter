@@ -6,11 +6,22 @@ public class LevelManager : MonoBehaviour
 {
     [HideInInspector()]
     public int levelIndex;
+    int index;
     [HideInInspector()]
     public List<string> LevelList = new List<string>();
     GameAudioManipulation songController;
     [HideInInspector()]
     public float timer;
+
+    /// SPECJALNE ZMIENNE UŻYWANE WYŁĄCZNIE PRZEZ BUILDA ///
+    bool ableToStartLevel = false;
+
+    [Header("------BUILD------")]
+    public int buildLevelIndex;
+    public List<ScriptableObject> buildLevels;
+    public List<AudioClip> buildSongs;
+
+
 
     LevelParameters level;
     int iterator;
@@ -18,33 +29,55 @@ public class LevelManager : MonoBehaviour
     bool timerStarted;
 
     Vector3 A, B, C;
+
+    [Header("------EDYTOR------")]
+    [Header("")]
     public Transform TransformOfB;
 
     List<GameObject> spawnPipeline = new List<GameObject>();
 
     private void Start()
     {
+        CheckPlatform();
         songController = GetComponent<GameAudioManipulation>();
+
+        if (ableToStartLevel && !songController.aSrc.isPlaying)
+        {
+            level = GetComponent<LevelParameters>();
+            GetComponent<LoadToScene>().LoadSong(index);
+            spawnPipeline = level.spawnPipeline;
+            Calculations();
+            timerStarted = true;
+        }
+    }
+
+    void CheckPlatform()
+    {
+        if (Application.platform != RuntimePlatform.WindowsEditor)
+        {
+            ableToStartLevel = true;
+            index = buildLevelIndex;
+        }
+        else if (levelIndex < LevelList.Count - 1)
+        {
+            ableToStartLevel = true;
+            index = levelIndex;
+        }
     }
 
     void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.Return) && levelIndex < LevelList.Count - 1 && !songController.aSrc.isPlaying)
-        {
-            level = GetComponent<LevelParameters>();
-            GetComponent<LoadToScene>().LoadSong(levelIndex);
-            spawnPipeline = level.spawnPipeline;
-            Calculations();
-
-            timerStarted = true;
-        }
-
         if (timerStarted)
         {
             PlayMusic();
             SpawnObjects();
             timer += Time.deltaTime;
+        }
+
+        //********** For Debugginh, spawn all the each time you press enter ***********
+        if (songController.aSrc.isPlaying && Input.GetKeyDown(KeyCode.Return))
+        {
+            Restart();
         }
     }
 
@@ -65,6 +98,27 @@ public class LevelManager : MonoBehaviour
     {
         if (timer >= level.margin - 0.01f && timer <= level.margin + 0.01f && !songController.aSrc.isPlaying)
             songController.aSrc.Play();
+    }
+
+    void StopMusic()
+    {
+        if (songController.aSrc.isPlaying)
+            songController.aSrc.Stop();
+    }
+
+    //********** For Debugginh, spawn all the each time you press enter ***********
+    void Restart()
+    {
+        iterator = 0;
+        spawnPipeline = level.spawnPipeline;
+        Calculations();
+        timerStarted = false;
+        StopMusic();
+        timer = 0;
+        timerStarted = true;
+        PlayMusic();
+        SpawnObjects();
+        timer += Time.deltaTime;
     }
 
     void SpawnObjects()

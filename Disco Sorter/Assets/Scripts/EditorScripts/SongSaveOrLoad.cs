@@ -32,22 +32,21 @@ public class SongSaveOrLoad : MonoBehaviour
     public void LoadSong(int selectedButton)
     {
         savesPanel.SetActive(false);
-        
+#if UNITY_EDITOR
         AssetDatabase.Refresh();
         string[] songNames = GetSavesNames();
 
         if (selectedButton >= songNames.Length || selectedButton < 0)
             return;
-        
+
+
         string songPath = "Assets/SONGS/" + songNames[selectedButton] + ".mp3";
         AudioClip c = (AudioClip)AssetDatabase.LoadAssetAtPath(songPath, typeof(AudioClip));
         GetComponent<AudioSource>().clip = c;
 
         string levelPath = "Assets/LEVELS/" + songNames[selectedButton] + ".asset";
         Level level = (Level)AssetDatabase.LoadAssetAtPath(levelPath, typeof(Level));
-        
-        
-
+#endif
         editorNet.BPM = level.BPM;
         editorNet.netDensity = level.netDensity;
         editorNet.songName = level.name;
@@ -64,22 +63,26 @@ public class SongSaveOrLoad : MonoBehaviour
             entity.ChangeActionIcon();
         }
 
-        
+
     }
 
     // Zwraca tablicę nazw zapisanych plików
     public static string[] GetSavesNames()
     {
+        string[] savesNames = null;
+#if UNITY_EDITOR
         string[] guids = AssetDatabase.FindAssets("t: ScriptableObject", new[] { "Assets/LEVELS" });
-        string[] savesNames = guids;
+        savesNames = guids;
         for (int i = 0; i < guids.Length; i++)
         {
             savesNames[i] = AssetDatabase.GUIDToAssetPath(guids[i]);
             savesNames[i] = savesNames[i].Remove(0, 14);
             savesNames[i] = savesNames[i].Remove(savesNames[i].IndexOf(".asset"), 6);
         }
+#endif
         return savesNames;
     }
+
 
     private bool IsGoodToSave()
     {
