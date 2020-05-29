@@ -25,7 +25,7 @@ public class LevelParameters : MonoBehaviour
     [HideInInspector()]
     public List<EntityColour> color = new List<EntityColour>();
     [HideInInspector()]
-    public List<int> action = new List<int>();
+    public List<EntityAction> action = new List<EntityAction>();
 
     // Dla tego elementu listy, dla tego ZŁAPANIA, na tej kratce, połączone z nim WYPUSZCZENIE jest na kratce o ID... (podanym w polu)
     [HideInInspector()]

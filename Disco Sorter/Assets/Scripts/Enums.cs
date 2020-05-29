@@ -19,6 +19,15 @@ public enum EntityColour
     Red
 };
 
+public enum EntityAction
+{
+    None,
+    Slap,
+    Throw,
+    CatchAndRelease,
+    ReleasePoint
+};
+
 public enum LoadedLevel
 {
     Kylie,

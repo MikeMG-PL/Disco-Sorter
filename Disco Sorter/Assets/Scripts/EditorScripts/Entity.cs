@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class Entity : MonoBehaviour
 {
     // Zmienne określające dany obiekt, zapisywane są one do pliku
-    public int action;                                  // Akcja, którą można wykonać na obiekcie
+    public EntityAction action;                                  // Akcja, którą można wykonać na obiekcie
     public int entityNumber;                            // Numer (identyfikator) obiektu
     public EntityType type;                             // Typ obiektu
     public EntityColour color;                          // Kolory jabłek, 0 - brak, 1 - zielony, 2 - czerwony
@@ -30,14 +30,14 @@ public class Entity : MonoBehaviour
             // Jeśli użytkownik ustala właśnie punkt release, oraz jeśli obiekt ten nie jest już punktem release dla innego entity, ani punktem catch
             if (entityMenuScript.isSettingRelease)
             {
-                if (action != 3 && action != 4)
+                if (action != EntityAction.CatchAndRelease && action != EntityAction.ReleasePoint)
                     entityMenuScript.gameObject.GetComponent<SetCatchRelease>().SetReleaseEntity(this);
             }
 
             else
             {
                 // Jeśli obiekt, który wskazał użytkownik jest punktem release, kamera wskazuje mu obiekt catch, połączony z tym obiektem
-                if (action == 4)
+                if (action == EntityAction.ReleasePoint)
                 {
                     entityMenuScript.PointCatchEntity(linkedCatchEN);
                 }
@@ -72,7 +72,7 @@ public class Entity : MonoBehaviour
     private void OnMouseOver()
     {
         // Jeśli kliknięto prawym przyciskiem myszy na punkt release
-        if (action == 4 && Input.GetMouseButtonDown(1))
+        if (action == EntityAction.ReleasePoint && Input.GetMouseButtonDown(1))
         {
             entityMenuScript.gameObject.GetComponent<SetCatchRelease>().SetUnreleaseEntity(this);
         }
@@ -139,7 +139,7 @@ public class Entity : MonoBehaviour
         Destroy(actionIcon);
         Vector3 position = new Vector3(transform.position.x, transform.position.y + 0.05f, transform.position.z);
 
-        if (action == 4)
+        if (action == EntityAction.ReleasePoint)
         {
             actionIcon = Instantiate(entityMenuScript.releaseEntity, position, entityMenuScript.releaseEntity.transform.rotation, transform);
         }

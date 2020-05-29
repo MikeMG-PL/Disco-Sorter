@@ -158,7 +158,7 @@ public class EntityMenu : MonoBehaviour
             Entity entity = markedEntities[i].GetComponent<Entity>();
 
             // Jeśli użytkownik ustala punkt catch
-            if (action == 3)
+            if ((EntityAction)action == EntityAction.CatchAndRelease)
             {
                 // Punkt catch można ustalać tylko dla jednego obiektu jednocześnie
                 if (markedEntities.Count == 1)
@@ -167,7 +167,7 @@ public class EntityMenu : MonoBehaviour
                     catchEntity = entity;
                     GetComponent<LineRenderer>().enabled = true;
                     isSettingRelease = true;
-                    entity.action = action;
+                    entity.action = (EntityAction)action;
                     CloseMenu();
                     return;
                 }
@@ -180,14 +180,14 @@ public class EntityMenu : MonoBehaviour
             }
 
             // Jeśli użytkownik "usuwa" punkt catch, tzn. entity miało wcześniej akcję Catch... release, musimy również usunąć punkt release
-            else if (entity.action == 3)
+            else if (entity.action == EntityAction.CatchAndRelease)
             {
                 Entity linkedReleaseEntity = entityArray[entity.linkedReleaseEN].GetComponent<Entity>();
                 GetComponent<SetCatchRelease>().SetUnreleaseEntity(linkedReleaseEntity);
             }
 
             IsSavedChange(false);
-            entity.action = action;
+            entity.action = (EntityAction)action;
             SetCurrentValues(entity.entityNumber);
         }
     }
@@ -211,7 +211,7 @@ public class EntityMenu : MonoBehaviour
 
         typeDropdown.SetValueWithoutNotify((int)entity.type);
         colorDropdown.SetValueWithoutNotify((int)entity.color);
-        actionDropdown.SetValueWithoutNotify(entity.action);
+        actionDropdown.SetValueWithoutNotify((int)entity.action);
     }
 
     // Ustawia wartości na domyślne (None) i blokuje, w związku z tym, niektóre opcje
@@ -238,7 +238,7 @@ public class EntityMenu : MonoBehaviour
 
         else
         {
-            entity.color = 0;
+            entity.color = EntityColour.None;
             entity.ChangeColor();
             colorDropdown.interactable = false;
             colorWarning.gameObject.SetActive(true);
@@ -256,7 +256,7 @@ public class EntityMenu : MonoBehaviour
 
         else
         {
-            entity.action = 0;
+            entity.action = EntityAction.None;
             if (entity.linkedReleaseEN != -1)
                 GetComponent<SetCatchRelease>().SetUnreleaseEntity(entityArray[entity.linkedReleaseEN].GetComponent<Entity>());
             actionDropdown.interactable = false;

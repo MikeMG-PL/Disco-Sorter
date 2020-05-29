@@ -13,8 +13,11 @@ public class ObjectParameters : MonoBehaviour
 
     public EntityType type;
     public EntityColour color;
-    public int action;
+    public EntityAction action;
     public int ID;
+
+    public bool wasPreviouslyInserted;
+    public bool wasPickedUp;
 
     void Update()
     {

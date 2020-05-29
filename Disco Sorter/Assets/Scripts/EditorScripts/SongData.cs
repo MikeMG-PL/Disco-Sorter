@@ -5,7 +5,7 @@ public class SongData
 {
     public List<EntityType> entityType = new List<EntityType>();
     public List<EntityColour> color = new List<EntityColour>();
-    public List<int> action = new List<int>();
+    public List<EntityAction> action = new List<EntityAction>();
     public List<int> linkedReleaseEN = new List<int>();
     public List<int> linkedCatchEN = new List<int>();
     public int BPM;

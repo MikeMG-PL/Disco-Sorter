@@ -89,12 +89,12 @@ public class SongSaveOrLoad : MonoBehaviour
         {
             Entity entity = editorNet.entityArray[i].GetComponent<Entity>();
 
-            if (entity.type == EntityType.Apple && (entity.color == 0 || entity.action == 0))
+            if (entity.type == EntityType.Apple && (entity.color == EntityColour.None || entity.action == EntityAction.None))
             {
                 badEntities.Add(editorNet.entityArray[i]);
             }
 
-            else if (entity.type == EntityType.RottenApple && entity.action == 0)
+            else if (entity.type == EntityType.RottenApple && entity.action == EntityAction.None)
             {
                 badEntities.Add(editorNet.entityArray[i]);
             }

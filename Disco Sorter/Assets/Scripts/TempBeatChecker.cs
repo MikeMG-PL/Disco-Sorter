@@ -62,7 +62,7 @@ public class TempBeatChecker : MonoBehaviour
                 float timer = GetComponentInParent<LevelManager>().timer; // Aktualny czas
                 if (timer > objParameters.actionStartTime && timer < objParameters.actionEndTime)
                 {
-                    print("Eureka! Start: " + objParameters.actionStartTime + ", End: " + objParameters.actionEndTime + ", Time: " + timer);
+                    print("Eureka! Start: " + objParameters.actionStartTime + ", End: " + objParameters.actionEndTime + ", Time: " + timer + " " + objParameters.action);
                     currentObjInCollider.Remove(gObj);
                     Destroy(gObj);
                 }

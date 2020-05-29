@@ -34,9 +34,9 @@ public class SetCatchRelease : MonoBehaviour
     // Ustawianie entity jako punkt Release
     public void SetReleaseEntity(Entity newReleaseEntity)
     {
-        newReleaseEntity.type = 0;
-        newReleaseEntity.color = 0;
-        newReleaseEntity.action = 4;
+        newReleaseEntity.type = EntityType.None;
+        newReleaseEntity.color = EntityColour.None;
+        newReleaseEntity.action = EntityAction.ReleasePoint;
         newReleaseEntity.linkedCatchEN = entityMenuScript.catchEntity.entityNumber;
         entityMenuScript.catchEntity.linkedReleaseEN = newReleaseEntity.entityNumber;
         newReleaseEntity.ChangeColor();
@@ -49,10 +49,10 @@ public class SetCatchRelease : MonoBehaviour
     public void SetUnreleaseEntity(Entity entityToUnrelease)
     {
         Entity linkedCatchEntity = editorNet.entityArray[entityToUnrelease.linkedCatchEN].GetComponent<Entity>();
-        linkedCatchEntity.action = 0;
+        linkedCatchEntity.action = EntityAction.None;
         linkedCatchEntity.linkedReleaseEN = -1;
 
-        entityToUnrelease.action = 0;
+        entityToUnrelease.action = EntityAction.None;
         entityToUnrelease.linkedCatchEN = -1;
         entityToUnrelease.ChangeActionIcon();
     }
