@@ -17,7 +17,7 @@ public class ObjectParameters : MonoBehaviour
     public int ID;
 
     public bool wasPreviouslyInserted;
-    public bool wasPickedUp;
+    public bool wasGrabbed;
 
     void Update()
     {

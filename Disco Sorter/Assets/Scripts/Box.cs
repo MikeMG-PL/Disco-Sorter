@@ -13,12 +13,12 @@ public class Box : MonoBehaviour
             ObjectParameters parameters = other.GetComponentInParent<ObjectParameters>();
             if (parameters.color == color && !parameters.wasPreviouslyInserted)
             {
-                if (parameters.action == EntityAction.Slap && !parameters.wasPickedUp)
+                if (parameters.action == EntityAction.Slap && !parameters.wasGrabbed)
                 {
                     Debug.Log("Point");
                 }
 
-                else if (parameters.action == EntityAction.Throw && parameters.wasPickedUp)
+                else if (parameters.action == EntityAction.Throw && parameters.wasGrabbed)
                 {
                     Debug.Log("Point");
                 }

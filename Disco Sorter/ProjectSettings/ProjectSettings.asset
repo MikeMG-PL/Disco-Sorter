@@ -391,9 +391,8 @@ PlayerSettings:
     m_Automatic: 1
   m_BuildTargetVRSettings:
   - m_BuildTarget: Android
-    m_Enabled: 1
-    m_Devices:
-    - Oculus
+    m_Enabled: 0
+    m_Devices: []
   - m_BuildTarget: Metro
     m_Enabled: 0
     m_Devices:
@@ -419,8 +418,6 @@ PlayerSettings:
   - m_BuildTarget: Standalone
     m_Enabled: 1
     m_Devices:
-    - None
-    - Oculus
     - OpenVR
   - m_BuildTarget: Tizen
     m_Enabled: 0
