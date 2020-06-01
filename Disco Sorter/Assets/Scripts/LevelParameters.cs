@@ -64,14 +64,6 @@ public class LevelParameters : MonoBehaviour
 
     List<float> actionEndTime = new List<float>();            // Koniec wykonania akcji z uwzględnieniem tolerancji
 
-    List<float> linkedReleaseTime = new List<float>();        /* Czas wypuszczenia trzymanego obiektu w ramach akcji Catch... release. Element reprezentuje ID obiektu,
-                                                                 pole - czas jego wypuszczenia. */
-
-    List<float> linkedCatchTime = new List<float>();          /* Czas złapania wypuszczanego obiektu w ramach akcji Catch... release. Element reprezentuje ID kratki z akcją release,
-                                                                 pole - czas złapania obiektu. */
-
-    
-
     public void Calculations()
     {
         var entitiesPerSecond = netDensity * BPM / 60f;                                   // Ilość pojawiających się obiektów na sekundę
@@ -164,7 +156,13 @@ public class LevelParameters : MonoBehaviour
         q.action = action[j];
         q.ID = j;
 
-        if(q.type == EntityType.Apple)
+        if (q.action == EntityAction.CatchAndRelease)
+        {
+            q.linkedReleaseTimeStart = actionStartTime[linkedReleaseEN[j]];
+            q.linkedReleaseTimeEnd = actionEndTime[linkedReleaseEN[j]];
+        }
+
+        if (q.type == EntityType.Apple)
         {
             switch(q.color)
             {
@@ -179,9 +177,5 @@ public class LevelParameters : MonoBehaviour
                     break;
             }
         }
-
-        // Niedokończone: w przypadku, gdy akcja to "catch... release" - należy ustawić te parametry
-        //q.linkedReleaseTime = linkedReleaseTime[j];
-        //q.linkedCatchTime = linkedCatchTime[j];
     }
 }

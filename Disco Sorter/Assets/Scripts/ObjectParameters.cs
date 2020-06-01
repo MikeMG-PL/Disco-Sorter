@@ -7,8 +7,9 @@ public class ObjectParameters : MonoBehaviour
     public float actionTime;
     public float actionStartTime;
     public float actionEndTime;
-    public float linkedReleaseTime;                // Opcjonalnie, jeśli akcja to Catch... release (catch)
-    public float linkedCatchTime;                  // Opcjonalnie, jeśli akcja to Catch... release (release)
+    public float linkedReleaseTimeStart;
+    public float linkedReleaseTimeEnd;
+    // public float linkedCatchTime;                  // Opcjonalnie, jeśli akcja to Catch... release (release)
     public float spawnTime;
 
     public EntityType type;
@@ -18,6 +19,8 @@ public class ObjectParameters : MonoBehaviour
 
     public bool wasPreviouslyInserted;
     public bool wasGrabbed;
+    public bool catchWasDoneOnTime;
+    public bool releaseWasDoneOnTime;
 
     void Update()
     {

@@ -18,6 +18,7 @@ TagManager:
   - Apple
   - RottenApple
   - DiscoBall
+  - LevelManager
   layers:
   - Default
   - TransparentFX

@@ -57410,6 +57410,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelManager
       objectReference: {fileID: 0}
+    - target: {fileID: 5319431753950434906, guid: 40a7ed54b5130e14eb8325fa554944cb,
+        type: 3}
+      propertyPath: m_TagString
+      value: LevelManager
+      objectReference: {fileID: 0}
     - target: {fileID: 3623847121241414591, guid: 40a7ed54b5130e14eb8325fa554944cb,
         type: 3}
       propertyPath: m_LocalPosition.x
