@@ -4,64 +4,36 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    [HideInInspector()]
-    public int levelIndex;
-    int index;
-    [HideInInspector()]
-    public List<string> LevelList = new List<string>();
     GameAudioManipulation songController;
     [HideInInspector()]
     public float timer;
 
-    /// SPECJALNE ZMIENNE UŻYWANE WYŁĄCZNIE PRZEZ BUILDA ///
     bool ableToStartLevel = false;
 
-    [Header("------BUILD------")]
-    public int buildLevelIndex;
+    public int index;           // chosen song from list
     public List<ScriptableObject> buildLevels;
     public List<AudioClip> buildSongs;
 
-
-
-    LevelParameters level;
+    LevelParameters levelParameters;
     int iterator;
     float spawnTime;
     bool timerStarted;
 
     Vector3 A, B, C;
-
-    [Header("------EDYTOR------")]
-    [Header("")]
     public Transform TransformOfB;
 
     List<GameObject> spawnPipeline = new List<GameObject>();
 
     private void Start()
     {
-        CheckPlatform();
         songController = GetComponent<GameAudioManipulation>();
 
-        if (ableToStartLevel && !songController.aSrc.isPlaying)
+        if (!songController.aSrc.isPlaying)
         {
-            level = GetComponent<LevelParameters>();
-            GetComponent<LoadToScene>().LoadSong(index);
-            spawnPipeline = level.spawnPipeline;
+            levelParameters = GetComponent<LevelParameters>();
+            spawnPipeline = levelParameters.spawnPipeline;
             Calculations();
             timerStarted = true;
-        }
-    }
-
-    void CheckPlatform()
-    {
-        if (Application.platform != RuntimePlatform.WindowsEditor)
-        {
-            ableToStartLevel = true;
-            index = buildLevelIndex;
-        }
-        else if (levelIndex < LevelList.Count - 1)
-        {
-            ableToStartLevel = true;
-            index = levelIndex;
         }
     }
 
@@ -84,7 +56,7 @@ public class LevelManager : MonoBehaviour
     void Calculations()
     {
 
-        var b = (Mathf.Pow(level.rollTime * 0.87f, 2) * Mathf.Abs(Physics.gravity.y) * Mathf.Sin(0.174532925f)) /
+        var b = (Mathf.Pow(levelParameters.rollTime * 0.87f, 2) * Mathf.Abs(Physics.gravity.y) * Mathf.Sin(0.174532925f)) /
                 (2 * (Mathf.Pow(Mathf.Sin(0.174532925f), 2) + 1) * Mathf.Sqrt(1 - Mathf.Pow(Mathf.Sin(0.174532925f), 2)));
 
         var h = (b * Mathf.Sin(0.174532925f)) / Mathf.Sqrt(1 - Mathf.Pow(Mathf.Sin(0.174532925f), 2));
@@ -96,7 +68,7 @@ public class LevelManager : MonoBehaviour
 
     void PlayMusic()
     {
-        if (timer >= level.margin - 0.01f && timer <= level.margin + 0.01f && !songController.aSrc.isPlaying)
+        if (timer >= levelParameters.margin - 0.01f && timer <= levelParameters.margin + 0.01f && !songController.aSrc.isPlaying)
             songController.aSrc.Play();
     }
 
@@ -110,7 +82,7 @@ public class LevelManager : MonoBehaviour
     void Restart()
     {
         iterator = 0;
-        spawnPipeline = level.spawnPipeline;
+        spawnPipeline = levelParameters.spawnPipeline;
         Calculations();
         timerStarted = false;
         StopMusic();
