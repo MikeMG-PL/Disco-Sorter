@@ -43,6 +43,7 @@ public class ScriptableObjectFactory : MonoBehaviour
 
         }
         level.name = GetComponent<AudioSource>().clip.name;
+        level.artist = "Disco Sorter Soundtrack";
         level.BPM = editorNet.BPM;
         level.netDensity = editorNet.netDensity;
         level.clipLength = editorNet.gameObject.GetComponent<AudioManipulation>().floatClipLength;

@@ -34,7 +34,7 @@ public class SetCatchRelease : MonoBehaviour
     // Ustawianie entity jako punkt Release
     public void SetReleaseEntity(Entity newReleaseEntity)
     {
-        newReleaseEntity.type = EntityType.None;
+        newReleaseEntity.type = EntityType.Release;
         newReleaseEntity.color = EntityColour.None;
         newReleaseEntity.action = EntityAction.ReleasePoint;
         newReleaseEntity.linkedCatchEN = entityMenuScript.catchEntity.entityNumber;

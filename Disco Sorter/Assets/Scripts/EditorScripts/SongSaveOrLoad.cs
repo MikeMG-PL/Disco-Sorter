@@ -58,6 +58,8 @@ public class SongSaveOrLoad : MonoBehaviour
             entity.type = level.entityType[i];
             entity.color = level.color[i];
             entity.action = level.action[i];
+            entity.linkedCatchEN = level.linkedCatchEN[i];
+            entity.linkedReleaseEN = level.linkedCatchEN[i];
             entity.ChangeColor();
             entity.ChangeTypeIcon();
             entity.ChangeActionIcon();

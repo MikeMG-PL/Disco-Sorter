@@ -37,8 +37,9 @@ public class EditorCamera : MonoBehaviour
         if (zoom.scrollZoom)
         {
             toggle.GetComponent<Toggle>().isOn = false;
-            transform.position = new Vector3(x, transform.position.y, transform.position.z);
         }
+
+        transform.position = new Vector3(x, transform.position.y, transform.position.z);
     }
 
     /// FUNKCJA POWODUJĄCA PODĄŻANIE ZA ZNACZNIKIEM ///
