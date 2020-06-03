@@ -131,6 +131,7 @@ public class LevelParameters : MonoBehaviour
             {
                 SetParameters(index);
                 spawnPipeline.Add(queueDispenser);
+                queueDispenser.SetActive(false);
             }
 
             if (column == 3)

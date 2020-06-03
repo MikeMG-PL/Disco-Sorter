@@ -129,6 +129,7 @@ public class LevelManager : MonoBehaviour
 
             if (timer >= spawnTime - 0.01f && timer <= spawnTime + 0.01f && timerStarted)
             {
+                spawnPipeline[iterator].SetActive(true);
                 spawnPipeline[iterator].transform.position = SetRowPosition(id: spawnPipeline[iterator].GetComponent<ObjectParameters>().ID, pos: C);
                 spawnPipeline[iterator].transform.rotation = Quaternion.identity;
                 spawnPipeline[iterator].GetComponent<Rigidbody>().velocity = Vector3.zero;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TempBeatChecker : MonoBehaviour
 {
-    // currentObjInCollider - Lista obiektów znajdujących się w colliderze. Symuluje obiekty, które akurat mamy "pod ręką", to znaczy maksymalnie jeden rząd jabłek,
+    /*// currentObjInCollider - Lista obiektów znajdujących się w colliderze. Symuluje obiekty, które akurat mamy "pod ręką", to znaczy maksymalnie jeden rząd jabłek,
     // z kolei wciśnięcie przycisków 1-4 symuluje uderzenie tychże obiektów, w odpowiadających kolumnach.
 
     private List<GameObject> currentObjInCollider = new List<GameObject>();
@@ -70,4 +70,5 @@ public class TempBeatChecker : MonoBehaviour
             }
         }
     }
+    */
 }
