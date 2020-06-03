@@ -52,8 +52,10 @@ public class SetCatchRelease : MonoBehaviour
         linkedCatchEntity.action = EntityAction.None;
         linkedCatchEntity.linkedReleaseEN = -1;
 
+        entityToUnrelease.type = EntityType.None;
         entityToUnrelease.action = EntityAction.None;
         entityToUnrelease.linkedCatchEN = -1;
+        entityToUnrelease.ChangeTypeIcon();
         entityToUnrelease.ChangeActionIcon();
     }
 }
