@@ -28,10 +28,4 @@ public enum EntityAction
     ReleasePoint
 };
 
-public enum LoadedLevel
-{
-    Kylie,
-    Pictures
-};
-
 

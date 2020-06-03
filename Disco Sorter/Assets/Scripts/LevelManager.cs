@@ -8,8 +8,6 @@ public class LevelManager : MonoBehaviour
     [HideInInspector()]
     public float timer;
 
-    bool ableToStartLevel = false;
-
     public int index;           // chosen song from list
     public List<ScriptableObject> buildLevels;
     public List<AudioClip> buildSongs;

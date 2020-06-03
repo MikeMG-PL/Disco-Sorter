@@ -122,6 +122,10 @@ public class LevelParameters : MonoBehaviour
                     queueDispenser = Instantiate(disco, pos, Quaternion.identity);
                     break;
 
+                case EntityType.Release:
+                    queueDispenser = Instantiate(release, pos, Quaternion.identity);
+                    break;
+
                 default:
                     addToPipeline = false;
                     break;
@@ -160,6 +164,7 @@ public class LevelParameters : MonoBehaviour
         {
             q.linkedReleaseTimeStart = actionStartTime[linkedReleaseEN[j]];
             q.linkedReleaseTimeEnd = actionEndTime[linkedReleaseEN[j]];
+            
         }
 
         if (q.type == EntityType.Apple)
