@@ -20,6 +20,7 @@ TagManager:
   - DiscoBall
   - Lightbar
   - Maluch
+  - Body
   layers:
   - Default
   - TransparentFX

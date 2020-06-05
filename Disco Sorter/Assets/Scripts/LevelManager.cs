@@ -47,7 +47,6 @@ public class LevelManager : MonoBehaviour
             PlayMusic();
             SpawnObjects();
             timer += Time.fixedDeltaTime;
-            Debug.Log(timer);
         }
 
         //********** For Debugginh, spawn all the each time you press enter ***********
