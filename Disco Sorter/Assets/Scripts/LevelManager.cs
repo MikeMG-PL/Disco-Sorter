@@ -22,6 +22,11 @@ public class LevelManager : MonoBehaviour
 
     List<GameObject> spawnPipeline = new List<GameObject>();
 
+    private void Awake()
+    {
+        Application.targetFrameRate = 75;
+    }
+
     private void Start()
     {
         songController = GetComponent<GameAudioManipulation>();
@@ -35,13 +40,14 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (timerStarted)
         {
             PlayMusic();
             SpawnObjects();
-            timer += Time.deltaTime;
+            timer += Time.fixedDeltaTime;
+            Debug.Log(timer);
         }
 
         //********** For Debugginh, spawn all the each time you press enter ***********
@@ -97,7 +103,7 @@ public class LevelManager : MonoBehaviour
         {
             spawnTime = spawnPipeline[iterator].GetComponent<ObjectParameters>().spawnTime;
 
-            if (timer >= spawnTime - 0.01f && timer <= spawnTime + 0.01f && timerStarted)
+            if (timer >= spawnTime - 0.02f && timer <= spawnTime + 0.02f && timerStarted) /// !!!
             {
                 spawnPipeline[iterator].SetActive(true);
                 spawnPipeline[iterator].transform.position = SetRowPosition(id: spawnPipeline[iterator].GetComponent<ObjectParameters>().ID, pos: C);
