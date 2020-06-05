@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3623847121241414591}
+  - component: {fileID: 6862720497453972305}
   - component: {fileID: 7437021264787854613}
   - component: {fileID: 7214126554702194147}
-  - component: {fileID: 6862720497453972305}
   - component: {fileID: 3878294189547431296}
   - component: {fileID: 4750110020836869315}
   m_Layer: 0
@@ -35,6 +35,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6862720497453972305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5319431753950434906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bda4399a05204d47bf3f2cfe8154e73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  savesPanel: {fileID: 0}
+  level: {fileID: 0}
 --- !u!114 &7437021264787854613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47,10 +61,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b1b6b1ace1edae4dae16943ec4a4748, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelIndex: 0
-  LevelList: []
   timer: 0
-  buildLevelIndex: 0
+  index: 0
   buildLevels:
   - {fileID: 11400000, guid: 79f8ee72a46a8ca47a14b8d951535a4f, type: 2}
   buildSongs:
@@ -68,7 +80,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b154b10da50893740b8a3e40a75445af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  apple: {fileID: 6320401737951602221, guid: 2064db32ea9aa7548844abb94b8a2739, type: 3}
+  redApple: {fileID: 6320401737951602221, guid: 2064db32ea9aa7548844abb94b8a2739,
+    type: 3}
+  greenApple: {fileID: 2804311234987695243, guid: 5b5f53497215ad34abf017db82359499,
+    type: 3}
   rottenApple: {fileID: 6320401737951602221, guid: 002e7599bec3b4d48bb92d79be15b810,
     type: 3}
   disco: {fileID: 8908264986510012346, guid: 5384527610821d546b4e4915f9c3508d, type: 3}
@@ -86,21 +101,6 @@ MonoBehaviour:
   margin: 8
   tolerance: 0.24
   rollTime: 3.5
---- !u!114 &6862720497453972305
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5319431753950434906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bda4399a05204d47bf3f2cfe8154e73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  savesPanel: {fileID: 0}
-  savesButtons: []
-  level: {fileID: 0}
 --- !u!82 &3878294189547431296
 AudioSource:
   m_ObjectHideFlags: 0

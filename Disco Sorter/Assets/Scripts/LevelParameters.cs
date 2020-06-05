@@ -8,7 +8,7 @@ public class LevelParameters : MonoBehaviour
 {
     ///////////////////////// PREFABY OBIEKTÓW /////////////////////////
 
-    public GameObject apple, rottenApple, disco, release;
+    public GameObject redApple, greenApple, rottenApple, disco, release;
     [HideInInspector()]
     GameObject queueDispenser;
 
@@ -111,7 +111,9 @@ public class LevelParameters : MonoBehaviour
             switch (entityType[index])
             {
                 case EntityType.Apple:
-                    queueDispenser = Instantiate(apple, pos, Quaternion.identity);
+                    if (color[index] == EntityColour.Red)
+                        queueDispenser = Instantiate(redApple, pos, Quaternion.identity);
+                    else queueDispenser = Instantiate(greenApple, pos, Quaternion.identity);
                     break;
 
                 case EntityType.RottenApple:
@@ -133,9 +135,9 @@ public class LevelParameters : MonoBehaviour
 
             if (addToPipeline)
             {
+                queueDispenser.SetActive(false);
                 SetParameters(index);
                 spawnPipeline.Add(queueDispenser);
-                queueDispenser.SetActive(false);
             }
 
             if (column == 3)
@@ -165,23 +167,6 @@ public class LevelParameters : MonoBehaviour
         {
             q.linkedReleaseTimeStart = actionStartTime[linkedReleaseEN[j]];
             q.linkedReleaseTimeEnd = actionEndTime[linkedReleaseEN[j]];
-            
-        }
-
-        if (q.type == EntityType.Apple)
-        {
-            switch(q.color)
-            {
-                case EntityColour.Red:
-                    break;
-
-                case EntityColour.Green:
-                    q.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = q.gameObject.GetComponent<MeshRenderer>().material;
-                    break;
-
-                default:
-                    break;
-            }
         }
     }
 }

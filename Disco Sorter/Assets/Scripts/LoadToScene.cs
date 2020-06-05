@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class LoadToScene : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject savesPanel;                  // Panel, w którym znajdują się przyciski do wyboru pliku, do wczytania.
     private LevelParameters levelParameters;
     private LevelManager levelManager;
 
