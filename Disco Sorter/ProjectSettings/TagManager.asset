@@ -21,6 +21,7 @@ TagManager:
   - Lightbar
   - Maluch
   - Body
+  - Laser
   layers:
   - Default
   - TransparentFX
