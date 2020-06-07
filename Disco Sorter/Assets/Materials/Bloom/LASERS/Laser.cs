@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class Laser : MonoBehaviour
 {
-    [HideInInspector()]
-    public enum LaserColor { blue, green, pink, red, yellow }
+    public enum LaserColor { blue, green, pink, red, yellow, none }
     public enum Dir { left, right }
-    Dir direction;
-    [HideInInspector()]
-    public LaserColor col;
 
-    public GameObject laser1, laser2, laser3;
-    [Header("Colors")]
+    public Dir direction;
+    [HideInInspector()]
+    public LaserColor col, prev;
+
+    public List<GameObject> lasers;
     public List<Material> colors;
 
     [Header("Rotation")]
@@ -23,15 +22,13 @@ public class Laser : MonoBehaviour
 
     void Start()
     {
-        direction = Dir.right;
-        col = (LaserColor)Random.Range(0, 5);
+        col = (LaserColor)Random.Range(0, colors.Count);
+        prev = col;
     }
 
     void Update()
     {
-        ChangeColor(col, laser1);
-        ChangeColor(col, laser2);
-        ChangeColor(col, laser3);
+        RandomColor();
         Rotate();
     }
 
@@ -57,11 +54,19 @@ public class Laser : MonoBehaviour
         }
     }
 
+    void RandomColor()
+    {
+        for (int i = 0; i < lasers.Count; i++)
+        {
+            ChangeColor(col, lasers[i]);
+        }
+    }
+
     void Direction()
     {
-        if(direction == Dir.right)
+        if (direction == Dir.right)
             rot.y += rotationSpeed * Time.fixedDeltaTime;
-        else if(direction == Dir.left)
+        else if (direction == Dir.left)
             rot.y -= rotationSpeed * Time.fixedDeltaTime;
     }
 
@@ -71,10 +76,10 @@ public class Laser : MonoBehaviour
         Direction();
         transform.localEulerAngles = rot;
 
-        
+
         timer += Time.fixedDeltaTime;
 
-        if(timer >= rotateTime)
+        if (timer >= rotateTime)
         {
             switch (direction)
             {

@@ -124,9 +124,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   col: 0
-  laser1: {fileID: 6327953958434086483}
-  laser2: {fileID: 6153211338819769420}
-  laser3: {fileID: 7544305001752103158}
+  lasers:
+  - {fileID: 6327953958434086483}
+  - {fileID: 6153211338819769420}
+  - {fileID: 7544305001752103158}
   colors:
   - {fileID: 2100000, guid: 2676972217903b0489461ce8653ba14d, type: 2}
   - {fileID: 2100000, guid: c3721c45e72b60e4fafba864a3360d94, type: 2}
