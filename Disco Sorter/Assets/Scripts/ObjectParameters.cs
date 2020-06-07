@@ -19,10 +19,10 @@ public class ObjectParameters : MonoBehaviour
 
     public bool wasPreviouslyInserted;
     public bool wasGrabbed;
-    public bool catchWasDoneOnTime;
-    public bool releaseWasDoneOnTime;
+    public bool wasCatchedOnTime;
+    public bool wasReleasedOnTime;
 
-    void Update()
+    void Start()
     {
         gameObject.GetComponent<Rigidbody>().maxAngularVelocity = 10000f;
     }

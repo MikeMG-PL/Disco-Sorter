@@ -14,7 +14,7 @@ public class Box : MonoBehaviour
         {
             ObjectParameters parameters = other.GetComponentInParent<ObjectParameters>();
 
-            if (parameters.color == color && parameters.catchWasDoneOnTime && !parameters.wasPreviouslyInserted)
+            if (parameters.color == color && parameters.wasCatchedOnTime && !parameters.wasPreviouslyInserted)
             {
                 if (parameters.action == EntityAction.Slap && !parameters.wasGrabbed)
                 {
@@ -26,7 +26,7 @@ public class Box : MonoBehaviour
                     Debug.Log("Point throw");
                 }
 
-                else if (parameters.action == EntityAction.CatchAndRelease && parameters.releaseWasDoneOnTime)
+                else if (parameters.action == EntityAction.CatchAndRelease && parameters.wasReleasedOnTime)
                 {
                     Debug.Log("Point catch&release");
                 }
