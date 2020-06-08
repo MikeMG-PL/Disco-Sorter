@@ -22,6 +22,7 @@ TagManager:
   - Maluch
   - Body
   - Laser
+  - Release
   layers:
   - Default
   - TransparentFX

@@ -17,7 +17,8 @@ public class Laser : MonoBehaviour
     [Header("Rotation")]
     public float rotationSpeed = 10f;
     public float rotateTime = 1.5f;
-    float timer;
+    [HideInInspector()]
+    public float timer;
     Vector3 rot = new Vector3(0, 0, 0);
 
     void Start()
@@ -79,7 +80,7 @@ public class Laser : MonoBehaviour
 
         timer += Time.fixedDeltaTime;
 
-        if (timer >= rotateTime)
+        if (timer >= rotateTime && rotateTime != 0)
         {
             switch (direction)
             {

@@ -24,7 +24,7 @@ public class LaserManager : MonoBehaviour
     {
         Transform p = other.transform.parent;
 
-        if ((p.CompareTag("DiscoBall") || p.CompareTag("Apple") || p.CompareTag("RottenApple") && other.transform.parent.GetComponent<ObjectParameters>().actionStartTime - 0.2f <= levelManager.timer))
+        if ((p.CompareTag("DiscoBall") || p.CompareTag("Apple") || p.CompareTag("RottenApple") || p.CompareTag("Release")) && other.transform.parent.GetComponent<ObjectParameters>().actionStartTime - 0.2f <= levelManager.timer)
         {
             for (int i = 0; i < howMany; i++)
             {
@@ -37,6 +37,12 @@ public class LaserManager : MonoBehaviour
                 if (l.col == l.prev && l.col > 0 && l.colors.Count != 1)
                     l.col--;
                 l.prev = l.col;
+                l.timer = 0;
+
+                if (l.direction == Laser.Dir.right)
+                    l.direction = Laser.Dir.left;
+                else
+                    l.direction = Laser.Dir.right;
             }
         }
     }
