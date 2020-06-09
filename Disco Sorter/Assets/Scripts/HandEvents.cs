@@ -1,5 +1,6 @@
 ﻿using OculusSampleFramework;
 using OVR.OpenVR;
+using System.Collections;
 using UnityEngine;
 using VRTK;
 
@@ -17,9 +18,7 @@ public class HandEvents : MonoBehaviour
     [Header("Vignette stuff")]
     public Material vignette;
     public float fadeSpeed = 60;
-    float tempTimer = 100;
     float alpha;
-
     Color g, r;
 
     // Eventy dotyczące tego, co robią ręce gracza, np. złapanie obiektu, wyrzucenie obiektu. Są doczepione do Left i Right ControllerScriptAlias
@@ -29,7 +28,6 @@ public class HandEvents : MonoBehaviour
     private Player player;
     private LevelManager levelManager;
     ObjectParameters parameters;
-
 
     private void Start()
     {
@@ -93,6 +91,8 @@ public class HandEvents : MonoBehaviour
 
     void HighlightVignette(ActionHighlight h)
     {
+        OnTime();
+
         switch (h)
         {
             case ActionHighlight.Success:
@@ -106,14 +106,7 @@ public class HandEvents : MonoBehaviour
                 break;
         }
 
-        if ((parameters.wasCatchedOnTime == false && parameters.action != EntityAction.ReleasePoint)
-            || (parameters.wasReleasedOnTime == false && parameters.action == EntityAction.ReleasePoint))
-        {
-            tempTimer = 0;
-        }
-        if (tempTimer > 0.5f)
-            OnTime();
-
+        StartCoroutine(VignetteAnim());
     }
 
     void OnTime()
@@ -129,34 +122,25 @@ public class HandEvents : MonoBehaviour
         }
     }
 
-    void VignetteAnim()
+    IEnumerator VignetteAnim()
     {
-        float maxAlpha = 0.5f, minAlpha = 0, step0 = 0, step1 = 0.2f, step2 = 0.5f;
-        tempTimer += Time.deltaTime;
-        if (tempTimer > step0 && alpha <= maxAlpha && tempTimer <= step1)
+        float maxAlpha = 0.75f;
+
+        while (alpha <= maxAlpha)
         {
+            vignette.color = new Color(vignette.color.r, vignette.color.g, vignette.color.b, alpha);
+            vignette.SetColor("_EmissionColor", vignette.color);
             alpha += fadeSpeed * Time.deltaTime;
+            yield return new WaitForSeconds(Time.deltaTime);
         }
-        else if (tempTimer > step1 && tempTimer <= step2)
+        while (alpha > 0)
         {
-            alpha -= fadeSpeed * Time.deltaTime * 2;
+            vignette.color = new Color(vignette.color.r, vignette.color.g, vignette.color.b, alpha);
+            vignette.SetColor("_EmissionColor", vignette.color);
+            alpha -= fadeSpeed * Time.deltaTime;
+            yield return new WaitForSeconds(Time.deltaTime);
         }
-        else if (tempTimer > step2)
-        {
-            alpha = minAlpha;
-        }
     }
 
-    void VignetteFlash()
-    {
-        vignette.color = new Color(vignette.color.r, vignette.color.g, vignette.color.b, alpha);
-        vignette.SetColor("_EmissionColor", vignette.color);
-        VignetteAnim();
-    }
-
-    void Update()
-    {
-        VignetteFlash();
-    }
-
+    
 }
