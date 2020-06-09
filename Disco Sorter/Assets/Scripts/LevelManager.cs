@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -84,6 +85,7 @@ public class LevelManager : MonoBehaviour
     //********** For Debugginh, spawn all the each time you press enter ***********
     void Restart()
     {
+        /*
         iterator = 0;
         spawnPipeline = levelParameters.spawnPipeline;
         Calculations();
@@ -93,7 +95,8 @@ public class LevelManager : MonoBehaviour
         timerStarted = true;
         PlayMusic();
         SpawnObjects();
-        timer += Time.deltaTime;
+        timer += Time.deltaTime;*/
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     void SpawnObjects()

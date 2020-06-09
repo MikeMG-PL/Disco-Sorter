@@ -96,6 +96,3 @@ public class OnScreen : MonoBehaviour
             Debug.LogError("There is no LoadToScene assigned in OnScreen gameobject.");
     }
 }
-
-
-// #if UNITY_EDITOR

@@ -174,17 +174,17 @@ PrefabInstance:
     - target: {fileID: 5861289943795818154, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.2
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 5861289943795818154, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.2
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 5861289943795818154, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.2
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 1305053816106069925, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
         type: 3}
@@ -196,15 +196,15 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
-    - target: {fileID: 1611012757184730072, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
-        type: 3}
-      propertyPath: precisionGrab
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8402051711649985921, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
         type: 3}
       propertyPath: m_Radius
       value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1611012757184730072, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
+        type: 3}
+      propertyPath: precisionGrab
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37ce9f027c7d6244b8e878f55bbe63b8, type: 3}

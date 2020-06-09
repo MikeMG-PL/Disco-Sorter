@@ -24,7 +24,8 @@ public class LaserManager : MonoBehaviour
     {
         Transform p = other.transform.parent;
 
-        if ((p.CompareTag("DiscoBall") || p.CompareTag("Apple") || p.CompareTag("RottenApple") || p.CompareTag("Release")) && other.transform.parent.GetComponent<ObjectParameters>().actionStartTime - 0.2f <= levelManager.timer)
+        if ((p.CompareTag("DiscoBall") || p.CompareTag("Apple") || p.CompareTag("RottenApple") || p.CompareTag("Release"))
+            && other.transform.parent.GetComponent<ObjectParameters>().actionEndTime + 0.2f >= levelManager.timer)
         {
             for (int i = 0; i < howMany; i++)
             {
