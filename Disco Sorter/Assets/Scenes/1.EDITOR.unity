@@ -6686,7 +6686,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: e93bed9030d6e8248a7d073b03df3ef8, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 3d376cabecb896b4aab1a07a92dffbcd, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.12
   m_Pitch: 1
@@ -6804,7 +6804,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   netDensity: 2
-  BPM: 150
+  BPM: 128
   entityArray: []
   entityEndTime: []
   entitiesOverallAmount: 0

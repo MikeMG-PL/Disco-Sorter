@@ -50,7 +50,6 @@ public class LevelManager : MonoBehaviour
             timer += Time.fixedDeltaTime;
         }
 
-        //********** For Debugginh, spawn all the each time you press enter ***********
         if (songController.aSrc.isPlaying && Input.GetKeyDown(KeyCode.Return))
         {
             Restart();
@@ -82,20 +81,8 @@ public class LevelManager : MonoBehaviour
             songController.aSrc.Stop();
     }
 
-    //********** For Debugginh, spawn all the each time you press enter ***********
     void Restart()
     {
-        /*
-        iterator = 0;
-        spawnPipeline = levelParameters.spawnPipeline;
-        Calculations();
-        timerStarted = false;
-        StopMusic();
-        timer = 0;
-        timerStarted = true;
-        PlayMusic();
-        SpawnObjects();
-        timer += Time.deltaTime;*/
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -103,6 +90,8 @@ public class LevelManager : MonoBehaviour
     {
         if (iterator < spawnPipeline.Count)
         {
+            Vector3 rot = new Vector3(Random.Range(0, 181), Random.Range(0, 181), Random.Range(0, 181));
+
             spawnTime = spawnPipeline[iterator].GetComponent<ObjectParameters>().spawnTime;
 
             if (timer >= spawnTime - 0.02f && timer <= spawnTime + 0.02f && timerStarted) /// !!!
@@ -110,6 +99,7 @@ public class LevelManager : MonoBehaviour
                 spawnPipeline[iterator].SetActive(true);
                 spawnPipeline[iterator].transform.position = SetRowPosition(id: spawnPipeline[iterator].GetComponent<ObjectParameters>().ID, pos: C);
                 spawnPipeline[iterator].transform.rotation = Quaternion.identity;
+                spawnPipeline[iterator].transform.localEulerAngles = rot;
                 spawnPipeline[iterator].GetComponent<Rigidbody>().velocity = Vector3.zero;
                 iterator++;
             }

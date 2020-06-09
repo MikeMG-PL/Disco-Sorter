@@ -55,6 +55,7 @@ public class HandEvents : MonoBehaviour
         if (timer >= parameters.actionStartTime && timer <= parameters.actionEndTime)
         {
             highlight = true;
+            Debug.Log("| START: " + parameters.actionStartTime + " | HIT: " + timer + " | END:" + parameters.actionEndTime);
         }
         parameters.wasGrabbed = true;
     }
