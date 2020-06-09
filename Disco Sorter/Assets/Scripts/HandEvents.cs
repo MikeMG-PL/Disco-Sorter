@@ -9,15 +9,18 @@ public enum Hand
     Left,
 };
 
+enum ActionHighlight { Unknown, Success, Fail };
+
 public class HandEvents : MonoBehaviour
 {
     // Do obsługi soczystości - potwierdzania trafienia w rytm na ekranie
     [Header("Vignette stuff")]
     public Material vignette;
     public float fadeSpeed = 60;
-    float tempTimer;
+    float tempTimer = 100;
     float alpha;
-    bool highlight;
+
+    Color g, r;
 
     // Eventy dotyczące tego, co robią ręce gracza, np. złapanie obiektu, wyrzucenie obiektu. Są doczepione do Left i Right ControllerScriptAlias
 
@@ -39,6 +42,8 @@ public class HandEvents : MonoBehaviour
         GetComponent<VRTK_InteractGrab>().ControllerUngrabInteractableObject += OnUngrabObject;
 
         vignette.color = new Color(0, 0, 0, 0);
+        g = new Color(0, 1, 0, alpha);
+        r = new Color(1, 0, 0, alpha);
     }
 
     private void OnGrabObject(object sender, ObjectInteractEventArgs e)
@@ -54,8 +59,11 @@ public class HandEvents : MonoBehaviour
 
         if (timer >= parameters.actionStartTime && timer <= parameters.actionEndTime)
         {
-            highlight = true;
-            Debug.Log("| START: " + parameters.actionStartTime + " | HIT: " + timer + " | END:" + parameters.actionEndTime);
+            HighlightVignette(ActionHighlight.Success);
+        }
+        else
+        {
+            HighlightVignette(ActionHighlight.Fail);
         }
         parameters.wasGrabbed = true;
     }
@@ -74,36 +82,38 @@ public class HandEvents : MonoBehaviour
             float timer = levelManager.timer;
             if (timer >= parameters.linkedReleaseTimeStart && timer <= parameters.linkedReleaseTimeEnd)
             {
-                highlight = true;
+                HighlightVignette(ActionHighlight.Success);
+            }
+            else
+            {
+                HighlightVignette(ActionHighlight.Fail);
             }
         }
     }
 
-    void HighlightVignette()
+    void HighlightVignette(ActionHighlight h)
     {
-        if (highlight == true)
+        switch (h)
         {
-            if ((parameters.wasCatchedOnTime == false && parameters.action != EntityAction.ReleasePoint) || (parameters.wasReleasedOnTime == false && parameters.action == EntityAction.ReleasePoint))
-            {
-                vignette.color = new Color(vignette.color.r, vignette.color.g, vignette.color.b, alpha);
-                tempTimer += Time.deltaTime;
-                if (tempTimer > 0 && alpha <= 0.5f && tempTimer <= 0.2f)
-                {
-                    alpha += fadeSpeed * 1.5f * Time.deltaTime;
-                }
-                else if (tempTimer > 0.2f && tempTimer <= 0.5f)
-                {
-                    alpha -= fadeSpeed * Time.deltaTime * 3.5f;
-                }
-                else if (tempTimer > 0.5f)
-                {
-                    OnTime();
-                    alpha = 0;
-                    highlight = false;
-                    tempTimer = 0;
-                }
-            }
+            case ActionHighlight.Success:
+                vignette.color = g;
+                break;
+            case ActionHighlight.Fail:
+                vignette.color = r;
+                break;
+            default:
+                vignette.color = new Color(0, 0, 0, 0);
+                break;
         }
+
+        if ((parameters.wasCatchedOnTime == false && parameters.action != EntityAction.ReleasePoint)
+            || (parameters.wasReleasedOnTime == false && parameters.action == EntityAction.ReleasePoint))
+        {
+            tempTimer = 0;
+        }
+        if (tempTimer > 0.5f)
+            OnTime();
+
     }
 
     void OnTime()
@@ -119,13 +129,34 @@ public class HandEvents : MonoBehaviour
         }
     }
 
+    void VignetteAnim()
+    {
+        float maxAlpha = 0.5f, minAlpha = 0, step0 = 0, step1 = 0.2f, step2 = 0.5f;
+        tempTimer += Time.deltaTime;
+        if (tempTimer > step0 && alpha <= maxAlpha && tempTimer <= step1)
+        {
+            alpha += fadeSpeed * Time.deltaTime;
+        }
+        else if (tempTimer > step1 && tempTimer <= step2)
+        {
+            alpha -= fadeSpeed * Time.deltaTime * 2;
+        }
+        else if (tempTimer > step2)
+        {
+            alpha = minAlpha;
+        }
+    }
+
     void VignetteFlash()
     {
-
+        vignette.color = new Color(vignette.color.r, vignette.color.g, vignette.color.b, alpha);
+        vignette.SetColor("_EmissionColor", vignette.color);
+        VignetteAnim();
     }
 
     void Update()
     {
-        HighlightVignette();
+        VignetteFlash();
     }
+
 }

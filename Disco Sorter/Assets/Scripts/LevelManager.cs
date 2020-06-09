@@ -59,7 +59,7 @@ public class LevelManager : MonoBehaviour
     void Calculations()
     {
 
-        var b = (Mathf.Pow(levelParameters.rollTime * 0.87f, 2) * Mathf.Abs(Physics.gravity.y) * Mathf.Sin(0.174532925f)) /
+        var b = (Mathf.Pow(levelParameters.rollTime * 0.83f, 2) * Mathf.Abs(Physics.gravity.y) * Mathf.Sin(0.174532925f)) /
                 (2 * (Mathf.Pow(Mathf.Sin(0.174532925f), 2) + 1) * Mathf.Sqrt(1 - Mathf.Pow(Mathf.Sin(0.174532925f), 2)));
 
         var h = (b * Mathf.Sin(0.174532925f)) / Mathf.Sqrt(1 - Mathf.Pow(Mathf.Sin(0.174532925f), 2));
