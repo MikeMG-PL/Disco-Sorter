@@ -4,21 +4,20 @@ using UnityEngine;
 
 public class MissedAction : MonoBehaviour
 {
-    [Tooltip("Does not matter whether left or right hand script is attached")]
-    public HandEvents handEvents;
+    public OnScreen onScreen;
 
-    void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         Transform p = other.transform.parent;
-        ObjectParameters o = other.transform.parent.GetComponent<ObjectParameters>();
+        ObjectParameters o = p.GetComponent<ObjectParameters>();
 
-        if ((p.CompareTag("DiscoBall") || p.CompareTag("Apple") || p.CompareTag("RottenApple")) && !o.wasGrabbed)
+        if((p.CompareTag("DiscoBall") || p.CompareTag("Apple") || p.CompareTag("RottenApple")) && !o.wasGrabbed)
         {
-            handEvents.HighlightVignette(ActionHighlight.Fail);
+            onScreen.HighlightVignette(ActionHighlight.Fail);
         }
-        if (p.CompareTag("Release") && !o.wasReleased)
+        else if((p.CompareTag("Release")) && !o.wasReleased)
         {
-            handEvents.HighlightVignette(ActionHighlight.Fail);
+            onScreen.HighlightVignette(ActionHighlight.Fail);
         }
     }
 }

@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class OnScreen : MonoBehaviour
 {
+    public Material vignette; Color r, g; float alpha; bool highlighted; public float vignetteFadeSpeed = 10;
+
+    [Header("-------------------")]
     public TextMesh songTitle;
     public TextMesh songArtist;
     public MeshRenderer titleMesh;
     public MeshRenderer artistMesh;
+
     [Header("-------------------")]
     public SpriteRenderer logo;
     public TextMesh scoreText;
@@ -28,6 +32,10 @@ public class OnScreen : MonoBehaviour
 
     void Start()
     {
+        vignette.color = new Color(0, 0, 0, 0);
+        g = new Color(0, 1, 0, alpha);
+        r = new Color(1, 0, 0, alpha);
+
         songTitle.text = loadToScene.level.name;
         songArtist.text = loadToScene.level.artist;
     }
@@ -41,15 +49,15 @@ public class OnScreen : MonoBehaviour
         scoreMesh.gameObject.SetActive(true);
         scoreMesh.material.color = new Color(scoreMesh.material.color.r, scoreMesh.material.color.g, scoreMesh.material.color.b, alphaText);
 
-        yield return new WaitForSecondsRealtime(2);
+        yield return new WaitForSeconds(2);
 
         showLogo = true;
 
-        yield return new WaitForSecondsRealtime(3);
+        yield return new WaitForSeconds(3);
 
         showLogo = false;
 
-        yield return new WaitForSecondsRealtime(2);
+        yield return new WaitForSeconds(2);
 
         showPoints = true;
     }
@@ -96,5 +104,59 @@ public class OnScreen : MonoBehaviour
             Debug.LogError("There is no LoadToScene assigned in OnScreen gameobject.");
     }
 
-    
+    public void HighlightVignette(ActionHighlight h)
+    {
+        switch (h)
+        {
+            case ActionHighlight.Success:
+                vignette.color = g;
+                break;
+            case ActionHighlight.Fail:
+                vignette.color = r;
+                break;
+            default:
+                vignette.color = new Color(0, 0, 0, 0);
+                break;
+        }
+
+        StartCoroutine(VignetteAnim());
+    }
+
+    public void OnTime(ObjectParameters parameters)
+    {
+        switch (parameters.action)
+        {
+            case EntityAction.ReleasePoint:
+                parameters.wasReleasedOnTime = true;
+                break;
+            default:
+                parameters.wasCatchedOnTime = true;
+                break;
+        }
+    }
+
+    public IEnumerator VignetteAnim()
+    {
+        if (!highlighted)
+        {
+            highlighted = true;
+            float maxAlpha = 0.75f;
+
+            while (alpha <= maxAlpha)
+            {
+                vignette.color = new Color(vignette.color.r, vignette.color.g, vignette.color.b, alpha);
+                vignette.SetColor("_EmissionColor", vignette.color);
+                alpha += vignetteFadeSpeed * Time.deltaTime;
+                yield return new WaitForSeconds(Time.deltaTime);
+            }
+            while (alpha > 0)
+            {
+                vignette.color = new Color(vignette.color.r, vignette.color.g, vignette.color.b, alpha);
+                vignette.SetColor("_EmissionColor", vignette.color);
+                alpha -= vignetteFadeSpeed * Time.deltaTime;
+                yield return new WaitForSeconds(Time.deltaTime);
+            }
+            highlighted = false;
+        }
+    }
 }

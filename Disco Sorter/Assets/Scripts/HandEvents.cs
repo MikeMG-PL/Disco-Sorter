@@ -15,12 +15,8 @@ public enum ActionHighlight { Unknown, Success, Fail };
 public class HandEvents : MonoBehaviour
 {
     // Do obsługi soczystości - potwierdzania trafienia w rytm na ekranie
-    [Header("Vignette stuff")]
-    public Material vignette;
-    public float fadeSpeed = 60;
-    float alpha;
-    Color g, r;
-    bool highlighted;
+    [Header("Vignette")]
+    public OnScreen onScreen;
 
     // Eventy dotyczące tego, co robią ręce gracza, np. złapanie obiektu, wyrzucenie obiektu. Są doczepione do Left i Right ControllerScriptAlias
 
@@ -39,13 +35,7 @@ public class HandEvents : MonoBehaviour
 
         GetComponent<VRTK_InteractGrab>().ControllerGrabInteractableObject += OnGrabObject;
         GetComponent<VRTK_InteractGrab>().ControllerUngrabInteractableObject += OnUngrabObject;
-
-        vignette.color = new Color(0, 0, 0, 0);
-        g = new Color(0, 1, 0, alpha);
-        r = new Color(1, 0, 0, alpha);
     }
-
-
 
     private void OnGrabObject(object sender, ObjectInteractEventArgs e)
     {
@@ -60,11 +50,11 @@ public class HandEvents : MonoBehaviour
 
         if (timer >= parameters.actionStartTime && timer <= parameters.actionEndTime)
         {
-            HighlightVignette(ActionHighlight.Success);
+            onScreen.HighlightVignette(ActionHighlight.Success);
         }
         else
         {
-            HighlightVignette(ActionHighlight.Fail);
+            onScreen.HighlightVignette(ActionHighlight.Fail);
         }
         parameters.wasGrabbed = true;
     }
@@ -83,36 +73,18 @@ public class HandEvents : MonoBehaviour
             float timer = levelManager.timer;
             if (timer >= parameters.linkedReleaseTimeStart && timer <= parameters.linkedReleaseTimeEnd)
             {
-                HighlightVignette(ActionHighlight.Success);
+                onScreen.HighlightVignette(ActionHighlight.Success);
+                OnTime(parameters);
             }
             else
             {
-                HighlightVignette(ActionHighlight.Fail);
+                onScreen.HighlightVignette(ActionHighlight.Fail);
             }
         }
         parameters.wasReleased = true;
     }
 
-    public void HighlightVignette(ActionHighlight h)
-    {
-        switch (h)
-        {
-            case ActionHighlight.Success:
-                OnTime();
-                vignette.color = g;
-                break;
-            case ActionHighlight.Fail:
-                vignette.color = r;
-                break;
-            default:
-                vignette.color = new Color(0, 0, 0, 0);
-                break;
-        }
-
-        StartCoroutine(VignetteAnim());
-    }
-
-    void OnTime()
+    void OnTime(ObjectParameters parameters)
     {
         switch (parameters.action)
         {
@@ -123,31 +95,5 @@ public class HandEvents : MonoBehaviour
                 parameters.wasCatchedOnTime = true;
                 break;
         }
-    }
-
-    public IEnumerator VignetteAnim()
-    {
-        if (!highlighted)
-        {
-            highlighted = true;
-            float maxAlpha = 0.75f;
-
-            while (alpha <= maxAlpha)
-            {
-                vignette.color = new Color(vignette.color.r, vignette.color.g, vignette.color.b, alpha);
-                vignette.SetColor("_EmissionColor", vignette.color);
-                alpha += fadeSpeed * Time.deltaTime;
-                yield return new WaitForSeconds(Time.deltaTime);
-            }
-            while (alpha > 0)
-            {
-                vignette.color = new Color(vignette.color.r, vignette.color.g, vignette.color.b, alpha);
-                vignette.SetColor("_EmissionColor", vignette.color);
-                alpha -= fadeSpeed * Time.deltaTime;
-                yield return new WaitForSeconds(Time.deltaTime);
-            }
-            highlighted = false;
-        }
-
     }
 }

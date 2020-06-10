@@ -3059,7 +3059,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabButton: 7
   grabPrecognition: 0
-  throwMultiplier: 1
+  throwMultiplier: 1.2
   createRigidBodyWhenNotTouching: 0
   controllerAttachPoint: {fileID: 6555101326896431281}
   controllerEvents: {fileID: 0}
@@ -5435,7 +5435,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabButton: 7
   grabPrecognition: 0
-  throwMultiplier: 1
+  throwMultiplier: 1.2
   createRigidBodyWhenNotTouching: 0
   controllerAttachPoint: {fileID: 3355809793067511688}
   controllerEvents: {fileID: 0}
@@ -6289,6 +6289,11 @@ PrefabInstance:
       propertyPath: useOverrides.pinkyOverride
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114963189862696322, guid: afec65f27dcd2c74cba31fc61eea61e6,
+        type: 3}
+      propertyPath: controllerType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 95718739528495300, guid: afec65f27dcd2c74cba31fc61eea61e6,
         type: 3}
       propertyPath: m_Avatar
@@ -6859,6 +6864,11 @@ PrefabInstance:
         type: 3}
       propertyPath: useOverrides.pinkyOverride
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114963189862696322, guid: afec65f27dcd2c74cba31fc61eea61e6,
+        type: 3}
+      propertyPath: controllerType
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 95718739528495300, guid: afec65f27dcd2c74cba31fc61eea61e6,
         type: 3}
