@@ -20,7 +20,7 @@ public class HandEvents : MonoBehaviour
     public float fadeSpeed = 60;
     float alpha;
     Color g, r;
-    int catchINDEX, releaseINDEX;
+    bool highlighted;
 
     // Eventy dotyczące tego, co robią ręce gracza, np. złapanie obiektu, wyrzucenie obiektu. Są doczepione do Left i Right ControllerScriptAlias
 
@@ -44,6 +44,8 @@ public class HandEvents : MonoBehaviour
         g = new Color(0, 1, 0, alpha);
         r = new Color(1, 0, 0, alpha);
     }
+
+
 
     private void OnGrabObject(object sender, ObjectInteractEventArgs e)
     {
@@ -69,8 +71,6 @@ public class HandEvents : MonoBehaviour
 
     private void OnUngrabObject(object sender, ObjectInteractEventArgs e)
     {
-        
-
         if (e.target.GetComponent<ObjectParameters>() == null) return;
 
         if (handSide == Hand.Right) player.rightHandGrabbedObject = null;
@@ -127,21 +127,27 @@ public class HandEvents : MonoBehaviour
 
     public IEnumerator VignetteAnim()
     {
-        float maxAlpha = 0.75f;
+        if (!highlighted)
+        {
+            highlighted = true;
+            float maxAlpha = 0.75f;
 
-        while (alpha <= maxAlpha)
-        {
-            vignette.color = new Color(vignette.color.r, vignette.color.g, vignette.color.b, alpha);
-            vignette.SetColor("_EmissionColor", vignette.color);
-            alpha += fadeSpeed * Time.deltaTime;
-            yield return new WaitForSeconds(Time.deltaTime);
+            while (alpha <= maxAlpha)
+            {
+                vignette.color = new Color(vignette.color.r, vignette.color.g, vignette.color.b, alpha);
+                vignette.SetColor("_EmissionColor", vignette.color);
+                alpha += fadeSpeed * Time.deltaTime;
+                yield return new WaitForSeconds(Time.deltaTime);
+            }
+            while (alpha > 0)
+            {
+                vignette.color = new Color(vignette.color.r, vignette.color.g, vignette.color.b, alpha);
+                vignette.SetColor("_EmissionColor", vignette.color);
+                alpha -= fadeSpeed * Time.deltaTime;
+                yield return new WaitForSeconds(Time.deltaTime);
+            }
+            highlighted = false;
         }
-        while (alpha > 0)
-        {
-            vignette.color = new Color(vignette.color.r, vignette.color.g, vignette.color.b, alpha);
-            vignette.SetColor("_EmissionColor", vignette.color);
-            alpha -= fadeSpeed * Time.deltaTime;
-            yield return new WaitForSeconds(Time.deltaTime);
-        }
+
     }
 }
