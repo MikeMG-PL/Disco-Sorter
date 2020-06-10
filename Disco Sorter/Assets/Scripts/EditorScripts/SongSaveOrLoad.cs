@@ -59,7 +59,11 @@ public class SongSaveOrLoad : MonoBehaviour
             entity.color = level.color[i];
             entity.action = level.action[i];
             entity.linkedCatchEN = level.linkedCatchEN[i];
-            entity.linkedReleaseEN = level.linkedCatchEN[i];
+            entity.linkedReleaseEN = level.linkedReleaseEN[i];
+            entity.linkedReleaseTimeStart = level.linkedReleaseTimeStart[i];
+            entity.linkedReleaseTimeEnd = level.linkedReleaseTimeEnd[i];
+            entity.linkedCatchTime = level.linkedCatchTime[i];
+             
             entity.ChangeColor();
             entity.ChangeTypeIcon();
             entity.ChangeActionIcon();

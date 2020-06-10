@@ -12,6 +12,9 @@ public class Entity : MonoBehaviour
     public EntityColour color;                          // Kolory jabłek, 0 - brak, 1 - zielony, 2 - czerwony
     public int linkedReleaseEN = -1;                    // Numer entity, do którego należy wyrzucić ten obiekt
     public int linkedCatchEN = -1;                      // Numer entity, który trzeba wyrzucić do tego obiektu
+    public float linkedReleaseTimeStart = -1;
+    public float linkedReleaseTimeEnd = -1;
+    public float linkedCatchTime = -1;
 
     [HideInInspector]
     public EntityMenu entityMenuScript;

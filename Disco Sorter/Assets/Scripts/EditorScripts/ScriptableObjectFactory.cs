@@ -40,8 +40,11 @@ public class ScriptableObjectFactory : MonoBehaviour
             level.action.Add(entity.action);
             level.linkedReleaseEN.Add(entity.linkedReleaseEN);
             level.linkedCatchEN.Add(entity.linkedCatchEN);
-
+            level.linkedReleaseTimeStart.Add(entity.linkedReleaseTimeStart);
+            level.linkedReleaseTimeEnd.Add(entity.linkedReleaseTimeEnd);
+            level.linkedCatchTime.Add(entity.linkedCatchTime);
         }
+
         level.name = GetComponent<AudioSource>().clip.name;
         level.artist = "Disco Sorter Soundtrack";
         level.BPM = editorNet.BPM;

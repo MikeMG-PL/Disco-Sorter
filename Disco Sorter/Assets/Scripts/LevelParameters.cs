@@ -159,6 +159,8 @@ public class LevelParameters : MonoBehaviour
         q.actionEndTime = actionEndTime[j];
         q.spawnTime = spawnTime[j];
         q.type = entityType[j];
+        q.linkedCatchEN = linkedCatchEN[j];
+        q.linkedReleaseEN = linkedReleaseEN[j];
         q.color = color[j];
         q.action = action[j];
         q.ID = j;

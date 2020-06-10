@@ -10,6 +10,8 @@ public class ObjectParameters : MonoBehaviour
     public float linkedReleaseTimeStart;
     public float linkedReleaseTimeEnd;
     public float linkedCatchTime;
+    public int linkedReleaseEN;
+    public int linkedCatchEN;
     public float spawnTime;
 
     public EntityType type;
