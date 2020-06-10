@@ -10,7 +10,7 @@ public enum Hand
     Left,
 };
 
-enum ActionHighlight { Unknown, Success, Fail };
+public enum ActionHighlight { Unknown, Success, Fail };
 
 public class HandEvents : MonoBehaviour
 {
@@ -20,6 +20,7 @@ public class HandEvents : MonoBehaviour
     public float fadeSpeed = 60;
     float alpha;
     Color g, r;
+    int catchINDEX, releaseINDEX;
 
     // Eventy dotyczące tego, co robią ręce gracza, np. złapanie obiektu, wyrzucenie obiektu. Są doczepione do Left i Right ControllerScriptAlias
 
@@ -68,6 +69,8 @@ public class HandEvents : MonoBehaviour
 
     private void OnUngrabObject(object sender, ObjectInteractEventArgs e)
     {
+        
+
         if (e.target.GetComponent<ObjectParameters>() == null) return;
 
         if (handSide == Hand.Right) player.rightHandGrabbedObject = null;
@@ -87,15 +90,15 @@ public class HandEvents : MonoBehaviour
                 HighlightVignette(ActionHighlight.Fail);
             }
         }
+        parameters.wasReleased = true;
     }
 
-    void HighlightVignette(ActionHighlight h)
+    public void HighlightVignette(ActionHighlight h)
     {
-        OnTime();
-
         switch (h)
         {
             case ActionHighlight.Success:
+                OnTime();
                 vignette.color = g;
                 break;
             case ActionHighlight.Fail:
@@ -122,7 +125,7 @@ public class HandEvents : MonoBehaviour
         }
     }
 
-    IEnumerator VignetteAnim()
+    public IEnumerator VignetteAnim()
     {
         float maxAlpha = 0.75f;
 
@@ -141,6 +144,4 @@ public class HandEvents : MonoBehaviour
             yield return new WaitForSeconds(Time.deltaTime);
         }
     }
-
-    
 }

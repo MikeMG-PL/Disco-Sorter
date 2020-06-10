@@ -21,7 +21,8 @@ public class LevelManager : MonoBehaviour
     Vector3 A, B, C;
     public Transform TransformOfB;
 
-    List<GameObject> spawnPipeline = new List<GameObject>();
+    [HideInInspector()]
+    public List<GameObject> spawnPipeline = new List<GameObject>();
 
     private void Awake()
     {

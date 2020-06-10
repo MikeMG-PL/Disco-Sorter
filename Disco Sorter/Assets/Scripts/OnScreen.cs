@@ -95,4 +95,6 @@ public class OnScreen : MonoBehaviour
         if (loadToScene == null)
             Debug.LogError("There is no LoadToScene assigned in OnScreen gameobject.");
     }
+
+    
 }
