@@ -24146,6 +24146,7 @@ GameObject:
   - component: {fileID: 1856877484}
   - component: {fileID: 1856877485}
   - component: {fileID: 1856877486}
+  - component: {fileID: 1856877487}
   m_Layer: 11
   m_Name: Finish
   m_TagString: Finish
@@ -24197,6 +24198,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lasers: []
   levelManager: {fileID: 238941089}
+--- !u!114 &1856877487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1856877483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0de3d0a6f61d77469a16c2e6dc46e50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handEvents: {fileID: 441682201}
 --- !u!1001 &1865493281
 PrefabInstance:
   m_ObjectHideFlags: 0
