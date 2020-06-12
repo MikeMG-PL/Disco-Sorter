@@ -7,6 +7,8 @@ public class LaserManager : MonoBehaviour
     public List<GameObject> lasers;
     int howMany;
     public LevelManager levelManager;
+    bool illuminate;
+
 
     void Start()
     {
@@ -18,6 +20,7 @@ public class LaserManager : MonoBehaviour
         {
             lasers.Add(tab[i]);
         }
+        StartCoroutine(Illuminations());
     }
 
     void OnTriggerEnter(Collider other)
@@ -26,25 +29,39 @@ public class LaserManager : MonoBehaviour
 
         if ((p.CompareTag("DiscoBall") || p.CompareTag("Apple") || p.CompareTag("RottenApple") || p.CompareTag("Release"))
             && other.transform.parent.GetComponent<ObjectParameters>().actionEndTime + 0.2f >= levelManager.timer)
+            illuminate = true;
+    }
+
+    IEnumerator Illuminations()
+    {
+        while (true)
         {
-            for (int i = 0; i < howMany; i++)
+            if (illuminate)
             {
-                Laser l = lasers[i].GetComponent<Laser>();
-                l.col = (Laser.LaserColor)Random.Range(0, l.colors.Count);
+                for (int i = 0; i < howMany; i++)
+                {
+                    Laser l = lasers[i].GetComponent<Laser>();
+                    l.col = (Laser.LaserColor)Random.Range(0, l.colors.Count);
 
-                // Losowanie z wyłącznością poprzedniego koloru
-                if (l.col == 0 && l.col == l.prev && l.colors.Count != 1)
-                    l.col++;
-                if (l.col == l.prev && l.col > 0 && l.colors.Count != 1)
-                    l.col--;
-                l.prev = l.col;
-                l.timer = 0;
+                    // Losowanie z wyłącznością poprzedniego koloru
+                    if (l.col == 0 && l.col == l.prev && l.colors.Count != 1)
+                        l.col++;
+                    if (l.col == l.prev && l.col > 0 && l.colors.Count != 1)
+                        l.col--;
+                    l.prev = l.col;
 
-                if (l.direction == Laser.Dir.right)
-                    l.direction = Laser.Dir.left;
-                else
-                    l.direction = Laser.Dir.right;
+                    if(l.timer < 0.5f)
+                        l.timer = 0;
+
+                    if (l.direction == Laser.Dir.right)
+                        l.direction = Laser.Dir.left;
+                    else
+                        l.direction = Laser.Dir.right;
+                }
             }
+            illuminate = false;
+
+            yield return new WaitForSeconds(0.2f);
         }
     }
 }

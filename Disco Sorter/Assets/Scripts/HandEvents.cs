@@ -4,12 +4,7 @@ using System.Collections;
 using UnityEngine;
 using VRTK;
 
-public enum Hand
-{
-    Right,
-    Left,
-};
-
+public enum Hand { Right, Left };
 public enum ActionHighlight { Unknown, Success, Fail };
 
 public class HandEvents : MonoBehaviour
@@ -40,55 +35,58 @@ public class HandEvents : MonoBehaviour
     private void OnGrabObject(object sender, ObjectInteractEventArgs e)
     {
         if (e.target.GetComponent<ObjectParameters>() == null) return;
-
+        parameters = e.target.GetComponent<ObjectParameters>();
+        parameters.wasGrabbed = true;
         if (handSide == Hand.Right) player.rightHandGrabbedObject = e.target;
         else player.leftHandGrabbedObject = e.target;
 
-        parameters = e.target.GetComponent<ObjectParameters>();
-
-        float timer = levelManager.timer;
-
-        if (timer >= parameters.actionStartTime && timer <= parameters.actionEndTime)
-        {
-            onScreen.HighlightVignette(ActionHighlight.Success);
-        }
-        else
-        {
-            onScreen.HighlightVignette(ActionHighlight.Fail);
-        }
-        parameters.wasGrabbed = true;
+        CheckActionTime(parameters, true);
     }
 
     private void OnUngrabObject(object sender, ObjectInteractEventArgs e)
     {
         if (e.target.GetComponent<ObjectParameters>() == null) return;
-
+        parameters = e.target.GetComponent<ObjectParameters>();
+        parameters.wasReleased = true;
         if (handSide == Hand.Right) player.rightHandGrabbedObject = null;
         else player.leftHandGrabbedObject = null;
 
-        parameters = e.target.GetComponent<ObjectParameters>();
+        CheckActionTime(parameters, false);
+    }
+
+    void CheckActionTime(ObjectParameters parameters, bool thisIsGrabbing)
+    {
+        float timer = levelManager.timer;
+        float clamp1 = 0, clamp2 = 0;
+
+        switch (thisIsGrabbing)
+        {
+            case true:
+                clamp1 = parameters.actionStartTime; clamp2 = parameters.actionEndTime;
+                break;
+
+            case false:
+                clamp1 = parameters.linkedReleaseTimeStart; clamp2 = parameters.linkedReleaseTimeEnd;
+                break;
+        }
 
         if (parameters.action == EntityAction.CatchAndRelease)
         {
-            float timer = levelManager.timer;
-            if (timer >= parameters.linkedReleaseTimeStart && timer <= parameters.linkedReleaseTimeEnd)
+            if (timer >= clamp1 && timer <= clamp2)
             {
                 onScreen.HighlightVignette(ActionHighlight.Success);
                 OnTime(parameters);
             }
             else
-            {
                 onScreen.HighlightVignette(ActionHighlight.Fail);
-            }
         }
-        parameters.wasReleased = true;
     }
 
     void OnTime(ObjectParameters parameters)
     {
         switch (parameters.action)
         {
-            case EntityAction.ReleasePoint:
+            case EntityAction.CatchAndRelease:
                 parameters.wasReleasedOnTime = true;
                 break;
             default:

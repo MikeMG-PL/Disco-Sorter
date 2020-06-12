@@ -66,9 +66,9 @@ public class Laser : MonoBehaviour
     void Direction()
     {
         if (direction == Dir.right)
-            rot.y += rotationSpeed * Time.fixedDeltaTime;
+            rot.y += rotationSpeed * Time.deltaTime;
         else if (direction == Dir.left)
-            rot.y -= rotationSpeed * Time.fixedDeltaTime;
+            rot.y -= rotationSpeed * Time.deltaTime;
     }
 
     void Rotate()
@@ -78,7 +78,7 @@ public class Laser : MonoBehaviour
         transform.localEulerAngles = rot;
 
 
-        timer += Time.fixedDeltaTime;
+        timer += Time.deltaTime;
 
         if (timer >= rotateTime && rotateTime != 0)
         {

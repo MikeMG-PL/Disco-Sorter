@@ -6127,6 +6127,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 5567112191052190804, guid: c1e0806a3e9bbf24da600e95d0dafd02,
+        type: 3}
+      propertyPath: fistAnim
+      value: 
+      objectReference: {fileID: 4093940845817684628}
+    - target: {fileID: 5567112191052190804, guid: c1e0806a3e9bbf24da600e95d0dafd02,
+        type: 3}
+      propertyPath: controllerEvents
+      value: 
+      objectReference: {fileID: 4144602681356632054}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1e0806a3e9bbf24da600e95d0dafd02, type: 3}
 --- !u!1 &3948428002012843658 stripped
@@ -7458,6 +7468,16 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 5567112191052190804, guid: c1e0806a3e9bbf24da600e95d0dafd02,
+        type: 3}
+      propertyPath: fistAnim
+      value: 
+      objectReference: {fileID: 4093940846887758460}
+    - target: {fileID: 5567112191052190804, guid: c1e0806a3e9bbf24da600e95d0dafd02,
+        type: 3}
+      propertyPath: controllerEvents
+      value: 
+      objectReference: {fileID: 4144602680617542355}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1e0806a3e9bbf24da600e95d0dafd02, type: 3}
 --- !u!1 &4801396364852601267 stripped
