@@ -1,5 +1,20 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &2549002786140659199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4027622840036874636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7145fb33eaaa8294897c07b273d0ddb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  discoFractured: {fileID: 3842982347706455850, guid: a97cc9522ba619647bfb40ae26b7a091,
+    type: 3}
+  dissolveMaterial: {fileID: 2100000, guid: aebb5bde2db93be4d85cfde130038120, type: 2}
 --- !u!1001 &1074705781907170190
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32,11 +47,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3129188097206123154, guid: e2dfae69c648a8447a58719ad633eca4,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4211283611653185306, guid: e2dfae69c648a8447a58719ad633eca4,
         type: 3}
       propertyPath: m_CollisionDetection
@@ -111,6 +121,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3129188097206123154, guid: e2dfae69c648a8447a58719ad633eca4,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8587124085269155674, guid: e2dfae69c648a8447a58719ad633eca4,
         type: 3}
@@ -142,7 +157,7 @@ PrefabInstance:
     - target: {fileID: 1208786397412436302, guid: e2dfae69c648a8447a58719ad633eca4,
         type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Release
       objectReference: {fileID: 0}
     - target: {fileID: 1862859142899868014, guid: e2dfae69c648a8447a58719ad633eca4,
         type: 3}
@@ -155,11 +170,6 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1862859142899868014, guid: e2dfae69c648a8447a58719ad633eca4,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3129188097206123154, guid: e2dfae69c648a8447a58719ad633eca4,
         type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -239,6 +249,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3129188097206123154, guid: e2dfae69c648a8447a58719ad633eca4,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8587124085269155674, guid: e2dfae69c648a8447a58719ad633eca4,
         type: 3}
       propertyPath: m_Enabled
@@ -246,3 +261,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2dfae69c648a8447a58719ad633eca4, type: 3}
+--- !u!1 &4027622840036874636 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1208786397412436302, guid: e2dfae69c648a8447a58719ad633eca4,
+    type: 3}
+  m_PrefabInstance: {fileID: 2819963036237983938}
+  m_PrefabAsset: {fileID: 0}

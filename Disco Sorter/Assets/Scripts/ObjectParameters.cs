@@ -24,9 +24,4 @@ public class ObjectParameters : MonoBehaviour
     public bool wasReleased;
     public bool wasCatchedOnTime;
     public bool wasReleasedOnTime;
-
-    void Start()
-    {
-        gameObject.GetComponent<Rigidbody>().maxAngularVelocity = 10000f;
-    }
 }

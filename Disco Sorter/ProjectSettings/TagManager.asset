@@ -23,6 +23,7 @@ TagManager:
   - Body
   - Laser
   - Release
+  - Building
   layers:
   - Default
   - TransparentFX
