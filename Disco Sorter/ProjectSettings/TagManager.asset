@@ -24,6 +24,7 @@ TagManager:
   - Laser
   - Release
   - Building
+  - Plane
   layers:
   - Default
   - TransparentFX

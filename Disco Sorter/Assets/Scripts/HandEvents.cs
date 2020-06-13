@@ -64,7 +64,7 @@ public class HandEvents : MonoBehaviour
 
     void CheckActionTime(ObjectParameters parameters, bool thisIsGrabbingOrDisco)
     {
-        float timer = levelManager.timer;
+        float timer = LevelManager.timer;
         float clamp1 = 0, clamp2 = 0;
 
         switch (thisIsGrabbingOrDisco)

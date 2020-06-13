@@ -7,38 +7,53 @@ public class ObjectMethods : MonoBehaviour
     public GameObject discoFractured;
     public Material dissolveMaterial;
     float timer;
+    public bool dissolve;
+    GameObject g;
 
     void Start()
     {
         dissolveMaterial.SetFloat("_DissolveAmount", 0);
-
         gameObject.GetComponent<Rigidbody>().maxAngularVelocity = 10000f;
     }
 
-    void OnCollisionStay(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Building") && !gameObject.CompareTag("Release") && !gameObject.CompareTag("DiscoBall"))
+        g = collision.gameObject;
+
+        if (g.CompareTag("Building") && !gameObject.CompareTag("Release") && !gameObject.CompareTag("DiscoBall") && dissolve)
         {
             transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = dissolveMaterial;
-            Dissolve();
+            StartCoroutine(Dissolve());
         }
-        else if(collision.gameObject.CompareTag("Building") && !gameObject.CompareTag("Release") && gameObject.CompareTag("DiscoBall"))
+        else if(g.CompareTag("Building") && !gameObject.CompareTag("Release") && gameObject.CompareTag("DiscoBall"))
         {
             Instantiate(discoFractured, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
+        else if(g.CompareTag("Plane") && !gameObject.CompareTag("Release") && !gameObject.CompareTag("DiscoBall") && gameObject.GetComponent<ObjectParameters>().linkedReleaseTimeEnd < LevelManager.timer)
+        {
+            transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = dissolveMaterial;
+            StartCoroutine(Dissolve());
+        }
     }
 
-    void Dissolve()
+    IEnumerator Dissolve()
     {
-        timer += Time.deltaTime;
-        dissolveMaterial.SetFloat("_DissolveAmount", Mathf.Sin(timer));
-
-        if (dissolveMaterial.GetFloat("_DissolveAmount") >= 0.86f)
+        float x = 0;
+        while (true)
         {
-            Destroy(gameObject);
-            if (transform.parent != null)
-                Destroy(transform.parent.gameObject);
+            dissolveMaterial.SetFloat("_DissolveAmount", Mathf.Sin(x) * 2);
+
+            if (dissolveMaterial.GetFloat("_DissolveAmount") >= 0.86f)
+            {
+                Destroy(gameObject);
+                if (transform.parent != null)
+                    Destroy(transform.parent.gameObject);
+            }
+
+            x += Time.deltaTime;
+            yield return new WaitForSeconds(Time.deltaTime);
         }
+
     }
 }

@@ -220,6 +220,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 8786746613793813702, guid: 002e7599bec3b4d48bb92d79be15b810,
+        type: 3}
+      propertyPath: dissolveOnTheFloor
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 002e7599bec3b4d48bb92d79be15b810, type: 3}
 --- !u!1001 &37484998
@@ -13325,6 +13330,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 8786746613793813702, guid: 2064db32ea9aa7548844abb94b8a2739,
+        type: 3}
+      propertyPath: dissolveOnTheFloor
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2064db32ea9aa7548844abb94b8a2739, type: 3}
 --- !u!1001 &593613252
@@ -25482,6 +25492,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 8051415255134806348, guid: 34e2589d4d4f4f441a1fc053bdc2e164,
+        type: 3}
+      propertyPath: m_TagString
+      value: Plane
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 34e2589d4d4f4f441a1fc053bdc2e164,
         type: 3}
