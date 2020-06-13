@@ -20,6 +20,8 @@ public class FistClench : MonoBehaviour
 
         if (p.CompareTag("DiscoBall"))
             fistAnim.SetBool("NearDisco", true);
+        else
+            fistAnim.SetBool("NearDisco", false);
     }
 
     void OnTriggerExit(Collider other)
