@@ -54,12 +54,18 @@ public class HandEvents : MonoBehaviour
         CheckActionTime(parameters, false);
     }
 
-    void CheckActionTime(ObjectParameters parameters, bool thisIsGrabbing)
+    public void OnDiscoHit(ObjectParameters parameters)
+    {
+        CheckActionTime(parameters, true);
+        Destroy(parameters.gameObject);
+    }
+
+    void CheckActionTime(ObjectParameters parameters, bool thisIsGrabbingOrDisco)
     {
         float timer = levelManager.timer;
         float clamp1 = 0, clamp2 = 0;
 
-        switch (thisIsGrabbing)
+        switch (thisIsGrabbingOrDisco)
         {
             case true:
                 clamp1 = parameters.actionStartTime; clamp2 = parameters.actionEndTime;
@@ -70,7 +76,7 @@ public class HandEvents : MonoBehaviour
                 break;
         }
 
-        if (parameters.action == EntityAction.CatchAndRelease)
+        if (parameters.action == EntityAction.CatchAndRelease || parameters.type == EntityType.Disco)
         {
             if (timer >= clamp1 && timer <= clamp2)
             {
