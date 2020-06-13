@@ -9,13 +9,19 @@ public class MissedAction : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         Transform p = other.transform.parent;
+
+        if (p.GetComponent<ObjectParameters>() == null) return;
+
         ObjectParameters o = p.GetComponent<ObjectParameters>();
 
-        if((p.CompareTag("DiscoBall") || p.CompareTag("Apple") || p.CompareTag("RottenApple")) && !o.wasGrabbed)
+        if ((p.CompareTag("DiscoBall") || p.CompareTag("Apple") || p.CompareTag("RottenApple")) && !o.wasGrabbed)
         {
             onScreen.HighlightVignette(ActionHighlight.Fail);
         }
-        else if((p.CompareTag("Release")) && !o.wasReleased)
+
+        // TO DO: || !linkedCatchObject.wasReleasedOnTime
+        // Właściwie chcemy dwa razy wyświetlać czerwoną obramówkę w przypadku miss, i dla obiektu catch, i dla release?
+        else if (p.CompareTag("Release"))
         {
             onScreen.HighlightVignette(ActionHighlight.Fail);
         }

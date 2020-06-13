@@ -27,7 +27,10 @@ public class HandEvents : MonoBehaviour
 
         player = GetComponentInParent<Player>();
         levelManager = player.levelManagerObject.GetComponent<LevelManager>();
+    }
 
+    private void OnEnable()
+    {
         GetComponent<VRTK_InteractGrab>().ControllerGrabInteractableObject += OnGrabObject;
         GetComponent<VRTK_InteractGrab>().ControllerUngrabInteractableObject += OnUngrabObject;
     }
@@ -35,10 +38,18 @@ public class HandEvents : MonoBehaviour
     private void OnGrabObject(object sender, ObjectInteractEventArgs e)
     {
         if (e.target.GetComponent<ObjectParameters>() == null) return;
-        parameters = e.target.GetComponent<ObjectParameters>();
-        parameters.wasGrabbed = true;
+
         if (handSide == Hand.Right) player.rightHandGrabbedObject = e.target;
         else player.leftHandGrabbedObject = e.target;
+
+        parameters = e.target.GetComponent<ObjectParameters>();
+        parameters.wasGrabbed = true;
+
+        if (parameters.action == EntityAction.CatchAndRelease)
+        {
+            levelManager.SetReleasePointPosition(levelManager.spawnPipeline[parameters.linkedReleaseId]);
+            levelManager.spawnPipeline[parameters.linkedReleaseId].GetComponentInChildren<MeshRenderer>().enabled = true;
+        }
 
         CheckActionTime(parameters, true);
     }
@@ -46,8 +57,13 @@ public class HandEvents : MonoBehaviour
     private void OnUngrabObject(object sender, ObjectInteractEventArgs e)
     {
         if (e.target.GetComponent<ObjectParameters>() == null) return;
+
+        //if (parameters.action == EntityAction.CatchAndRelease)
+        //levelManager.SetReleasePointPosition(levelManager.spawnPipeline[parameters.linkedReleaseId]);
+
         parameters = e.target.GetComponent<ObjectParameters>();
         parameters.wasReleased = true;
+
         if (handSide == Hand.Right) player.rightHandGrabbedObject = null;
         else player.leftHandGrabbedObject = null;
 
@@ -57,22 +73,22 @@ public class HandEvents : MonoBehaviour
     void CheckActionTime(ObjectParameters parameters, bool thisIsGrabbing)
     {
         float timer = levelManager.timer;
-        float clamp1 = 0, clamp2 = 0;
+        float actionStart = 0, actionEnd = 0;
 
         switch (thisIsGrabbing)
         {
             case true:
-                clamp1 = parameters.actionStartTime; clamp2 = parameters.actionEndTime;
+                actionStart = parameters.actionStartTime; actionEnd = parameters.actionEndTime;
                 break;
 
             case false:
-                clamp1 = parameters.linkedReleaseTimeStart; clamp2 = parameters.linkedReleaseTimeEnd;
+                actionStart = parameters.linkedReleaseTimeStart; actionEnd = parameters.linkedReleaseTimeEnd;
                 break;
         }
 
         if (parameters.action == EntityAction.CatchAndRelease)
         {
-            if (timer >= clamp1 && timer <= clamp2)
+            if (timer >= actionStart && timer <= actionEnd)
             {
                 onScreen.HighlightVignette(ActionHighlight.Success);
                 OnTime(parameters);
@@ -93,5 +109,11 @@ public class HandEvents : MonoBehaviour
                 parameters.wasCatchedOnTime = true;
                 break;
         }
+    }
+
+    private void OnDisable()
+    {
+        GetComponent<VRTK_InteractGrab>().ControllerGrabInteractableObject -= OnGrabObject;
+        GetComponent<VRTK_InteractGrab>().ControllerUngrabInteractableObject -= OnUngrabObject;
     }
 }

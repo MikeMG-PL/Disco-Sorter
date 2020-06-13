@@ -103,7 +103,7 @@ public class LevelParameters : MonoBehaviour
     public void ConvertToPipeline()
     {
         var pos = new Vector3 { x = 100, y = 100, z = 100 };
-        int row = 0, column = 0, index;
+        int row = 0, column = 0, index, id = 0;
         while (row < entitiesAmountInColumn)
         {
             bool addToPipeline = true; // Czy dodać element do pipeline, domyślnie tak
@@ -136,8 +136,9 @@ public class LevelParameters : MonoBehaviour
             if (addToPipeline)
             {
                 queueDispenser.SetActive(false);
-                SetParameters(index);
+                SetParameters(index, id);
                 spawnPipeline.Add(queueDispenser);
+                id++;
             }
 
             if (column == 3)
@@ -148,9 +149,11 @@ public class LevelParameters : MonoBehaviour
 
             column++;
         }
+
+        MatchCatchAndReleaseIds();
     }
 
-    void SetParameters(int j)
+    void SetParameters(int j, int id)
     {
         ObjectParameters q = queueDispenser.GetComponent<ObjectParameters>();
 
@@ -163,12 +166,32 @@ public class LevelParameters : MonoBehaviour
         q.linkedReleaseEN = linkedReleaseEN[j];
         q.color = color[j];
         q.action = action[j];
-        q.ID = j;
+        q.EN = j;
+        q.Id = id;
 
         if (q.action == EntityAction.CatchAndRelease)
         {
             q.linkedReleaseTimeStart = actionStartTime[linkedReleaseEN[j]];
             q.linkedReleaseTimeEnd = actionEndTime[linkedReleaseEN[j]];
+        }
+    }
+
+    void MatchCatchAndReleaseIds()
+    {
+        for (int i = 0; i < spawnPipeline.Count; i++)
+        {
+            if (spawnPipeline[i].GetComponent<ObjectParameters>().action == EntityAction.CatchAndRelease)
+            {
+                for (int j = 0; i < spawnPipeline.Count; j++)
+                {
+                    if (spawnPipeline[j].GetComponent<ObjectParameters>().linkedCatchEN == spawnPipeline[i].GetComponent<ObjectParameters>().EN)
+                    {
+                        spawnPipeline[i].GetComponent<ObjectParameters>().linkedReleaseId = j;
+                        spawnPipeline[j].GetComponent<ObjectParameters>().linkedCatchId = i;
+                        break;
+                    }
+                }
+            }
         }
     }
 }

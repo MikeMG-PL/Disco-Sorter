@@ -14,7 +14,7 @@ public class Box : MonoBehaviour
         {
             ObjectParameters parameters = other.GetComponentInParent<ObjectParameters>();
 
-            if (parameters.color == color && parameters.wasCatchedOnTime && !parameters.wasPreviouslyInserted)
+            if (parameters.color == color && parameters.wasCatchedOnTime && !parameters.wasInserted)
             {
                 if (parameters.action == EntityAction.Slap && !parameters.wasGrabbed)
                 {
@@ -32,7 +32,7 @@ public class Box : MonoBehaviour
                 }
             }
 
-            parameters.wasPreviouslyInserted = true;
+            parameters.wasInserted = true;
         }
     }
 }

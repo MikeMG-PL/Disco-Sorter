@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
+    public GameObject playerObject;
     GameAudioManipulation songController;
     [HideInInspector()]
     public float timer;
@@ -14,6 +15,7 @@ public class LevelManager : MonoBehaviour
     public List<AudioClip> buildSongs;
 
     LevelParameters levelParameters;
+    Player player;
     int iterator;
     float spawnTime;
     bool timerStarted;
@@ -32,6 +34,7 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         songController = GetComponent<GameAudioManipulation>();
+        player = playerObject.GetComponent<Player>();
 
         if (!songController.aSrc.isPlaying)
         {
@@ -98,10 +101,15 @@ public class LevelManager : MonoBehaviour
             if (timer >= spawnTime - 0.02f && timer <= spawnTime + 0.02f && timerStarted) /// !!!
             {
                 spawnPipeline[iterator].SetActive(true);
-                spawnPipeline[iterator].transform.position = SetRowPosition(id: spawnPipeline[iterator].GetComponent<ObjectParameters>().ID, pos: C);
+                spawnPipeline[iterator].transform.position = SetRowPosition(id: spawnPipeline[iterator].GetComponent<ObjectParameters>().EN, pos: C);
                 spawnPipeline[iterator].transform.rotation = Quaternion.identity;
                 spawnPipeline[iterator].transform.localEulerAngles = rot;
                 spawnPipeline[iterator].GetComponent<Rigidbody>().velocity = Vector3.zero;
+                if (spawnPipeline[iterator].GetComponent<ObjectParameters>().action == EntityAction.ReleasePoint)
+                {
+                    SetReleasePointPosition(spawnPipeline[iterator]);
+                    spawnPipeline[iterator].GetComponentInChildren<MeshRenderer>().enabled = false;
+                }
                 iterator++;
             }
         }
@@ -125,5 +133,31 @@ public class LevelManager : MonoBehaviour
             finalPos = new Vector3(finalPos.x + 1.5f, finalPos.y, finalPos.z);
 
         return finalPos;
+    }
+
+    public void SetReleasePointPosition(GameObject releasePoint)
+    {
+        Vector3 finalPosition = new Vector3(), currentPosition = releasePoint.transform.position, startPosition = C;
+
+        ObjectParameters parametersCatch = spawnPipeline[releasePoint.GetComponent<ObjectParameters>().linkedCatchId].GetComponent<ObjectParameters>();
+
+        // Na razie wyłączone, do omówienia
+        //if (parameters.wasMissed) finalPosition = new Vector3(100, 100, 100);
+
+        if (player.leftHandGrabbedObject != null && player.leftHandGrabbedObject.GetComponent<ObjectParameters>() != null)
+        {
+            if (parametersCatch.Id == player.leftHandGrabbedObject.GetComponent<ObjectParameters>().Id)
+                finalPosition = new Vector3(startPosition.x + 0.25f, currentPosition.y, currentPosition.z);
+        }
+
+        else if (player.rightHandGrabbedObject != null && player.rightHandGrabbedObject.GetComponent<ObjectParameters>() != null)
+        {
+            if (parametersCatch.Id == player.rightHandGrabbedObject.GetComponent<ObjectParameters>().Id)
+                finalPosition = new Vector3(startPosition.x + 1.25f, currentPosition.y, currentPosition.z);
+        }
+
+        else return;
+
+        releasePoint.transform.position = finalPosition;
     }
 }
