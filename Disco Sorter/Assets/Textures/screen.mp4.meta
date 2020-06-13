@@ -25,15 +25,24 @@ VideoClipImporter:
       customHeight: 1080
       bitrateMode: 2
       spatialQuality: 2
-    7:
+    1:
       enableTranscoding: 1
       codec: 0
-      resizeFormat: 2
+      resizeFormat: 1
       aspectRatio: 0
       customWidth: 1920
       customHeight: 1080
-      bitrateMode: 1
-      spatialQuality: 1
+      bitrateMode: 0
+      spatialQuality: 0
+    7:
+      enableTranscoding: 1
+      codec: 0
+      resizeFormat: 3
+      aspectRatio: 0
+      customWidth: 1920
+      customHeight: 1080
+      bitrateMode: 0
+      spatialQuality: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

@@ -140,7 +140,7 @@ public class OnScreen : MonoBehaviour
         if (!highlighted)
         {
             highlighted = true;
-            float maxAlpha = 0.75f;
+            float maxAlpha = 1f;
 
             while (alpha <= maxAlpha)
             {

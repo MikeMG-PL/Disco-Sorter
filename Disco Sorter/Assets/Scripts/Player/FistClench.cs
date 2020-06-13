@@ -19,9 +19,9 @@ public class FistClench : MonoBehaviour
         Transform p = other.transform.parent;
 
         if (p.CompareTag("DiscoBall"))
-        {
             fistAnim.SetBool("NearDisco", true);
-        }
+        else
+            fistAnim.SetBool("NearDisco", false);
     }
 
     void OnTriggerExit(Collider other)
@@ -29,8 +29,6 @@ public class FistClench : MonoBehaviour
         Transform p = other.transform.parent;
 
         if (p.CompareTag("DiscoBall"))
-        {
             fistAnim.SetBool("NearDisco", false);
-        }
     }
 }

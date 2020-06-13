@@ -20,6 +20,7 @@ public class HandEvents : MonoBehaviour
     private Player player;
     private LevelManager levelManager;
     ObjectParameters parameters;
+    public GameObject discoFractured;
 
     private void Start()
     {
@@ -70,12 +71,19 @@ public class HandEvents : MonoBehaviour
         CheckActionTime(parameters, false);
     }
 
-    void CheckActionTime(ObjectParameters parameters, bool thisIsGrabbing)
+    public void OnDiscoHit(ObjectParameters parameters)
     {
-        float timer = levelManager.timer;
+        CheckActionTime(parameters, true);
+        Instantiate(discoFractured, parameters.transform.position, Quaternion.identity);
+        Destroy(parameters.gameObject);
+    }
+
+    void CheckActionTime(ObjectParameters parameters, bool thisIsGrabbingOrDisco)
+    {
+        float timer = LevelManager.timer;
         float actionStart = 0, actionEnd = 0;
 
-        switch (thisIsGrabbing)
+        switch (thisIsGrabbingOrDisco)
         {
             case true:
                 actionStart = parameters.actionStartTime; actionEnd = parameters.actionEndTime;
@@ -86,7 +94,7 @@ public class HandEvents : MonoBehaviour
                 break;
         }
 
-        if (parameters.action == EntityAction.CatchAndRelease)
+        if (parameters.action == EntityAction.CatchAndRelease || parameters.type == EntityType.Disco)
         {
             if (timer >= actionStart && timer <= actionEnd)
             {

@@ -28,7 +28,7 @@ public class LaserManager : MonoBehaviour
         Transform p = other.transform.parent;
 
         if ((p.CompareTag("DiscoBall") || p.CompareTag("Apple") || p.CompareTag("RottenApple") || p.CompareTag("Release"))
-            && other.transform.parent.GetComponent<ObjectParameters>().actionEndTime + 0.2f >= levelManager.timer)
+            && other.transform.parent.GetComponent<ObjectParameters>().actionEndTime + 0.2f >= LevelManager.timer)
             illuminate = true;
     }
 

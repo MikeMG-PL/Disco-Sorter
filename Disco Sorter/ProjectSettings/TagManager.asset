@@ -23,6 +23,8 @@ TagManager:
   - Body
   - Laser
   - Release
+  - Building
+  - Plane
   layers:
   - Default
   - TransparentFX
@@ -36,7 +38,7 @@ TagManager:
   - 
   - Player
   - Finish
-  - 
+  - HandxPlaneObject
   - 
   - 
   - 

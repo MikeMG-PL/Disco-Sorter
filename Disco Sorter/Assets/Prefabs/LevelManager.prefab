@@ -67,6 +67,7 @@ MonoBehaviour:
   buildSongs:
   - {fileID: 8300000, guid: e93bed9030d6e8248a7d073b03df3ef8, type: 3}
   TransformOfB: {fileID: 0}
+  spawnPipeline: []
 --- !u!114 &7214126554702194147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,7 +99,7 @@ MonoBehaviour:
   clipLength: 0
   entitiesAmountInColumn: 0
   margin: 8
-  tolerance: 0.24
+  tolerance: 0.16
   rollTime: 3
 --- !u!82 &3878294189547431296
 AudioSource:

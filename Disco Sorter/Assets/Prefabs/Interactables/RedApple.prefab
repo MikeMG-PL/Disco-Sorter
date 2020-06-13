@@ -206,6 +206,16 @@ PrefabInstance:
       propertyPath: precisionGrab
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4011621206611398281, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
+        type: 3}
+      propertyPath: dissolveMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: fb31c58cb33824b419db1dd1b7af5523, type: 2}
+    - target: {fileID: 4011621206611398281, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
+        type: 3}
+      propertyPath: dissolveOnTheFloor
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37ce9f027c7d6244b8e878f55bbe63b8, type: 3}
 --- !u!4 &2237043681895916773 stripped

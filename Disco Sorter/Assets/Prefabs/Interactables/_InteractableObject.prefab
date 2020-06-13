@@ -54,6 +54,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3048727672643982173}
   - component: {fileID: 4754699222902330729}
+  - component: {fileID: 4011621206611398281}
   - component: {fileID: 5133951597541539140}
   - component: {fileID: 7950573092220717641}
   - component: {fileID: 1675809255854603560}
@@ -114,6 +115,20 @@ MonoBehaviour:
   objectHighlighter: {fileID: 0}
   touchHighlightColor: {r: 0, g: 0, b: 0, a: 0}
   usingState: 0
+--- !u!114 &4011621206611398281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1867442034410331234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7145fb33eaaa8294897c07b273d0ddb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  discoFractured: {fileID: 3842982347706455850, guid: a97cc9522ba619647bfb40ae26b7a091,
+    type: 3}
 --- !u!114 &5133951597541539140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,6 +179,8 @@ MonoBehaviour:
   linkedReleaseTimeStart: 0
   linkedReleaseTimeEnd: 0
   linkedCatchTime: 0
+  linkedReleaseEN: 0
+  linkedCatchEN: 0
   spawnTime: 0
   type: 0
   color: 0
@@ -171,8 +188,9 @@ MonoBehaviour:
   ID: 0
   wasPreviouslyInserted: 0
   wasGrabbed: 0
-  catchWasDoneOnTime: 0
-  releaseWasDoneOnTime: 0
+  wasReleased: 0
+  wasCatchedOnTime: 0
+  wasReleasedOnTime: 0
 --- !u!54 &7869331068644618187
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -8,7 +8,7 @@ public class LevelManager : MonoBehaviour
     public GameObject playerObject;
     GameAudioManipulation songController;
     [HideInInspector()]
-    public float timer;
+    static public float timer;
 
     public int index;           // chosen song from list
     public List<ScriptableObject> buildLevels;
@@ -88,6 +88,7 @@ public class LevelManager : MonoBehaviour
     void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        timer = 0;
     }
 
     void SpawnObjects()
