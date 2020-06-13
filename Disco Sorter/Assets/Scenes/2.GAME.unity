@@ -26977,6 +26977,11 @@ PrefabInstance:
       propertyPath: buildSongs.Array.data[0]
       value: 
       objectReference: {fileID: 8300000, guid: 3d376cabecb896b4aab1a07a92dffbcd, type: 3}
+    - target: {fileID: 7437021264787854613, guid: 40a7ed54b5130e14eb8325fa554944cb,
+        type: 3}
+      propertyPath: playerObject
+      value: 
+      objectReference: {fileID: 452694593}
     - target: {fileID: 3623847121241414591, guid: 40a7ed54b5130e14eb8325fa554944cb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -27507,16 +27512,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1827226128182048838, guid: 006b2dc7863151a49af9e15ddae757dd,
         type: 3}
-    - target: {fileID: 3067812913298252678, guid: 08508dc24962baf428b9ffa8503aaba4,
-        type: 3}
-      propertyPath: handEvents
-      value: 
-      objectReference: {fileID: 441682201}
     - target: {fileID: 6843590444215291071, guid: 08508dc24962baf428b9ffa8503aaba4,
         type: 3}
       propertyPath: handEvents
       value: 
       objectReference: {fileID: 508613671}
+    - target: {fileID: 3067812913298252678, guid: 08508dc24962baf428b9ffa8503aaba4,
+        type: 3}
+      propertyPath: handEvents
+      value: 
+      objectReference: {fileID: 441682201}
     m_RemovedComponents:
     - {fileID: 5504121453051619505, guid: 08508dc24962baf428b9ffa8503aaba4, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 08508dc24962baf428b9ffa8503aaba4, type: 3}
