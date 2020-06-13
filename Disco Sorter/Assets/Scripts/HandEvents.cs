@@ -20,6 +20,7 @@ public class HandEvents : MonoBehaviour
     private Player player;
     private LevelManager levelManager;
     ObjectParameters parameters;
+    public GameObject discoFractured;
 
     private void Start()
     {
@@ -57,6 +58,7 @@ public class HandEvents : MonoBehaviour
     public void OnDiscoHit(ObjectParameters parameters)
     {
         CheckActionTime(parameters, true);
+        Instantiate(discoFractured, parameters.transform.position, Quaternion.identity);
         Destroy(parameters.gameObject);
     }
 
