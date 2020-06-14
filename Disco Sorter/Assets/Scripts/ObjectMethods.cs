@@ -27,7 +27,7 @@ public class ObjectMethods : MonoBehaviour
         }
         else if(g.CompareTag("Building") && !gameObject.CompareTag("Release") && gameObject.CompareTag("DiscoBall"))
         {
-            Instantiate(discoFractured, transform.position, Quaternion.identity);
+            Instantiate(discoFractured, transform.position, Quaternion.identity);    
             Destroy(gameObject);
         }
         else if(g.CompareTag("Plane") && !gameObject.CompareTag("Release") && !gameObject.CompareTag("DiscoBall") && gameObject.GetComponent<ObjectParameters>().linkedReleaseTimeEnd < LevelManager.timer)
@@ -47,7 +47,7 @@ public class ObjectMethods : MonoBehaviour
             if (dissolveMaterial.GetFloat("_DissolveAmount") >= 0.86f)
             {
                 Destroy(gameObject);
-                if (transform.parent != null)
+                if (transform.parent != null && (transform.parent.CompareTag("Apple") || transform.CompareTag("RottenApple")))
                     Destroy(transform.parent.gameObject);
             }
 

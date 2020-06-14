@@ -108,7 +108,7 @@ public class LevelManager : MonoBehaviour
                 spawnPipeline[iterator].GetComponent<Rigidbody>().velocity = Vector3.zero;
                 if (spawnPipeline[iterator].GetComponent<ObjectParameters>().action == EntityAction.ReleasePoint)
                 {
-                    SetReleasePointPosition(spawnPipeline[iterator]);
+                    //SetReleasePointPosition(spawnPipeline[iterator]);
                     spawnPipeline[iterator].GetComponentInChildren<MeshRenderer>().enabled = false;
                 }
                 iterator++;
