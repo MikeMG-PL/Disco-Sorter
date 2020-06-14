@@ -561,12 +561,12 @@ namespace VRTK
 
         protected virtual void SetAnimatorStateOn(string state, AxisOverrides overrides)
         {
-            animator.SetFloat(state, (overrides.ignoreAllOverrides ? -1f : overrides.stateValue));
+            //animator.SetFloat(state, (overrides.ignoreAllOverrides ? -1f : overrides.stateValue));
         }
 
         protected virtual void SetAnimatorStateOff(string state)
         {
-            animator.SetFloat(state, -1f);
+            //animator.SetFloat(state, -1f);
         }
 
         protected virtual void DoControllerNearTouch(object sender, ObjectInteractEventArgs e)
@@ -781,7 +781,7 @@ namespace VRTK
         protected virtual void SetFingerPosition(int arrayIndex, float axis)
         {
             int animationLayer = arrayIndex + 1;
-            animator.SetLayerWeight(animationLayer, axis);
+            animator.SetLayerWeight(0, axis);
             fingerAxis[arrayIndex] = axis;
             if (overrideAxisValues[arrayIndex] == OverrideState.WasOverring)
             {
