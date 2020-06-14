@@ -138,21 +138,21 @@ public class LevelManager : MonoBehaviour
     {
         Vector3 finalPosition = new Vector3(), currentPosition = releasePoint.transform.position, startPosition = C;
 
-        ObjectParameters parametersCatch = spawnPipeline[releasePoint.GetComponent<ObjectParameters>().linkedCatchId].GetComponent<ObjectParameters>();
+        //ObjectParameters parametersCatch = spawnPipeline[releasePoint.GetComponent<ObjectParameters>().linkedCatchId].GetComponent<ObjectParameters>();
 
         // Na razie wyłączone, do omówienia
         //if (parametersCatch.wasMissed) finalPosition = new Vector3(100, 100, 100);
 
         if (handSide == Hand.Left)
         {
-            if (parametersCatch.Id == player.leftHandGrabbedObject.GetComponent<ObjectParameters>().Id)
-                finalPosition = new Vector3(startPosition.x + 0.25f, currentPosition.y, currentPosition.z);
+            //if (parametersCatch.Id == player.leftHandGrabbedObject.GetComponent<ObjectParameters>().Id)
+            finalPosition = new Vector3(startPosition.x + 0.25f, currentPosition.y, currentPosition.z);
         }
 
         if (handSide == Hand.Right)
         {
-            if (parametersCatch.Id == player.rightHandGrabbedObject.GetComponent<ObjectParameters>().Id)
-                finalPosition = new Vector3(startPosition.x + 1.25f, currentPosition.y, currentPosition.z);
+            //if (parametersCatch.Id == player.rightHandGrabbedObject.GetComponent<ObjectParameters>().Id)
+            finalPosition = new Vector3(startPosition.x + 1.25f, currentPosition.y, currentPosition.z);
         }
 
         releasePoint.transform.position = finalPosition;
