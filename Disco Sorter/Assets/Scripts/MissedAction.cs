@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MissedAction : MonoBehaviour
 {
+    public LevelManager levelManager;
     public OnScreen onScreen;
 
     private void OnTriggerExit(Collider other)
@@ -14,14 +15,15 @@ public class MissedAction : MonoBehaviour
 
         ObjectParameters o = p.GetComponent<ObjectParameters>();
 
-        if ((p.CompareTag("DiscoBall") || p.CompareTag("Apple") || p.CompareTag("RottenApple")) && !o.wasGrabbed)
+        //Debug.Log(p.tag + o.action + o.wasGrabbed + o.wasReleasedOnTime);
+
+        if (p.CompareTag("Apple") && o.action == EntityAction.CatchAndRelease && o.wasGrabbed && !o.wasReleasedOnTime)
         {
             onScreen.HighlightVignette(ActionHighlight.Fail);
+            levelManager.spawnPipeline[o.linkedReleaseId].GetComponentInChildren<MeshRenderer>().enabled = false;
         }
 
-        // TO DO: || !linkedCatchObject.wasReleasedOnTime
-        // Właściwie chcemy dwa razy wyświetlać czerwoną obramówkę w przypadku miss, i dla obiektu catch, i dla release?
-        else if (p.CompareTag("Release"))
+        if ((p.CompareTag("DiscoBall") || p.CompareTag("Apple") || p.CompareTag("RottenApple")) && !o.wasGrabbed)
         {
             onScreen.HighlightVignette(ActionHighlight.Fail);
         }

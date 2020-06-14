@@ -48,7 +48,7 @@ public class HandEvents : MonoBehaviour
 
         if (parameters.action == EntityAction.CatchAndRelease)
         {
-            levelManager.SetReleasePointPosition(levelManager.spawnPipeline[parameters.linkedReleaseId]);
+            levelManager.SetReleasePointPosition(levelManager.spawnPipeline[parameters.linkedReleaseId], handSide);
             levelManager.spawnPipeline[parameters.linkedReleaseId].GetComponentInChildren<MeshRenderer>().enabled = true;
         }
 

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -108,7 +107,6 @@ public class LevelManager : MonoBehaviour
                 spawnPipeline[iterator].GetComponent<Rigidbody>().velocity = Vector3.zero;
                 if (spawnPipeline[iterator].GetComponent<ObjectParameters>().action == EntityAction.ReleasePoint)
                 {
-                    SetReleasePointPosition(spawnPipeline[iterator]);
                     spawnPipeline[iterator].GetComponentInChildren<MeshRenderer>().enabled = false;
                 }
                 iterator++;
@@ -136,28 +134,26 @@ public class LevelManager : MonoBehaviour
         return finalPos;
     }
 
-    public void SetReleasePointPosition(GameObject releasePoint)
+    public void SetReleasePointPosition(GameObject releasePoint, Hand handSide)
     {
         Vector3 finalPosition = new Vector3(), currentPosition = releasePoint.transform.position, startPosition = C;
 
         ObjectParameters parametersCatch = spawnPipeline[releasePoint.GetComponent<ObjectParameters>().linkedCatchId].GetComponent<ObjectParameters>();
 
         // Na razie wyłączone, do omówienia
-        //if (parameters.wasMissed) finalPosition = new Vector3(100, 100, 100);
+        //if (parametersCatch.wasMissed) finalPosition = new Vector3(100, 100, 100);
 
-        if (player.leftHandGrabbedObject != null && player.leftHandGrabbedObject.GetComponent<ObjectParameters>() != null)
+        if (handSide == Hand.Left)
         {
             if (parametersCatch.Id == player.leftHandGrabbedObject.GetComponent<ObjectParameters>().Id)
                 finalPosition = new Vector3(startPosition.x + 0.25f, currentPosition.y, currentPosition.z);
         }
 
-        else if (player.rightHandGrabbedObject != null && player.rightHandGrabbedObject.GetComponent<ObjectParameters>() != null)
+        if (handSide == Hand.Right)
         {
             if (parametersCatch.Id == player.rightHandGrabbedObject.GetComponent<ObjectParameters>().Id)
                 finalPosition = new Vector3(startPosition.x + 1.25f, currentPosition.y, currentPosition.z);
         }
-
-        else return;
 
         releasePoint.transform.position = finalPosition;
     }
