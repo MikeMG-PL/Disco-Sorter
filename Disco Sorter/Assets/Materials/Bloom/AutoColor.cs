@@ -59,4 +59,4 @@ public class AutoColor : MonoBehaviour
 
 }
 
-// Material.setColor(„_Color”, new Color())
+// Material.setFloat(„_Color”, new Color())

@@ -27,7 +27,9 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
+#if UNITY_EDITOR
         Application.targetFrameRate = 75;
+#endif
     }
 
     private void Start()
