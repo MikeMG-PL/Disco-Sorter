@@ -31,6 +31,11 @@ public class ObjectMethods : MonoBehaviour
             f.GetComponent<AudioSource>().Play();
             Destroy(gameObject);
         }
+        if (g.CompareTag("Plane") && !gameObject.CompareTag("Release") && !gameObject.CompareTag("DiscoBall") && gameObject.GetComponent<ObjectParameters>().linkedReleaseTimeEnd < LevelManager.timer)
+        {
+            transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = dissolveMaterial;
+            StartCoroutine(Dissolve());
+        }
     }
 
     void OnCollisionStay(Collision collision)

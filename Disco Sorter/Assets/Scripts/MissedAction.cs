@@ -20,7 +20,7 @@ public class MissedAction : MonoBehaviour
         if (p.CompareTag("Apple") && o.action == EntityAction.CatchAndRelease && o.wasGrabbed && !o.wasReleasedOnTime)
         {
             onScreen.HighlightVignette(ActionHighlight.Fail);
-            levelManager.spawnPipeline[o.linkedReleaseId].GetComponentInChildren<MeshRenderer>().enabled = false;
+            levelManager.spawnPipeline[o.linkedReleaseId].GetComponentInChildren<SpriteRenderer>().enabled = false;
         }
 
         if ((p.CompareTag("DiscoBall") || p.CompareTag("Apple") || p.CompareTag("RottenApple")) && !o.wasGrabbed)

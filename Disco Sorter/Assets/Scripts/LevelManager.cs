@@ -109,7 +109,7 @@ public class LevelManager : MonoBehaviour
                 spawnPipeline[iterator].GetComponent<Rigidbody>().velocity = Vector3.zero;
                 if (spawnPipeline[iterator].GetComponent<ObjectParameters>().action == EntityAction.ReleasePoint)
                 {
-                    spawnPipeline[iterator].GetComponentInChildren<MeshRenderer>().enabled = false;
+                    spawnPipeline[iterator].transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
                 }
                 iterator++;
             }
@@ -136,9 +136,26 @@ public class LevelManager : MonoBehaviour
         return finalPos;
     }
 
-    public void SetReleasePointPosition(GameObject releasePoint, Hand handSide)
+    public void SetReleasePointPosition(GameObject releasePoint, Hand handSide, bool twoHands)
     {
+        int ID = releasePoint.GetComponent<ObjectParameters>().linkedCatchId;
+        ReleaseIcon rel = releasePoint.transform.GetChild(0).GetComponent<ReleaseIcon>();
         Vector3 finalPosition = new Vector3(), currentPosition = releasePoint.transform.position, startPosition = C;
+        Debug.Log(ID);
+        if(!twoHands)
+            finalPosition = new Vector3(startPosition.x + 0.75f, currentPosition.y, currentPosition.z);
+        else
+        {
+            if (handSide == Hand.Left)
+            {
+                finalPosition = new Vector3(startPosition.x + 0.25f, currentPosition.y, currentPosition.z);
+            }
+            if (handSide == Hand.Right)
+            {
+                finalPosition = new Vector3(startPosition.x + 1.25f, currentPosition.y, currentPosition.z);
+            }
+        }
+            
 
         //ObjectParameters parametersCatch = spawnPipeline[releasePoint.GetComponent<ObjectParameters>().linkedCatchId].GetComponent<ObjectParameters>();
 
@@ -148,13 +165,23 @@ public class LevelManager : MonoBehaviour
         if (handSide == Hand.Left)
         {
             //if (parametersCatch.Id == player.leftHandGrabbedObject.GetComponent<ObjectParameters>().Id)
-            finalPosition = new Vector3(startPosition.x + 0.25f, currentPosition.y, currentPosition.z);
+            rel.LeftHand();
         }
 
         if (handSide == Hand.Right)
         {
             //if (parametersCatch.Id == player.rightHandGrabbedObject.GetComponent<ObjectParameters>().Id)
-            finalPosition = new Vector3(startPosition.x + 1.25f, currentPosition.y, currentPosition.z);
+            rel.RightHand();
+        }
+
+        switch(spawnPipeline[ID].GetComponent<ObjectParameters>().color)
+        {
+            case EntityColour.Green:
+                rel.Green();
+                break;
+            case EntityColour.Red:
+                rel.Red();
+                break;
         }
 
         releasePoint.transform.position = finalPosition;
