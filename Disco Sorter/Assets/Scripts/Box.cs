@@ -6,7 +6,12 @@ public class Box : MonoBehaviour
 {
     // Kolider w pudle, do którego mamy wrzucać jabłka, sprawdza czy zostały spełnione wszystkie warunki i czy możemy dostać za jabłko punkty
 
-    public EntityColour color;
+    public EntityColour color; SFXManager sfx;
+
+    void Start()
+    {
+        sfx = GetComponent<SFXManager>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -14,25 +19,14 @@ public class Box : MonoBehaviour
         {
             ObjectParameters parameters = other.GetComponentInParent<ObjectParameters>();
 
-            if (parameters.color == color && parameters.wasCatchedOnTime && !parameters.wasInserted)
+            if (parameters.color == color && /*parameters.wasCatchedOnTime &&*/ !parameters.wasInserted)
             {
-                if (parameters.action == EntityAction.Slap && !parameters.wasGrabbed)
-                {
-                    Debug.Log("Point slap");
-                }
-
-                else if (parameters.action == EntityAction.Throw && parameters.wasGrabbed)
-                {
-                    Debug.Log("Point throw");
-                }
-
-                else if (parameters.action == EntityAction.CatchAndRelease && parameters.wasReleasedOnTime)
-                {
-                    Debug.Log("Point catch&release");
-                }
+                parameters.wasInserted = true;
+                Debug.Log("Point");
+                sfx.PlaySound(sfx.correctBox);
             }
-
-            parameters.wasInserted = true;
+            else if (parameters.color != color && /*parameters.wasCatchedOnTime &&*/ !parameters.wasInserted)
+                sfx.PlaySound(sfx.customClips[0]);
         }
     }
 }

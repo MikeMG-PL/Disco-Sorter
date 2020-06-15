@@ -25,6 +25,7 @@ TagManager:
   - Release
   - Building
   - Plane
+  - Gloves
   layers:
   - Default
   - TransparentFX

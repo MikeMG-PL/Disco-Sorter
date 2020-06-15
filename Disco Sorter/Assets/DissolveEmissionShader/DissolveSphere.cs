@@ -4,31 +4,13 @@ using UnityEngine;
 
 public class DissolveSphere : MonoBehaviour
 {
-    Material mat; float timer;
+    Material mat;
 
     private void Start()
     {
         mat = GetComponent<Renderer>().material;
         mat.SetFloat("_DissolveAmount", 0);
         StartCoroutine(Dissolve());
-    }
-
-    private void Update()
-    {
-
-    }
-
-    void Dissolvex()
-    {
-        timer += Time.deltaTime;
-        mat.SetFloat("_DissolveAmount", Mathf.Sin(timer));
-
-        if (mat.GetFloat("_DissolveAmount") >= 0.86f)
-        {
-            Destroy(gameObject);
-            if (transform.parent != null)
-                Destroy(transform.parent.gameObject);
-        }
     }
 
     IEnumerator Dissolve()
@@ -45,8 +27,8 @@ public class DissolveSphere : MonoBehaviour
                     Destroy(transform.parent.gameObject);
             }
 
-            x += Time.deltaTime;
-            yield return new WaitForSeconds(Time.deltaTime);
+            x += Time.fixedDeltaTime;
+            yield return new WaitForSeconds(Time.fixedDeltaTime);
         }
 
     }
