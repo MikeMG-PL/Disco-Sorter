@@ -74,7 +74,8 @@ public class HandEvents : MonoBehaviour
     public void OnDiscoHit(ObjectParameters parameters)
     {
         CheckActionTime(parameters, true);
-        Instantiate(discoFractured, parameters.transform.position, Quaternion.identity);
+        GameObject f = Instantiate(discoFractured, transform.position, Quaternion.identity);
+        f.GetComponent<AudioSource>().Play();
         Destroy(parameters.gameObject);
     }
 

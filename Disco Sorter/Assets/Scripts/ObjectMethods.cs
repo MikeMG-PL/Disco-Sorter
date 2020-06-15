@@ -25,12 +25,17 @@ public class ObjectMethods : MonoBehaviour
             transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = dissolveMaterial;
             StartCoroutine(Dissolve());
         }
-        else if(g.CompareTag("Building") && !gameObject.CompareTag("Release") && gameObject.CompareTag("DiscoBall"))
+        if(g.CompareTag("Building") && gameObject.CompareTag("DiscoBall"))
         {
-            Instantiate(discoFractured, transform.position, Quaternion.identity);    
+            GameObject f = Instantiate(discoFractured, transform.position, Quaternion.identity);
+            f.GetComponent<AudioSource>().Play();
             Destroy(gameObject);
         }
-        else if(g.CompareTag("Plane") && !gameObject.CompareTag("Release") && !gameObject.CompareTag("DiscoBall") && gameObject.GetComponent<ObjectParameters>().linkedReleaseTimeEnd < LevelManager.timer)
+    }
+
+    void OnCollisionStay(Collision collision)
+    {
+        if (g.CompareTag("Plane") && !gameObject.CompareTag("Release") && !gameObject.CompareTag("DiscoBall") && gameObject.GetComponent<ObjectParameters>().linkedReleaseTimeEnd < LevelManager.timer)
         {
             transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = dissolveMaterial;
             StartCoroutine(Dissolve());
@@ -40,6 +45,7 @@ public class ObjectMethods : MonoBehaviour
     IEnumerator Dissolve()
     {
         float x = 0;
+
         while (true)
         {
             dissolveMaterial.SetFloat("_DissolveAmount", Mathf.Sin(x) * 2);
@@ -51,8 +57,8 @@ public class ObjectMethods : MonoBehaviour
                     Destroy(transform.parent.gameObject);
             }
 
-            x += Time.deltaTime;
-            yield return new WaitForSeconds(Time.deltaTime);
+            x += Time.fixedDeltaTime;
+            yield return new WaitForSeconds(Time.fixedDeltaTime);
         }
 
     }

@@ -6,6 +6,7 @@ public class OnScreen : MonoBehaviour
 {
     public Material vignette; Color r, g; float alpha; bool highlighted; public float vignetteFadeSpeed = 10;
 
+    SFXManager sfx;
     [Header("-------------------")]
     public TextMesh songTitle;
     public TextMesh songArtist;
@@ -28,6 +29,7 @@ public class OnScreen : MonoBehaviour
     private void Awake()
     {
         StartCoroutine(Cor());
+        sfx = GetComponent<SFXManager>();
     }
 
     void Start()
@@ -109,9 +111,11 @@ public class OnScreen : MonoBehaviour
         switch (h)
         {
             case ActionHighlight.Success:
+                sfx.PlaySound(sfx.onTime);
                 vignette.color = g;
                 break;
             case ActionHighlight.Fail:
+                sfx.PlaySound(sfx.wrong);
                 vignette.color = r;
                 break;
             default:
@@ -146,15 +150,15 @@ public class OnScreen : MonoBehaviour
             {
                 vignette.color = new Color(vignette.color.r, vignette.color.g, vignette.color.b, alpha);
                 vignette.SetColor("_EmissionColor", vignette.color);
-                alpha += vignetteFadeSpeed * Time.deltaTime;
-                yield return new WaitForSeconds(Time.deltaTime);
+                alpha += vignetteFadeSpeed * Time.fixedDeltaTime;
+                yield return new WaitForSeconds(Time.fixedDeltaTime);
             }
             while (alpha > 0)
             {
                 vignette.color = new Color(vignette.color.r, vignette.color.g, vignette.color.b, alpha);
                 vignette.SetColor("_EmissionColor", vignette.color);
-                alpha -= vignetteFadeSpeed * Time.deltaTime;
-                yield return new WaitForSeconds(Time.deltaTime);
+                alpha -= vignetteFadeSpeed * Time.fixedDeltaTime;
+                yield return new WaitForSeconds(Time.fixedDeltaTime);
             }
             highlighted = false;
         }
