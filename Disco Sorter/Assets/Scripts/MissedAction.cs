@@ -15,13 +15,6 @@ public class MissedAction : MonoBehaviour
 
         ObjectParameters o = p.GetComponent<ObjectParameters>();
 
-        //Debug.Log(p.tag + o.action + o.wasGrabbed + o.wasReleasedOnTime);
-
-        //if (p.CompareTag("Apple") && o.action == EntityAction.CatchAndRelease && o.wasGrabbed && !o.wasReleasedOnTime)
-        //{
-            //onScreen.HighlightVignette(ActionHighlight.Fail);
-       // }
-
         if ((p.CompareTag("DiscoBall") || p.CompareTag("Apple") || p.CompareTag("RottenApple")) && !o.wasGrabbed)
         {
             onScreen.HighlightVignette(ActionHighlight.Fail);
