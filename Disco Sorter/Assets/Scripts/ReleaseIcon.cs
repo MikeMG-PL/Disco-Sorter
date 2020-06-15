@@ -41,4 +41,10 @@ public class ReleaseIcon : MonoBehaviour
         spriteRenderer.enabled = true;
         spriteRenderer.sprite = sprites[3];
     }
+
+    public void Rotten()
+    {
+        spriteRenderer.enabled = true;
+        spriteRenderer.sprite = sprites[4];
+    }
 }

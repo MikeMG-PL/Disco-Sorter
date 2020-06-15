@@ -148,6 +148,9 @@ public class LevelManager : MonoBehaviour
                 case EntityColour.Red:
                     rel.LeftRed();
                     break;
+                default:
+                    rel.Rotten();
+                    break;
             }
         }
         else
@@ -160,6 +163,9 @@ public class LevelManager : MonoBehaviour
                     break;
                 case EntityColour.Red:
                     rel.RightRed();
+                    break;
+                default:
+                    rel.Rotten();
                     break;
             }
         }

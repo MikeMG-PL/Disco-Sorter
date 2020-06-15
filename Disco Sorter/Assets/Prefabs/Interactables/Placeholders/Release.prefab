@@ -112,6 +112,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: f98f5993b3ffb7240859e0d82c66a41f, type: 3}
   - {fileID: 21300000, guid: 0fe8a682de524b3489283945d0630450, type: 3}
   - {fileID: 21300000, guid: 6ef6bdc10462fbe4f8a954aa49ffac01, type: 3}
+  - {fileID: 21300000, guid: caace41ec3cc34b4b9dbb9e47dee438a, type: 3}
   spriteRenderer: {fileID: 0}
 --- !u!1001 &1074705781907170190
 PrefabInstance:
