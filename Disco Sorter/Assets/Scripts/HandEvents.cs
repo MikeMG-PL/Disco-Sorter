@@ -48,18 +48,8 @@ public class HandEvents : MonoBehaviour
         parameters = e.target.GetComponent<ObjectParameters>();
         parameters.wasGrabbed = true;
 
-        if(parameters.action == EntityAction.CatchAndRelease && player.leftHandGrabbedObject != null && player.rightHandGrabbedObject != null)
-        {
-            levelManager.SetReleasePointPosition(levelManager.spawnPipeline[parameters.linkedReleaseId], handSide, true);
-            levelManager.spawnPipeline[parameters.linkedReleaseId].GetComponentInChildren<SpriteRenderer>().enabled = true;
-        }
-
-        else if (parameters.action == EntityAction.CatchAndRelease)
-        {
-            levelManager.SetReleasePointPosition(levelManager.spawnPipeline[parameters.linkedReleaseId], handSide, false);
-            levelManager.spawnPipeline[parameters.linkedReleaseId].GetComponentInChildren<SpriteRenderer>().enabled = true;
-            Debug.Log(levelManager.spawnPipeline[parameters.linkedReleaseId].GetComponentInChildren<SpriteRenderer>().enabled);
-        }
+        if (parameters.action == EntityAction.CatchAndRelease)
+            levelManager.SetReleasePointPosition(levelManager.spawnPipeline[parameters.linkedReleaseId], handSide);
 
         CheckActionTime(parameters, true);
     }
@@ -68,14 +58,11 @@ public class HandEvents : MonoBehaviour
     {
         if (e.target.GetComponent<ObjectParameters>() == null) return;
 
-        //if (parameters.action == EntityAction.CatchAndRelease)
-        //levelManager.SetReleasePointPosition(levelManager.spawnPipeline[parameters.linkedReleaseId]);
+        if (handSide == Hand.Right) player.rightHandGrabbedObject = null;
+        else player.leftHandGrabbedObject = null;
 
         parameters = e.target.GetComponent<ObjectParameters>();
         parameters.wasReleased = true;
-
-        if (handSide == Hand.Right) player.rightHandGrabbedObject = null;
-        else player.leftHandGrabbedObject = null;
 
         CheckActionTime(parameters, false);
     }
@@ -106,7 +93,6 @@ public class HandEvents : MonoBehaviour
 
                 else
                     onScreen.HighlightVignette(ActionHighlight.Fail);
-
                 break;
 
             case false:
@@ -124,7 +110,6 @@ public class HandEvents : MonoBehaviour
                     onScreen.HighlightVignette(ActionHighlight.Fail);
                     levelManager.spawnPipeline[parameters.linkedReleaseId].GetComponentInChildren<SpriteRenderer>().enabled = false;
                 }
-
                 break;
         }
     }
