@@ -122,7 +122,7 @@ public class HandEvents : MonoBehaviour
                 else
                 {
                     onScreen.HighlightVignette(ActionHighlight.Fail);
-                    levelManager.spawnPipeline[parameters.linkedReleaseId].GetComponentInChildren<MeshRenderer>().enabled = false;
+                    levelManager.spawnPipeline[parameters.linkedReleaseId].GetComponentInChildren<SpriteRenderer>().enabled = false;
                 }
 
                 break;
