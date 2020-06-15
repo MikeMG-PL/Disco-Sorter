@@ -41,30 +41,34 @@ public class HandEvents : MonoBehaviour
     private void OnGrabObject(object sender, ObjectInteractEventArgs e)
     {
         if (e.target.GetComponent<ObjectParameters>() == null) return;
+        parameters = e.target.GetComponent<ObjectParameters>();
 
         if (handSide == Hand.Right) player.rightHandGrabbedObject = e.target;
         else player.leftHandGrabbedObject = e.target;
 
-        parameters = e.target.GetComponent<ObjectParameters>();
+        if (!parameters.wasGrabbed)
+        {
+            CheckActionTime(parameters, true);
+
+            if (parameters.action == EntityAction.CatchAndRelease)
+                levelManager.SetReleasePointPosition(levelManager.spawnPipeline[parameters.linkedReleaseId], handSide);
+        }
+
         parameters.wasGrabbed = true;
-
-        if (parameters.action == EntityAction.CatchAndRelease)
-            levelManager.SetReleasePointPosition(levelManager.spawnPipeline[parameters.linkedReleaseId], handSide);
-
-        CheckActionTime(parameters, true);
     }
 
     private void OnUngrabObject(object sender, ObjectInteractEventArgs e)
     {
         if (e.target.GetComponent<ObjectParameters>() == null) return;
+        parameters = e.target.GetComponent<ObjectParameters>();
 
         if (handSide == Hand.Right) player.rightHandGrabbedObject = null;
         else player.leftHandGrabbedObject = null;
 
-        parameters = e.target.GetComponent<ObjectParameters>();
-        parameters.wasReleased = true;
+        if (!parameters.wasReleased)
+            CheckActionTime(parameters, false);
 
-        CheckActionTime(parameters, false);
+        parameters.wasReleased = true;
     }
 
     public void OnDiscoHit(ObjectParameters parameters)

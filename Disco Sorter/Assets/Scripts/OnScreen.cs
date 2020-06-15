@@ -126,19 +126,6 @@ public class OnScreen : MonoBehaviour
         StartCoroutine(VignetteAnim());
     }
 
-    public void OnTime(ObjectParameters parameters)
-    {
-        switch (parameters.action)
-        {
-            case EntityAction.ReleasePoint:
-                parameters.wasReleasedOnTime = true;
-                break;
-            default:
-                parameters.wasCatchedOnTime = true;
-                break;
-        }
-    }
-
     public IEnumerator VignetteAnim()
     {
         if (!highlighted)
