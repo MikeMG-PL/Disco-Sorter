@@ -9,18 +9,20 @@ public enum ActionHighlight { Unknown, Success, Fail };
 
 public class HandEvents : MonoBehaviour
 {
+    // Skrypt dotyczący tego, co robi gracz rękami, np. złapanie obiektu, wyrzucenie obiektu. Są doczepione do Left i Right ControllerScriptAlias
+
     // Do obsługi soczystości - potwierdzania trafienia w rytm na ekranie
     [Header("Vignette")]
     public OnScreen onScreen;
 
-    // Eventy dotyczące tego, co robią ręce gracza, np. złapanie obiektu, wyrzucenie obiektu. Są doczepione do Left i Right ControllerScriptAlias
-
     [Header("Hands stuff")]
     public Hand handSide;
+    public GameObject discoFractured;
+
     private Player player;
     private LevelManager levelManager;
-    ObjectParameters parameters;
-    public GameObject discoFractured;
+    private ObjectParameters parameters;
+
 
     private void Start()
     {
@@ -81,40 +83,40 @@ public class HandEvents : MonoBehaviour
     void CheckActionTime(ObjectParameters parameters, bool thisIsGrabbingOrDisco)
     {
         float timer = LevelManager.timer;
-        float actionStart = 0, actionEnd = 0;
+        float actionStart, actionEnd;
 
         switch (thisIsGrabbingOrDisco)
         {
             case true:
                 actionStart = parameters.actionStartTime; actionEnd = parameters.actionEndTime;
+
+                if (timer >= actionStart && timer <= actionEnd)
+                {
+                    onScreen.HighlightVignette(ActionHighlight.Success);
+                    parameters.wasCatchedOnTime = true;
+                }
+
+                else
+                    onScreen.HighlightVignette(ActionHighlight.Fail);
+
                 break;
 
             case false:
+                if (parameters.action != EntityAction.CatchAndRelease) return;
                 actionStart = parameters.linkedReleaseTimeStart; actionEnd = parameters.linkedReleaseTimeEnd;
-                break;
-        }
 
-        if (parameters.action == EntityAction.CatchAndRelease || parameters.type == EntityType.Disco)
-        {
-            if (timer >= actionStart && timer <= actionEnd)
-            {
-                onScreen.HighlightVignette(ActionHighlight.Success);
-                OnTime(parameters);
-            }
-            else
-                onScreen.HighlightVignette(ActionHighlight.Fail);
-        }
-    }
+                if (timer >= actionStart && timer <= actionEnd)
+                {
+                    onScreen.HighlightVignette(ActionHighlight.Success);
+                    parameters.wasReleasedOnTime = true;
+                }
 
-    void OnTime(ObjectParameters parameters)
-    {
-        switch (parameters.action)
-        {
-            case EntityAction.CatchAndRelease:
-                parameters.wasReleasedOnTime = true;
-                break;
-            default:
-                parameters.wasCatchedOnTime = true;
+                else
+                {
+                    onScreen.HighlightVignette(ActionHighlight.Fail);
+                    levelManager.spawnPipeline[parameters.linkedReleaseId].GetComponentInChildren<MeshRenderer>().enabled = false;
+                }
+
                 break;
         }
     }
