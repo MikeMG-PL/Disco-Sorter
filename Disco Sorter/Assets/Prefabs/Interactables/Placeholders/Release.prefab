@@ -107,8 +107,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4986cc71914a699419c59711f2344ff8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  green: {fileID: 21300000, guid: ffe55bc9291752749bdc732064becc5c, type: 3}
-  red: {fileID: 21300000, guid: e78e47b45a5adc74a83902a59e1a803e, type: 3}
+  sprites:
+  - {fileID: 21300000, guid: 2cd72571711cb9e46a982adf711eb840, type: 3}
+  - {fileID: 21300000, guid: f98f5993b3ffb7240859e0d82c66a41f, type: 3}
+  - {fileID: 21300000, guid: 0fe8a682de524b3489283945d0630450, type: 3}
+  - {fileID: 21300000, guid: 6ef6bdc10462fbe4f8a954aa49ffac01, type: 3}
+  - {fileID: 21300000, guid: caace41ec3cc34b4b9dbb9e47dee438a, type: 3}
   spriteRenderer: {fileID: 0}
 --- !u!1001 &1074705781907170190
 PrefabInstance:
@@ -205,17 +209,17 @@ PrefabInstance:
     - target: {fileID: 8935280917665640665, guid: e2dfae69c648a8447a58719ad633eca4,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.2
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 8935280917665640665, guid: e2dfae69c648a8447a58719ad633eca4,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.2
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 8935280917665640665, guid: e2dfae69c648a8447a58719ad633eca4,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.2
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 3129188097206123154, guid: e2dfae69c648a8447a58719ad633eca4,
         type: 3}

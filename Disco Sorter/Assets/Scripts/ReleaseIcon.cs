@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ReleaseIcon : MonoBehaviour
 {
-    public Sprite green, red;
+    public List<Sprite> sprites;
     public SpriteRenderer spriteRenderer;
 
     void Awake()
@@ -18,25 +18,33 @@ public class ReleaseIcon : MonoBehaviour
         transform.eulerAngles = new Vector3(10, 0, 0);
     }
 
-    public void LeftHand()
+    public void LeftRed()
     {
         spriteRenderer.enabled = true;
-        spriteRenderer.flipX = true;
+        spriteRenderer.sprite = sprites[0];
     }
 
-    public void RightHand()
+    public void RightRed()
     {
         spriteRenderer.enabled = true;
-        spriteRenderer.flipX = false;
+        spriteRenderer.sprite = sprites[1];
     }
 
-    public void Green()
-    { 
-        spriteRenderer.sprite = green;
-    }
-
-    public void Red()
+    public void LeftGreen()
     {
-        spriteRenderer.sprite = red;
+        spriteRenderer.enabled = true;
+        spriteRenderer.sprite = sprites[2];
+    }
+
+    public void RightGreen()
+    {
+        spriteRenderer.enabled = true;
+        spriteRenderer.sprite = sprites[3];
+    }
+
+    public void Rotten()
+    {
+        spriteRenderer.enabled = true;
+        spriteRenderer.sprite = sprites[4];
     }
 }

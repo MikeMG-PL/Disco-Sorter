@@ -136,24 +136,39 @@ public class LevelManager : MonoBehaviour
     {
         ReleaseIcon rel = releasePoint.GetComponentInChildren<ReleaseIcon>();
         Vector3 finalPosition, currentPosition = releasePoint.transform.position, startPosition = C;
-
+        int ID = releasePoint.GetComponent<ObjectParameters>().linkedCatchId;
         if (handSide == Hand.Left)
         {
             finalPosition = new Vector3(startPosition.x + 0.25f, currentPosition.y, currentPosition.z);
-            rel.LeftHand();
+            switch (spawnPipeline[ID].GetComponent<ObjectParameters>().color)
+            {
+                case EntityColour.Green:
+                    rel.LeftGreen();
+                    break;
+                case EntityColour.Red:
+                    rel.LeftRed();
+                    break;
+                default:
+                    rel.Rotten();
+                    break;
+            }
         }
-
         else
         {
             finalPosition = new Vector3(startPosition.x + 1.25f, currentPosition.y, currentPosition.z);
-            rel.RightHand();
+            switch (spawnPipeline[ID].GetComponent<ObjectParameters>().color)
+            {
+                case EntityColour.Green:
+                    rel.RightGreen();
+                    break;
+                case EntityColour.Red:
+                    rel.RightRed();
+                    break;
+                default:
+                    rel.Rotten();
+                    break;
+            }
         }
-
-        int ID = releasePoint.GetComponent<ObjectParameters>().linkedCatchId;
-        if (spawnPipeline[ID].GetComponent<ObjectParameters>().color == EntityColour.Green)
-            rel.Green();
-        else
-            rel.Red();
 
         releasePoint.transform.position = finalPosition;
     }
