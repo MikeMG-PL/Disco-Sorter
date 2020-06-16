@@ -260,7 +260,7 @@ PlayerSettings:
   clonedFromGUID: 3355557de5a687e44a6eface0a816616
   templatePackageId: 
   templateDefaultScene: 
-  AndroidTargetArchitectures: 5
+  AndroidTargetArchitectures: 1
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
   AndroidKeystoreName: '{inproject}: '
@@ -384,7 +384,10 @@ PlayerSettings:
   m_BuildTargetBatching:
   - m_BuildTarget: Standalone
     m_StaticBatching: 1
-    m_DynamicBatching: 1
+    m_DynamicBatching: 0
+  - m_BuildTarget: Android
+    m_StaticBatching: 1
+    m_DynamicBatching: 0
   m_BuildTargetGraphicsAPIs:
   - m_BuildTarget: AndroidPlayer
     m_APIs: 0b00000008000000
@@ -458,6 +461,7 @@ PlayerSettings:
   vuforiaEnabled: 0
   m_TemplateCustomTags: {}
   mobileMTRendering:
+    Android: 1
     iPhone: 1
     tvOS: 1
   m_BuildTargetGroupLightmapEncodingQuality:
