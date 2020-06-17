@@ -43,6 +43,7 @@ public class PlayerActions : MonoBehaviour
                 {
                     onScreen.HighlightVignette(ActionHighlight.Fail);
                     levelManager.spawnPipeline[parameters.linkedReleaseId].GetComponentInChildren<SpriteRenderer>().enabled = false;
+                    levelManager.spawnPipeline[parameters.linkedReleaseId].GetComponentInChildren<MeshRenderer>().enabled = false;
                 }
                 break;
         }

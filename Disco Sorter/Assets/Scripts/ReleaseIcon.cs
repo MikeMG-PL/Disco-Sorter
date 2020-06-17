@@ -5,12 +5,15 @@ using UnityEngine;
 public class ReleaseIcon : MonoBehaviour
 {
     public List<Sprite> sprites;
-    public SpriteRenderer spriteRenderer;
+    SpriteRenderer spriteRenderer; MeshRenderer childRenderer;
 
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        childRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
+
         spriteRenderer.enabled = false;
+        childRenderer.enabled = false;
     }
 
     void Update()
@@ -21,30 +24,35 @@ public class ReleaseIcon : MonoBehaviour
     public void LeftRed()
     {
         spriteRenderer.enabled = true;
+        childRenderer.enabled = true;
         spriteRenderer.sprite = sprites[0];
     }
 
     public void RightRed()
     {
         spriteRenderer.enabled = true;
+        childRenderer.enabled = true;
         spriteRenderer.sprite = sprites[1];
     }
 
     public void LeftGreen()
     {
         spriteRenderer.enabled = true;
+        childRenderer.enabled = true;
         spriteRenderer.sprite = sprites[2];
     }
 
     public void RightGreen()
     {
         spriteRenderer.enabled = true;
+        childRenderer.enabled = true;
         spriteRenderer.sprite = sprites[3];
     }
 
     public void Rotten()
     {
         spriteRenderer.enabled = true;
+        childRenderer.enabled = true;
         spriteRenderer.sprite = sprites[4];
     }
 }
