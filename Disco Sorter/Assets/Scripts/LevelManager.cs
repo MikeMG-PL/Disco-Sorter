@@ -139,7 +139,7 @@ public class LevelManager : MonoBehaviour
         int ID = releasePoint.GetComponent<ObjectParameters>().linkedCatchId;
         if (handSide == Hand.Left)
         {
-            finalPosition = new Vector3(startPosition.x + 0.25f, currentPosition.y, currentPosition.z);
+            finalPosition = new Vector3(startPosition.x + 0.5f, currentPosition.y, currentPosition.z);
             switch (spawnPipeline[ID].GetComponent<ObjectParameters>().color)
             {
                 case EntityColour.Green:
@@ -155,7 +155,7 @@ public class LevelManager : MonoBehaviour
         }
         else
         {
-            finalPosition = new Vector3(startPosition.x + 1.25f, currentPosition.y, currentPosition.z);
+            finalPosition = new Vector3(startPosition.x + 1f, currentPosition.y, currentPosition.z);
             switch (spawnPipeline[ID].GetComponent<ObjectParameters>().color)
             {
                 case EntityColour.Green:

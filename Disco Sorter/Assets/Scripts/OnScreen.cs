@@ -113,31 +113,36 @@ public class OnScreen : MonoBehaviour
             case ActionHighlight.Success:
                 sfx.PlaySound(sfx.onTime);
                 vignette.color = g;
+                StartCoroutine(VignetteAnim(true));
                 break;
             case ActionHighlight.Fail:
                 sfx.PlaySound(sfx.wrong);
                 vignette.color = r;
+                StartCoroutine(VignetteAnim(false));
                 break;
             default:
                 vignette.color = new Color(0, 0, 0, 0);
                 break;
         }
 
-        StartCoroutine(VignetteAnim());
+        
     }
 
-    public IEnumerator VignetteAnim()
+    public IEnumerator VignetteAnim(bool withEnviroLight)
     {
         if (!highlighted)
         {
             highlighted = true;
-            float maxAlpha = 1f;
+            float maxAlpha = 1f, maxLight = 1f, minLight = 0.3f;
 
             while (alpha <= maxAlpha)
             {
                 vignette.color = new Color(vignette.color.r, vignette.color.g, vignette.color.b, alpha);
                 vignette.SetColor("_EmissionColor", vignette.color);
                 alpha += vignetteFadeSpeed * Time.fixedDeltaTime;
+
+                if (withEnviroLight && RenderSettings.reflectionIntensity < maxLight)
+                    RenderSettings.reflectionIntensity += vignetteFadeSpeed * Time.fixedDeltaTime;
                 yield return new WaitForSeconds(Time.fixedDeltaTime);
             }
             while (alpha > 0)
@@ -145,6 +150,8 @@ public class OnScreen : MonoBehaviour
                 vignette.color = new Color(vignette.color.r, vignette.color.g, vignette.color.b, alpha);
                 vignette.SetColor("_EmissionColor", vignette.color);
                 alpha -= vignetteFadeSpeed * Time.fixedDeltaTime;
+                if (withEnviroLight && RenderSettings.reflectionIntensity > minLight)
+                    RenderSettings.reflectionIntensity -= vignetteFadeSpeed * Time.fixedDeltaTime;
                 yield return new WaitForSeconds(Time.fixedDeltaTime);
             }
             highlighted = false;
