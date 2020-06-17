@@ -39,7 +39,7 @@ public class PlayerActions : MonoBehaviour
                     parameters.wasReleasedOnTime = true;
                 }
 
-                else
+                else if(levelManager.spawnPipeline[parameters.linkedReleaseId] != null)
                 {
                     onScreen.HighlightVignette(ActionHighlight.Fail);
                     StartCoroutine(levelManager.spawnPipeline[parameters.linkedReleaseId].GetComponentInChildren<ReleaseIcon>().Disable());
