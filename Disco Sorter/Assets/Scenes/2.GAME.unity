@@ -20943,6 +20943,36 @@ PrefabInstance:
       propertyPath: handEvents
       value: 
       objectReference: {fileID: 441682201}
+    - target: {fileID: 4438490111104523824, guid: bcc5bd4dac6cd9040aa5946e2420884a,
+        type: 3}
+      propertyPath: r.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4438490111104523824, guid: bcc5bd4dac6cd9040aa5946e2420884a,
+        type: 3}
+      propertyPath: r.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4438490111104523824, guid: bcc5bd4dac6cd9040aa5946e2420884a,
+        type: 3}
+      propertyPath: r.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4438490111104523824, guid: bcc5bd4dac6cd9040aa5946e2420884a,
+        type: 3}
+      propertyPath: g.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4438490111104523824, guid: bcc5bd4dac6cd9040aa5946e2420884a,
+        type: 3}
+      propertyPath: g.g
+      value: 0.8039216
+      objectReference: {fileID: 0}
+    - target: {fileID: 4438490111104523824, guid: bcc5bd4dac6cd9040aa5946e2420884a,
+        type: 3}
+      propertyPath: g.b
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3247161016362894812, guid: bcc5bd4dac6cd9040aa5946e2420884a,
         type: 3}
       propertyPath: m_IsActive

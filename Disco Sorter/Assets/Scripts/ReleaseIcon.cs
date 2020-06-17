@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ReleaseIcon : MonoBehaviour
 {
-    public List<Sprite> sprites;
+    public List<Sprite> sprites; float alpha, childAlphaPower; bool disabling;
     SpriteRenderer spriteRenderer; MeshRenderer childRenderer;
 
     void Awake()
@@ -21,38 +21,119 @@ public class ReleaseIcon : MonoBehaviour
         transform.eulerAngles = new Vector3(10, 0, 0);
     }
 
+    public IEnumerator Enable()
+    {
+        if (disabling)
+            StopCoroutine(Enable());
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        alpha = 0;
+        spriteRenderer.enabled = true;
+
+        while (alpha < 1 && spriteRenderer != null)
+        {
+            alpha += Time.fixedDeltaTime * 2;
+            spriteRenderer.material.color = new Color(spriteRenderer.material.color.r, spriteRenderer.material.color.g, spriteRenderer.material.color.b, alpha);
+            yield return new WaitForSeconds(Time.fixedDeltaTime);
+        }
+        StopCoroutine(Enable());
+    }
+
+    public IEnumerator Disable()
+    {
+        disabling = true;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        while (alpha > 0 && spriteRenderer != null)
+        {
+            alpha -= Time.fixedDeltaTime * 6;
+            spriteRenderer.material.color = new Color(spriteRenderer.material.color.r, spriteRenderer.material.color.g, spriteRenderer.material.color.b, alpha);
+            yield return new WaitForSeconds(Time.fixedDeltaTime);
+        }
+        disabling = false;
+
+        if (spriteRenderer != null)
+        {
+            Destroy(transform.parent.gameObject);
+            StopCoroutine(Disable());
+        }
+
+    }
+
+    public IEnumerator EnableFog()
+    {
+        if (disabling)
+            StopCoroutine(EnableFog());
+        childRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
+        childAlphaPower = 15;
+        childRenderer.enabled = true;
+
+        while (childAlphaPower > 3f && childRenderer != null)
+        {
+            childAlphaPower -= Time.fixedDeltaTime * 30;
+            childRenderer.material.SetFloat("_AlphaPower", childAlphaPower);
+            yield return new WaitForSeconds(Time.fixedDeltaTime);
+        }
+
+        StopCoroutine(EnableFog());
+    }
+
+    public IEnumerator DisableFog()
+    {
+        disabling = true;
+        childRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
+
+        while (childAlphaPower < 50 && childRenderer != null)
+        {
+            childAlphaPower += Time.fixedDeltaTime * 90;
+            childRenderer.material.SetFloat("_AlphaPower", childAlphaPower);
+            childRenderer.material.SetFloat("_Color", alpha);
+            yield return new WaitForSeconds(Time.fixedDeltaTime);
+        }
+        disabling = false;
+
+        if (childRenderer != null)
+        {
+            Destroy(transform.parent.gameObject);
+            StopCoroutine(DisableFog());
+        }
+
+    }
+
+    public void Activate()
+    {
+        transform.parent.gameObject.SetActive(true);
+        gameObject.SetActive(true);
+        StartCoroutine(Enable());
+        StartCoroutine(EnableFog());
+    }
+
     public void LeftRed()
     {
-        spriteRenderer.enabled = true;
-        childRenderer.enabled = true;
+        Activate();
         spriteRenderer.sprite = sprites[0];
     }
 
     public void RightRed()
     {
-        spriteRenderer.enabled = true;
-        childRenderer.enabled = true;
+        Activate();
         spriteRenderer.sprite = sprites[1];
     }
 
     public void LeftGreen()
     {
-        spriteRenderer.enabled = true;
-        childRenderer.enabled = true;
+        Activate();
         spriteRenderer.sprite = sprites[2];
     }
 
     public void RightGreen()
     {
-        spriteRenderer.enabled = true;
-        childRenderer.enabled = true;
+        Activate();
         spriteRenderer.sprite = sprites[3];
     }
 
     public void Rotten()
     {
-        spriteRenderer.enabled = true;
-        childRenderer.enabled = true;
+        Activate();
         spriteRenderer.sprite = sprites[4];
     }
 }

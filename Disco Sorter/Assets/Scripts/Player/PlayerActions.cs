@@ -42,8 +42,8 @@ public class PlayerActions : MonoBehaviour
                 else
                 {
                     onScreen.HighlightVignette(ActionHighlight.Fail);
-                    levelManager.spawnPipeline[parameters.linkedReleaseId].GetComponentInChildren<SpriteRenderer>().enabled = false;
-                    levelManager.spawnPipeline[parameters.linkedReleaseId].GetComponentInChildren<MeshRenderer>().enabled = false;
+                    StartCoroutine(levelManager.spawnPipeline[parameters.linkedReleaseId].GetComponentInChildren<ReleaseIcon>().Disable());
+                    StartCoroutine(levelManager.spawnPipeline[parameters.linkedReleaseId].GetComponentInChildren<ReleaseIcon>().DisableFog());
                 }
                 break;
         }

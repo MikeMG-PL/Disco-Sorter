@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OnScreen : MonoBehaviour
 {
-    public Material vignette; Color r, g; float alpha; bool highlighted; public float vignetteFadeSpeed = 10;
+    public Material vignette; public Color r, g; float alpha; bool highlighted; public float vignetteFadeSpeed = 10;
 
     SFXManager sfx;
     [Header("-------------------")]
@@ -35,8 +35,8 @@ public class OnScreen : MonoBehaviour
     void Start()
     {
         vignette.color = new Color(0, 0, 0, 0);
-        g = new Color(0, 1, 0, alpha);
-        r = new Color(1, 0, 0, alpha);
+        //g = new Color(0, 1, 0, alpha);
+        //r = new Color(1, 0, 0, alpha);
 
         songTitle.text = loadToScene.level.name;
         songArtist.text = loadToScene.level.artist;
