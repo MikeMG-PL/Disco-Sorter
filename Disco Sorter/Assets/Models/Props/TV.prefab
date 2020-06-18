@@ -51,6 +51,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vignette: {fileID: 2100000, guid: a49b4ab32723bcd40adbf817b6d205c4, type: 2}
+  r: {r: 0, g: 0, b: 0, a: 0}
+  g: {r: 0, g: 0.8039216, b: 1, a: 0}
   vignetteFadeSpeed: 7.5
   songTitle: {fileID: 1365138505735039504}
   songArtist: {fileID: 5645265233961641438}
@@ -76,6 +78,7 @@ MonoBehaviour:
   onTime: {fileID: 8300000, guid: 9a9dc923fa9f80c439fbedab26e67619, type: 3}
   correctBox: {fileID: 8300000, guid: cf9b6fdabbaad5c4d904e3294706b205, type: 3}
   wrong: {fileID: 8300000, guid: 3d2c24e0a1931994a9051134e65b8a80, type: 3}
+  customClips: []
 --- !u!82 &7026347049254060671
 AudioSource:
   m_ObjectHideFlags: 0

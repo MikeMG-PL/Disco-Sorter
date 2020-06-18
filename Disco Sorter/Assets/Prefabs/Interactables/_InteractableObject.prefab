@@ -129,6 +129,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   discoFractured: {fileID: 3842982347706455850, guid: a97cc9522ba619647bfb40ae26b7a091,
     type: 3}
+  distanceCounter: {fileID: 3564120174567746430, guid: c858a44472723274fa299e4a08ea6c6c,
+    type: 3}
+  dissolveMaterial: {fileID: 0}
+  dissolve: 0
 --- !u!114 &5133951597541539140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,14 +183,18 @@ MonoBehaviour:
   linkedReleaseTimeStart: 0
   linkedReleaseTimeEnd: 0
   linkedCatchTime: 0
+  spawnTime: 0
   linkedReleaseEN: 0
   linkedCatchEN: 0
-  spawnTime: 0
+  linkedReleaseId: 0
+  linkedCatchId: 0
+  EN: 0
+  Id: 0
   type: 0
   color: 0
   action: 0
-  ID: 0
-  wasPreviouslyInserted: 0
+  wasInserted: 0
+  wasMissed: 0
   wasGrabbed: 0
   wasReleased: 0
   wasCatchedOnTime: 0

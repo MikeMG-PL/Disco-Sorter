@@ -19,13 +19,13 @@ public class PlayerActions : MonoBehaviour
             case true:
                 actionStart = parameters.actionStartTime; actionEnd = parameters.actionEndTime;
 
-                if (timer >= actionStart && timer <= actionEnd)
+                if (timer >= actionStart && timer <= actionEnd && !parameters.wasCatchedOnTime)
                 {
                     onScreen.HighlightVignette(ActionHighlight.Success);
                     parameters.wasCatchedOnTime = true;
                 }
 
-                else
+                else if((timer < actionStart || timer > actionEnd))
                     onScreen.HighlightVignette(ActionHighlight.Fail);
                 break;
 

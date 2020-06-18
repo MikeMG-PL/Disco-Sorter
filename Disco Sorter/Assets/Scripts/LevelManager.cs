@@ -88,8 +88,9 @@ public class LevelManager : MonoBehaviour
 
     void Restart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        timer = 0;
+        
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //timer = 0;
     }
 
     void SpawnObjects()

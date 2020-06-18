@@ -26,8 +26,11 @@ public class OnScreen : MonoBehaviour
     float alphaLogo = 0, alphaText = 0;
     bool showLogo, showPoints;
 
+    PointManager pointManager;
+
     private void Awake()
     {
+        pointManager = GameObject.FindGameObjectWithTag("PointManager").GetComponent<PointManager>();
         StartCoroutine(Cor());
         sfx = GetComponent<SFXManager>();
     }
@@ -111,15 +114,23 @@ public class OnScreen : MonoBehaviour
         switch (h)
         {
             case ActionHighlight.Success:
+
                 sfx.PlaySound(sfx.onTime);
                 vignette.color = g;
+                pointManager.OnTime();
+
                 StartCoroutine(VignetteAnim(true));
                 break;
+
             case ActionHighlight.Fail:
+
                 sfx.PlaySound(sfx.wrong);
                 vignette.color = r;
+                pointManager.Punish();
+
                 StartCoroutine(VignetteAnim(false));
                 break;
+
             default:
                 vignette.color = new Color(0, 0, 0, 0);
                 break;

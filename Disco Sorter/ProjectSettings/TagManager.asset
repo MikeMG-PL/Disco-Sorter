@@ -26,6 +26,8 @@ TagManager:
   - Building
   - Plane
   - Gloves
+  - PointManager
+  - DistanceCounter
   layers:
   - Default
   - TransparentFX

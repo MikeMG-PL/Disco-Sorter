@@ -24,7 +24,9 @@ public class MissedAction : MonoBehaviour
 
         if ((p.CompareTag("DiscoBall") || p.CompareTag("Apple") || p.CompareTag("RottenApple") || p.CompareTag("Release")) && !o.wasGrabbed)
         {
-            onScreen.HighlightVignette(ActionHighlight.Fail);
+            if(!o.wasMissed)
+                onScreen.HighlightVignette(ActionHighlight.Fail);
+            o.wasMissed = true;
         }
     }
 }
