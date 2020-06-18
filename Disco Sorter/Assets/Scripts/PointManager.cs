@@ -7,7 +7,8 @@ public class PointManager : MonoBehaviour
     public int onTimePoints, punishPoints, comboMultiplier, comboAfterStreak, rottenDistanceMultiplier, wrongBoxPunishment, noBoxPunishment, wrongActionsNeededToFail, correctBoxPoints;
     public OnScreen onScreen;
 
-    int points, beforeComboCounter, combo, rottenDistance; Queue<bool> actionQueue; public enum AppleState { IncorrectBox, CorrectBox, NoBox, RottenThrow };
+    int points, beforeComboCounter, combo, rottenDistance; Queue<bool> actionQueue; public enum AppleState { IncorrectBox, CorrectBox, NoBox, RottenThrow }; public bool levelFailed;
+    public LevelManager levelManager; bool stopListening;
 
     void Start()
     {
@@ -102,19 +103,64 @@ public class PointManager : MonoBehaviour
 
     public void FailLevel()
     {
-        Debug.LogError("LEVEL FAILED!");
+        levelFailed = true;
+        //Debug.LogError("LEVEL FAILED!");
+        onScreen.showPoints = false;
+        onScreen.scoreMesh.transform.localScale = new Vector3(0.15f, 0.15f);
+        onScreen.scoreText.text = "sorting\nfailed!";
+        onScreen.showPoints = true;
+        stopListening = true;
+        StartCoroutine(FailEffect());
     }
 
     public void DisplayPoints()
     {
-        Debug.Log("Points: " + points + ", Combo: " + combo);
+        if (combo > 0 && levelFailed == false)
+        {
+            onScreen.scoreText.text = points.ToString() + "\ncombo: " + combo;
+            onScreen.scoreMesh.transform.localScale = new Vector3(0.15f, 0.15f);
+        }
+        else if (levelFailed == false)
+        {
+            onScreen.scoreText.text = points.ToString();
+            onScreen.scoreMesh.transform.localScale = new Vector3(0.2f, 0.2f);
+        }
     }
 
     public void PointListener()
     {
-        if (points < 0 && actionQueue.Count >= 5)
+        if (points < 0 && actionQueue.Count >= 5 && !stopListening)
             FailLevel();
     }
 
+    IEnumerator FailEffect()
+    {
+        for (int i = 0; i < levelManager.spawnPipeline.Count; i++)
+        {
+            if (levelManager.spawnPipeline[i] != null)
+            {
 
+                if (levelManager.spawnPipeline[i].CompareTag("DiscoBall") && levelManager.spawnPipeline[i].activeSelf)
+                    levelManager.spawnPipeline[i].GetComponent<ObjectMethods>().DestroyDisco();
+                else
+                {
+                    levelManager.spawnPipeline[i].transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material =
+                        levelManager.spawnPipeline[i].GetComponent<ObjectMethods>().dissolveMaterial;
+                    StartCoroutine(levelManager.spawnPipeline[i].GetComponent<ObjectMethods>().Dissolve());
+                }
+
+            }
+        }
+
+        while (Time.timeScale > 0.1)
+        {
+            Time.timeScale -= Time.fixedDeltaTime / 2;
+
+            levelManager.GetComponent<AudioSource>().pitch -= Time.fixedDeltaTime / 2;
+            yield return new WaitForSeconds(Time.fixedDeltaTime);
+        }
+        Time.timeScale = 0;
+        levelManager.GetComponent<AudioSource>().pitch = 0;
+        StopCoroutine(FailEffect());
+    }
 }

@@ -24,7 +24,8 @@ public class OnScreen : MonoBehaviour
 
     public float fadeSpeed = 10;
     float alphaLogo = 0, alphaText = 0;
-    bool showLogo, showPoints;
+    [HideInInspector()]
+    public bool showLogo, showPoints;
 
     PointManager pointManager;
 

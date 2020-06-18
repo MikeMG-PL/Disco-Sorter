@@ -50,15 +50,20 @@ public class ObjectMethods : MonoBehaviour
         }
         if (g.CompareTag("Building") && gameObject.CompareTag("DiscoBall"))
         {
-            GameObject f = Instantiate(discoFractured, transform.position, Quaternion.identity);
-            f.GetComponent<AudioSource>().Play();
-            Destroy(gameObject);
+            DestroyDisco();
         }
         if (g.CompareTag("Plane") && !gameObject.CompareTag("Release") && !gameObject.CompareTag("DiscoBall") && gameObject.GetComponent<ObjectParameters>().linkedReleaseTimeEnd < LevelManager.timer)
         {
             transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = dissolveMaterial;
             StartCoroutine(Dissolve());
         }
+    }
+
+    public void DestroyDisco()
+    {
+        GameObject f = Instantiate(discoFractured, transform.position, Quaternion.identity);
+        f.GetComponent<AudioSource>().Play();
+        Destroy(gameObject);
     }
 
     void OnCollisionStay(Collision collision)
@@ -89,7 +94,7 @@ public class ObjectMethods : MonoBehaviour
         }
     }
 
-    IEnumerator Dissolve()
+    public IEnumerator Dissolve()
     {
         if (!dissolving)
         {
@@ -99,7 +104,7 @@ public class ObjectMethods : MonoBehaviour
             {
                 dissolveMaterial.SetFloat("_DissolveAmount", Mathf.Sin(x) * 2);
 
-                if (dissolveMaterial.GetFloat("_DissolveAmount") >= 0.86f)
+                if (dissolveMaterial.GetFloat("_DissolveAmount") >= 0.86f && !GameObject.FindGameObjectWithTag("PointManager").GetComponent<PointManager>().levelFailed)
                 {
                     Destroy(gameObject);
                     if (transform.parent != null && (transform.parent.CompareTag("Apple") || transform.CompareTag("RottenApple")))

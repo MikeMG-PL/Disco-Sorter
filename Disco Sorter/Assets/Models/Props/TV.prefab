@@ -61,6 +61,8 @@ MonoBehaviour:
   logo: {fileID: 328913277251227081}
   scoreText: {fileID: 922406552047659678}
   scoreMesh: {fileID: 20875864460305335}
+  comboText: {fileID: 0}
+  comboMesh: {fileID: 0}
   loadToScene: {fileID: 0}
   fadeSpeed: 5
 --- !u!114 &1901615454111574941
@@ -201,7 +203,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 847273061459462892}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0.09545296, y: -0.282, z: 0}
+  m_LocalPosition: {x: 0.09545296, y: -0.282, z: -0}
   m_LocalScale: {x: 0.19999997, y: 0.19999994, z: 1}
   m_Children: []
   m_Father: {fileID: 1624217836702475938}
@@ -256,7 +258,7 @@ TextMesh:
   m_Text: 0
   m_OffsetZ: 0
   m_CharacterSize: 0.1
-  m_LineSpacing: 1
+  m_LineSpacing: 0.6
   m_Anchor: 4
   m_Alignment: 1
   m_TabSize: 4

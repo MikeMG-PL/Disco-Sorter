@@ -88,14 +88,14 @@ public class LevelManager : MonoBehaviour
 
     void Restart()
     {
-        
+
         //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         //timer = 0;
     }
 
     void SpawnObjects()
     {
-        if (iterator < spawnPipeline.Count)
+        if (iterator < spawnPipeline.Count && spawnPipeline[iterator] != null)
         {
             Vector3 rot = new Vector3(Random.Range(0, 181), Random.Range(0, 181), Random.Range(0, 181));
 
