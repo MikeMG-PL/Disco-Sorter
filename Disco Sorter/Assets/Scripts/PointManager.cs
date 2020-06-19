@@ -147,9 +147,10 @@ public class PointManager : MonoBehaviour
         }
 
         float timer = 0;
+        onScreen.showPoints = false;
+
         while (Time.timeScale > 0.1)
         {
-            onScreen.showPoints = false;
             timer += Time.fixedDeltaTime;
             if(timer >= 0.5f)
             {
