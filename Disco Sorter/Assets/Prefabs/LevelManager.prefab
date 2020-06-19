@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b1b6b1ace1edae4dae16943ec4a4748, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: 0
+  playerObject: {fileID: 0}
   index: 0
   buildLevels:
   - {fileID: 11400000, guid: 79f8ee72a46a8ca47a14b8d951535a4f, type: 2}
