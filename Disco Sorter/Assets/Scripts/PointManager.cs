@@ -104,12 +104,6 @@ public class PointManager : MonoBehaviour
     public void FailLevel()
     {
         levelFailed = true;
-        //Debug.LogError("LEVEL FAILED!");
-        onScreen.showPoints = false;
-        onScreen.scoreMesh.transform.localScale = new Vector3(0.15f, 0.15f);
-        onScreen.scoreText.text = "sorting\nfailed!";
-        onScreen.showPoints = true;
-        stopListening = true;
         StartCoroutine(FailEffect());
     }
 
@@ -152,10 +146,20 @@ public class PointManager : MonoBehaviour
             }
         }
 
+        float timer = 0;
         while (Time.timeScale > 0.1)
         {
-            Time.timeScale -= Time.fixedDeltaTime / 2;
+            onScreen.showPoints = false;
+            timer += Time.fixedDeltaTime;
+            if(timer >= 0.5f)
+            {
+                onScreen.scoreMesh.transform.localScale = new Vector3(0.15f, 0.15f);
+                onScreen.scoreText.text = "sorting\nfailed!";
+                onScreen.showPoints = true;
+                stopListening = true;
+            }
 
+            Time.timeScale -= Time.fixedDeltaTime / 2;
             levelManager.GetComponent<AudioSource>().pitch -= Time.fixedDeltaTime / 2;
             yield return new WaitForSeconds(Time.fixedDeltaTime);
         }
