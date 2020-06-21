@@ -2085,11 +2085,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 4540151001161789927, guid: 006b2dc7863151a49af9e15ddae757dd,
-        type: 3}
-      propertyPath: m_TagString
-      value: Gloves
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 006b2dc7863151a49af9e15ddae757dd,
         type: 3}
       propertyPath: m_LocalPosition.x

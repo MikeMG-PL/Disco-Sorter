@@ -6,7 +6,7 @@ public class ControllerRendererDisable : MonoBehaviour
 {
     Renderer[] renderers;
 
-    void Update()
+    void Start()
     {
         renderers = GetComponentsInChildren<Renderer>();
 
