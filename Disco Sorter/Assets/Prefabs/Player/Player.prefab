@@ -2641,7 +2641,7 @@ MonoBehaviour:
   UseSDKPackets: 1
   PacketSettings:
     UpdateRate: 0.033333335
-  StartWithControllers: 1
+  StartWithControllers: 0
   FirstPersonLayer:
     layerIndex: 0
   ThirdPersonLayer:
