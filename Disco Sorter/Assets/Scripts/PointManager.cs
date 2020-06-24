@@ -8,7 +8,7 @@ public class PointManager : MonoBehaviour
     public OnScreen onScreen;
 
     int points, beforeComboCounter, combo, rottenDistance; Queue<bool> actionQueue; public enum AppleState { IncorrectBox, CorrectBox, NoBox, RottenThrow }; public bool levelFailed;
-    public LevelManager levelManager; bool stopListening;
+    public LevelManager levelManager; bool stopListening; public bool godMode;
 
     void Start()
     {
@@ -103,8 +103,12 @@ public class PointManager : MonoBehaviour
 
     public void FailLevel()
     {
-        levelFailed = true;
-        StartCoroutine(FailEffect());
+        if (godMode == false)
+        {
+            levelFailed = true;
+            StartCoroutine(FailEffect());
+        }
+
     }
 
     public void DisplayPoints()
@@ -152,7 +156,7 @@ public class PointManager : MonoBehaviour
         while (Time.timeScale > 0.1)
         {
             timer += Time.fixedDeltaTime;
-            if(timer >= 0.5f)
+            if (timer >= 0.5f)
             {
                 onScreen.scoreMesh.transform.localScale = new Vector3(0.15f, 0.15f);
                 onScreen.scoreText.text = "sorting\nfailed!";

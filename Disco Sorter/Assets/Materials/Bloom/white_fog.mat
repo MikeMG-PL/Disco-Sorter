@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: white_fog
   m_Shader: {fileID: 4800000, guid: 6fc10955b29d48b419fd39c3f81b2b60, type: 3}
-  m_ShaderKeywords: DOUBLE_SIDED _CULLMODE_OFF _DOUBLESIDED_FRONT
+  m_ShaderKeywords: DOUBLE_SIDED ETC1_EXTERNAL_ALPHA _CULLMODE_OFF _DOUBLESIDED_FRONT
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0

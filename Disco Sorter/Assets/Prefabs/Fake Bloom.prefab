@@ -89,7 +89,6 @@ GameObject:
   - component: {fileID: 481055011468410}
   - component: {fileID: 481055011468391}
   - component: {fileID: 481055011468408}
-  - component: {fileID: 481055011468409}
   m_Layer: 0
   m_Name: Fake Bloom
   m_TagString: Untagged
@@ -159,20 +158,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &481055011468409
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 481055011468411}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &4995143929373575697
 GameObject:
   m_ObjectHideFlags: 0

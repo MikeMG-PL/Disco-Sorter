@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: WindmillMaterial
   m_Shader: {fileID: 4800000, guid: f4b0404f9d6f0f745a9d6caa997ff40d, type: 3}
-  m_ShaderKeywords: _NORMALMAP _REFLECTIONMAPENABLED_ON
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA _NORMALMAP _REFLECTIONMAPENABLED_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
