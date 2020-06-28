@@ -18,7 +18,8 @@ public class HandEvents : MonoBehaviour
     private Player player;
     private PlayerActions playerActions;
     private LevelManager levelManager;
-    private ObjectParameters parameters;
+    [HideInInspector()]
+    public ObjectParameters parameters;
 
 
     private void Start()

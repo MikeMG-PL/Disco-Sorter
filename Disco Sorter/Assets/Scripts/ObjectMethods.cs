@@ -7,7 +7,7 @@ public class ObjectMethods : MonoBehaviour
     public GameObject discoFractured;
     public Material dissolveMaterial;
     public bool dissolve;
-    bool dissolving, isChecked;
+    bool dissolving, isChecked, performing;
     GameObject g;
     Transform distanceCounter;
 
@@ -79,8 +79,7 @@ public class ObjectMethods : MonoBehaviour
             {
                 distanceCounter = GameObject.FindGameObjectWithTag("DistanceCounter").transform;
                 pointManager.ThrowPoints(PointManager.AppleState.RottenThrow, Vector3.Distance(distanceCounter.transform.position, transform.position));
-            }
-                
+            } 
             else
                 pointManager.ThrowPoints(PointManager.AppleState.NoBox, 0);
         }
@@ -90,14 +89,18 @@ public class ObjectMethods : MonoBehaviour
         if (g.CompareTag("Plane") && !gameObject.CompareTag("Release") && !gameObject.CompareTag("DiscoBall") && gameObject.GetComponent<ObjectParameters>().linkedReleaseTimeEnd < LevelManager.timer)
         {
             transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = dissolveMaterial;
-            StartCoroutine(Dissolve());
+            if(!performing)
+            {
+                StartCoroutine(Dissolve());
+                performing = true;
+            }
         }
     }
 
     public IEnumerator Dissolve()
     {
-        if (!dissolving)
-        {
+        //if (!dissolving)
+        //{
             float x = 0;
             dissolving = true;
             while (true)
@@ -111,12 +114,13 @@ public class ObjectMethods : MonoBehaviour
                     {
                         Destroy(transform.parent.gameObject);
                         dissolving = false;
+                        StopCoroutine(Dissolve());
                     }
                 }
 
                 x += Time.fixedDeltaTime;
                 yield return new WaitForSeconds(Time.fixedDeltaTime);
-            }
+            //}
         }
 
     }

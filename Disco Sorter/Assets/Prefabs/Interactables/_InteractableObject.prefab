@@ -129,8 +129,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   discoFractured: {fileID: 3842982347706455850, guid: a97cc9522ba619647bfb40ae26b7a091,
     type: 3}
-  distanceCounter: {fileID: 3564120174567746430, guid: c858a44472723274fa299e4a08ea6c6c,
-    type: 3}
   dissolveMaterial: {fileID: 0}
   dissolve: 0
 --- !u!114 &5133951597541539140
@@ -214,7 +212,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &124326043288262799
 MonoBehaviour:
   m_ObjectHideFlags: 0
