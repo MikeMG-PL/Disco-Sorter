@@ -111,6 +111,11 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 81704a084a4574a4ba6aca61aca043c7, type: 2}
   - {fileID: 2100000, guid: 4620e2a9d52491743aaaa5943f65adb4, type: 2}
   mat: {fileID: 2100000, guid: 03705f7a870ba1f4484156115264e88a, type: 2}
+  bloom: {fileID: 0}
+  topYellow: 0
+  myLight: 0
+  light: 0
+  baseLight: 0
   blinkSpeed: 1
   blinkColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!136 &3912041931467278099

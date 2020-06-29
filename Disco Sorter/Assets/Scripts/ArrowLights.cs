@@ -6,7 +6,8 @@ public class ArrowLights : MonoBehaviour
 {
     public List<Material> materials;
     public Material mat;
-    Material bloom;
+    [HideInInspector()]
+    public Material bloom;
     bool bloomRunning, colorRunning; public bool topYellow;
     [HideInInspector()]
     public bool myLight;

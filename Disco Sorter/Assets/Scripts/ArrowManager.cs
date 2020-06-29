@@ -10,7 +10,7 @@ public class ArrowManager : MonoBehaviour
     public Color blinkColor;
     ArrowLights[] lights;
     TopYellowArrow[] topYellows;
-    bool loopDone, illuminate = false;
+    bool loopDone, illuminate = false; bool set;
     int d, previousID;
     [HideInInspector()]
     public bool isChecked;
@@ -36,6 +36,7 @@ public class ArrowManager : MonoBehaviour
     float distance;
     ObjectParameters o;
     int speed;
+    FinalBlink[] components;
     void DistanceCheck()
     {
         if (leftHand.parameters != null)
@@ -45,6 +46,7 @@ public class ArrowManager : MonoBehaviour
 
         if (o != null && levelManager.spawnPipeline[o.linkedReleaseId].gameObject != null && !levelManager.spawnPipeline[o.linkedReleaseId].GetComponent<ObjectParameters>().wasReleased)
         {
+            components = GetComponentsInChildren<FinalBlink>();
             distance = Vector3.Distance(levelManager.spawnPipeline[o.linkedReleaseId].transform.position, finish.position);
 
             if (previousID != o.linkedReleaseId)
@@ -54,14 +56,46 @@ public class ArrowManager : MonoBehaviour
             blinkSpeed = Mathf.Clamp(Mathf.Pow(speed, 2), 9, 100);
 
             previousID = o.linkedReleaseId;
+
+            if (LevelManager.timer >= o.linkedReleaseTimeStart && LevelManager.timer <= o.linkedReleaseTimeEnd && !set)
+            {
+                for (int i = 0; i < components.Length; i++)
+                {
+                    switch(light)
+                    {
+                        case Light.Red:
+                            if(components[i].GetComponent<ArrowLights>().light == Light.Red)
+                                StartCoroutine(components[i].GetComponent<FinalBlink>().Enable());
+                            break;
+
+                        case Light.Green:
+                            if (components[i].GetComponent<ArrowLights>().light == Light.Green)
+                                StartCoroutine(components[i].GetComponent<FinalBlink>().Enable());
+                            break;
+
+                        case Light.Yellow:
+                            if (components[i].GetComponent<ArrowLights>().light == Light.Yellow)
+                                StartCoroutine(components[i].GetComponent<FinalBlink>().Enable());
+                            break;
+
+                        case Light.None:
+                            break;
+                    }
+                    
+                }
+                set = true;
+            }
         }
         else
+        {
             light = Light.None;
+            set = false;
+        }
     }
 
     void ColorCheck()
     {
-        if (o != null && levelManager.spawnPipeline[o.linkedReleaseId].gameObject != null && !levelManager.spawnPipeline[o.linkedReleaseId].GetComponent<ObjectParameters>().wasReleased)
+        if (o != null && levelManager.spawnPipeline[o.linkedReleaseId].gameObject != null && !levelManager.spawnPipeline[o.linkedReleaseId].GetComponent<ObjectParameters>().wasReleased && !set)
         {
             if (o.type == EntityType.RottenApple)
                 light = Light.Yellow;
