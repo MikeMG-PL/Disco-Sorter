@@ -11,6 +11,7 @@ public class ArrowManager : MonoBehaviour
     ArrowLights[] lights;
     TopYellowArrow[] topYellows;
     bool loopDone, illuminate = false;
+    int d, previousID;
     [HideInInspector()]
     public bool isChecked;
     public enum Light { None, Red, Green, Yellow }; public new Light light;
@@ -34,33 +35,9 @@ public class ArrowManager : MonoBehaviour
 
     float distance;
     ObjectParameters o;
+    int speed;
     void DistanceCheck()
     {
-        /*if (!loopDone)
-        {
-            for (int i = 0; i < levelManager.spawnPipeline.Count; i++)
-            {
-                if (levelManager.spawnPipeline[i].CompareTag("Release"))
-                    releasePipeline.Enqueue(levelManager.spawnPipeline[i]);
-                if (i == levelManager.spawnPipeline.Count - 1)
-                    loopDone = true;
-            }
-        }
-
-        if (releasePipeline.ToArray()[0].gameObject != null && releasePipeline.Count > 0 && releasePipeline.ToArray()[0].activeSelf)
-        {
-            illuminating = false;
-            distance = Vector3.Distance(releasePipeline.ToArray()[0].transform.position, finish.position);
-            Debug.Log((int)distance);
-
-            if (distance < 0.45f)
-            {
-                releasePipeline.Dequeue();
-                isChecked = false;
-                illuminating = true;
-            }
-        }*/
-
         if (leftHand.parameters != null)
             o = leftHand.parameters;
         if (rightHand.parameters != null)
@@ -69,7 +46,14 @@ public class ArrowManager : MonoBehaviour
         if (o != null && levelManager.spawnPipeline[o.linkedReleaseId].gameObject != null && !levelManager.spawnPipeline[o.linkedReleaseId].GetComponent<ObjectParameters>().wasReleased)
         {
             distance = Vector3.Distance(levelManager.spawnPipeline[o.linkedReleaseId].transform.position, finish.position);
-            Debug.Log((int)distance);
+
+            if (previousID != o.linkedReleaseId)
+                d = (int)distance;
+
+            speed = (2 * d - (int)distance) * 8 / (2 * d);
+            blinkSpeed = Mathf.Clamp(Mathf.Pow(speed, 2), 9, 100);
+
+            previousID = o.linkedReleaseId;
         }
         else
             light = Light.None;

@@ -23,7 +23,7 @@ public class ReleaseIcon : MonoBehaviour
 
     public IEnumerator Enable()
     {
-        if (disabling)
+        /*if (disabling)
             StopCoroutine(Enable());
         spriteRenderer = GetComponent<SpriteRenderer>();
         alpha = 0;
@@ -35,7 +35,8 @@ public class ReleaseIcon : MonoBehaviour
             spriteRenderer.material.color = new Color(spriteRenderer.material.color.r, spriteRenderer.material.color.g, spriteRenderer.material.color.b, alpha);
             yield return new WaitForSeconds(Time.fixedDeltaTime);
         }
-        StopCoroutine(Enable());
+        StopCoroutine(Enable());*/
+        yield return new WaitForEndOfFrame();
     }
 
     public IEnumerator Disable()
@@ -56,12 +57,13 @@ public class ReleaseIcon : MonoBehaviour
             Destroy(transform.parent.gameObject);
             StopCoroutine(Disable());
         }
-
+        
+        yield return new WaitForEndOfFrame();
     }
 
     public IEnumerator EnableFog()
     {
-        if (disabling)
+        /*if (disabling)
             StopCoroutine(EnableFog());
         childRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
         childAlphaPower = 15;
@@ -74,7 +76,8 @@ public class ReleaseIcon : MonoBehaviour
             yield return new WaitForSeconds(Time.fixedDeltaTime);
         }
 
-        StopCoroutine(EnableFog());
+        StopCoroutine(EnableFog());*/
+        yield return new WaitForEndOfFrame();
     }
 
     public IEnumerator DisableFog()
@@ -96,15 +99,14 @@ public class ReleaseIcon : MonoBehaviour
             Destroy(transform.parent.gameObject);
             StopCoroutine(DisableFog());
         }
-
     }
 
     public void Activate()
     {
         transform.parent.gameObject.SetActive(true);
         gameObject.SetActive(true);
-        StartCoroutine(Enable());
-        StartCoroutine(EnableFog());
+        //StartCoroutine(Enable());
+        //StartCoroutine(EnableFog());
     }
 
     public void LeftRed()
