@@ -21,7 +21,13 @@ public class Box : MonoBehaviour
         {
             ObjectParameters parameters = other.GetComponentInParent<ObjectParameters>();
 
-            if (parameters.color == color && /*parameters.wasCatchedOnTime &&*/ !parameters.wasInserted)
+            if (parameters.type == EntityType.RottenApple && color == EntityColour.None)
+            {
+                parameters.wasInserted = true;
+                sfx.PlaySound(sfx.correctBox);
+                pointManager.ThrowPoints(PointManager.AppleState.CorrectBox, 0);
+            }
+            else if (parameters.color == color && /*parameters.wasCatchedOnTime &&*/ !parameters.wasInserted)
             {
                 parameters.wasInserted = true;
                 sfx.PlaySound(sfx.correctBox);

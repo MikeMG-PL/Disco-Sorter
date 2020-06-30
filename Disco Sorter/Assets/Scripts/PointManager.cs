@@ -49,7 +49,7 @@ public class PointManager : MonoBehaviour
                 points += correctBoxPoints;
                 break;
             case AppleState.RottenThrow:
-                points += (int)throwDistance * rottenDistanceMultiplier;
+                points += correctBoxPoints;
                 break;
         }
     }

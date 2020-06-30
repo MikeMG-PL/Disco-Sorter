@@ -35,7 +35,7 @@ public class ArrowManager : MonoBehaviour
 
     float distance;
     ObjectParameters o;
-    int speed;
+    float speed;
     FinalBlink[] components;
     void DistanceCheck()
     {
@@ -53,18 +53,18 @@ public class ArrowManager : MonoBehaviour
                 d = (int)distance;
 
             speed = (2 * d - (int)distance) * 8 / (2 * d);
-            blinkSpeed = Mathf.Clamp(Mathf.Pow(speed, 2), 9, 100);
+            blinkSpeed = Mathf.Clamp(Mathf.Pow(speed, 2), 1, 100);
 
             previousID = o.linkedReleaseId;
 
-            if (LevelManager.timer >= o.linkedReleaseTimeStart && LevelManager.timer <= o.linkedReleaseTimeEnd && !set)
+            if (LevelManager.timer >= o.linkedReleaseTimeStart + 0.02f && LevelManager.timer <= o.linkedReleaseTimeEnd - 0.02f && !set)
             {
                 for (int i = 0; i < components.Length; i++)
                 {
-                    switch(light)
+                    switch (light)
                     {
                         case Light.Red:
-                            if(components[i].GetComponent<ArrowLights>().light == Light.Red)
+                            if (components[i].GetComponent<ArrowLights>().light == Light.Red)
                                 StartCoroutine(components[i].GetComponent<FinalBlink>().Enable());
                             break;
 
@@ -81,7 +81,7 @@ public class ArrowManager : MonoBehaviour
                         case Light.None:
                             break;
                     }
-                    
+
                 }
                 set = true;
             }

@@ -20,14 +20,14 @@ public class FinalBlink : MonoBehaviour
             blinkMaterial.SetFloat("_AlphaPower", 100);
             isSet = true;
         }
-
     }
 
     public IEnumerator Enable()
     {
         blinkMaterial.SetFloat("_AlphaPower", 3);
-        Debug.Log(blinkMaterial.GetFloat("_AlphaPower"));
-        yield return new WaitForSeconds(0.5f);
+
+        yield return new WaitForSeconds(0.25f);
+
         blinkMaterial.SetFloat("_AlphaPower", 100);
     }
 }
