@@ -23,16 +23,16 @@ public class OnScreen : MonoBehaviour
     //////////////////////////////
 
     public float fadeSpeed = 10;
-    float alphaLogo = 0, alphaText = 0;
+    float alphaLogo = 0, alphaText = 0, alphaSongInfo = 0;
     [HideInInspector()]
-    public bool showLogo, showPoints;
+    public bool showLogo, showPoints, showSongInfo;
 
     PointManager pointManager;
 
     private void Awake()
     {
         pointManager = GameObject.FindGameObjectWithTag("PointManager").GetComponent<PointManager>();
-        StartCoroutine(Cor());
+        StartCoroutine(CorGame());
         sfx = GetComponent<SFXManager>();
     }
 
@@ -46,22 +46,26 @@ public class OnScreen : MonoBehaviour
         songArtist.text = loadToScene.level.artist;
     }
 
-    IEnumerator Cor()
+    IEnumerator CorGame()
     {
         songTitle.gameObject.SetActive(true);
-        songTitle.color = new Color(songTitle.color.r, songTitle.color.g, songTitle.color.b, alphaLogo);
+        songTitle.color = new Color(songTitle.color.r, songTitle.color.g, songTitle.color.b, alphaSongInfo);
+        titleMesh.material.color = new Color(titleMesh.material.color.r, titleMesh.material.color.g, titleMesh.material.color.b, alphaSongInfo);
+
         songArtist.gameObject.SetActive(true);
-        songArtist.color = new Color(songArtist.color.r, songArtist.color.g, songArtist.color.b, alphaLogo);
+        songArtist.color = new Color(songArtist.color.r, songArtist.color.g, songArtist.color.b, alphaSongInfo);
+        artistMesh.material.color = new Color(artistMesh.material.color.r, artistMesh.material.color.g, artistMesh.material.color.b, alphaSongInfo);
+
         scoreMesh.gameObject.SetActive(true);
         scoreMesh.material.color = new Color(scoreMesh.material.color.r, scoreMesh.material.color.g, scoreMesh.material.color.b, alphaText);
 
         yield return new WaitForSeconds(2);
 
-        showLogo = true;
+        showSongInfo = true;
 
         yield return new WaitForSeconds(3);
 
-        showLogo = false;
+        showSongInfo = false;
 
         yield return new WaitForSeconds(2);
 
@@ -70,41 +74,42 @@ public class OnScreen : MonoBehaviour
 
     void Update()
     {
-        if (showLogo)
+        if (showSongInfo)
         {
-            titleMesh.material.color = new Color(titleMesh.material.color.r, titleMesh.material.color.g, titleMesh.material.color.b, alphaLogo);
-            artistMesh.material.color = new Color(artistMesh.material.color.r, artistMesh.material.color.g, artistMesh.material.color.b, alphaLogo);
-            if (alphaLogo < 1)
+            if (alphaSongInfo < 1)
             {
-                alphaLogo += fadeSpeed * Time.deltaTime;
+                titleMesh.material.color = new Color(titleMesh.material.color.r, titleMesh.material.color.g, titleMesh.material.color.b, alphaSongInfo);
+                artistMesh.material.color = new Color(artistMesh.material.color.r, artistMesh.material.color.g, artistMesh.material.color.b, alphaSongInfo);
+                alphaSongInfo += fadeSpeed * Time.deltaTime;
             }
         }
         else
         {
-            titleMesh.material.color = new Color(titleMesh.material.color.r, titleMesh.material.color.g, titleMesh.material.color.b, alphaLogo);
-            artistMesh.material.color = new Color(artistMesh.material.color.r, artistMesh.material.color.g, artistMesh.material.color.b, alphaLogo);
-            if (alphaLogo > 0)
+            if (alphaSongInfo > 0)
             {
-                alphaLogo -= fadeSpeed * Time.deltaTime;
+                titleMesh.material.color = new Color(titleMesh.material.color.r, titleMesh.material.color.g, titleMesh.material.color.b, alphaSongInfo);
+                artistMesh.material.color = new Color(artistMesh.material.color.r, artistMesh.material.color.g, artistMesh.material.color.b, alphaSongInfo);
+                alphaSongInfo -= fadeSpeed * Time.deltaTime;
             }
         }
 
         if (showPoints)
         {
-            scoreMesh.material.color = new Color(scoreMesh.material.color.r, scoreMesh.material.color.g, scoreMesh.material.color.b, alphaText);
             if (alphaText < 1)
             {
+                scoreMesh.material.color = new Color(scoreMesh.material.color.r, scoreMesh.material.color.g, scoreMesh.material.color.b, alphaText);
                 alphaText += fadeSpeed * Time.deltaTime;
             }
         }
         else
         {
-            scoreMesh.material.color = new Color(scoreMesh.material.color.r, scoreMesh.material.color.g, scoreMesh.material.color.b, alphaText);
             if (alphaText > 0)
             {
+                scoreMesh.material.color = new Color(scoreMesh.material.color.r, scoreMesh.material.color.g, scoreMesh.material.color.b, alphaText);
                 alphaText -= fadeSpeed * Time.deltaTime;
             }
         }
+
         //////////////////////////////////////////////////
         if (loadToScene == null)
             Debug.LogError("There is no LoadToScene assigned in OnScreen gameobject.");
