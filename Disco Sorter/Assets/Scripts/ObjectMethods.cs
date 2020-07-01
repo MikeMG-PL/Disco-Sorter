@@ -15,7 +15,8 @@ public class ObjectMethods : MonoBehaviour
 
     void Start()
     {
-        pointManager = GameObject.FindGameObjectWithTag("PointManager").GetComponent<PointManager>();
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "3.MENU")
+            pointManager = GameObject.FindGameObjectWithTag("PointManager").GetComponent<PointManager>();
         dissolveMaterial.SetFloat("_DissolveAmount", 0);
         gameObject.GetComponent<Rigidbody>().maxAngularVelocity = 10000f;
     }
@@ -74,12 +75,12 @@ public class ObjectMethods : MonoBehaviour
             && !isChecked && GetComponent<ObjectParameters>().wasGrabbed)
         {
             isChecked = true;
-            
-            if(gameObject.CompareTag("RottenApple"))
+
+            if (gameObject.CompareTag("RottenApple"))
             {
                 distanceCounter = GameObject.FindGameObjectWithTag("DistanceCounter").transform;
                 pointManager.ThrowPoints(PointManager.AppleState.RottenThrow, Vector3.Distance(distanceCounter.transform.position, transform.position));
-            } 
+            }
             else
                 pointManager.ThrowPoints(PointManager.AppleState.NoBox, 0);
         }
@@ -89,7 +90,7 @@ public class ObjectMethods : MonoBehaviour
         if (g.CompareTag("Plane") && !gameObject.CompareTag("Release") && !gameObject.CompareTag("DiscoBall") && gameObject.GetComponent<ObjectParameters>().linkedReleaseTimeEnd < LevelManager.timer)
         {
             transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = dissolveMaterial;
-            if(!performing)
+            if (!performing)
             {
                 StartCoroutine(Dissolve());
                 performing = true;
@@ -101,27 +102,40 @@ public class ObjectMethods : MonoBehaviour
     {
         //if (!dissolving)
         //{
-            float x = 0;
-            dissolving = true;
-            while (true)
+        float x = 0;
+        dissolving = true;
+        while (true)
+        {
+            dissolveMaterial.SetFloat("_DissolveAmount", Mathf.Sin(x) * 2);
+
+            if (dissolveMaterial.GetFloat("_DissolveAmount") >= 0.86f && !GameObject.FindGameObjectWithTag("PointManager").GetComponent<PointManager>().levelFailed)
             {
-                dissolveMaterial.SetFloat("_DissolveAmount", Mathf.Sin(x) * 2);
-
-                if (dissolveMaterial.GetFloat("_DissolveAmount") >= 0.86f && !GameObject.FindGameObjectWithTag("PointManager").GetComponent<PointManager>().levelFailed)
+                Destroy(gameObject);
+                if (transform.parent != null && (transform.parent.CompareTag("Apple") || transform.CompareTag("RottenApple")))
                 {
-                    Destroy(gameObject);
-                    if (transform.parent != null && (transform.parent.CompareTag("Apple") || transform.CompareTag("RottenApple")))
-                    {
-                        Destroy(transform.parent.gameObject);
-                        dissolving = false;
-                        StopCoroutine(Dissolve());
-                    }
+                    Destroy(transform.parent.gameObject);
+                    dissolving = false;
+                    StopCoroutine(Dissolve());
                 }
+            }
 
-                x += Time.fixedDeltaTime;
-                yield return new WaitForSeconds(Time.fixedDeltaTime);
+            x += Time.fixedDeltaTime;
+            yield return new WaitForSeconds(Time.fixedDeltaTime);
             //}
         }
 
+    }
+
+    public IEnumerator RevertedDissolve()
+    {
+        float x = 90;
+
+        while (Mathf.Sin(x) >= 0)
+        {
+            dissolveMaterial.SetFloat("_DissolveAmount", Mathf.Sin(x));
+
+            x -= Time.fixedDeltaTime;
+            yield return new WaitForSeconds(Time.fixedDeltaTime);
+        }
     }
 }

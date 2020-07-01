@@ -1,6 +1,7 @@
 ﻿using OculusSampleFramework;
 using OVR.OpenVR;
 using System.Collections;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using VRTK;
 
@@ -19,7 +20,7 @@ public class HandEvents : MonoBehaviour
     private PlayerActions playerActions;
     private LevelManager levelManager;
     [HideInInspector()]
-    public ObjectParameters parameters;
+    public ObjectParameters parameters; public bool holding;
 
 
     private void Start()
@@ -28,7 +29,8 @@ public class HandEvents : MonoBehaviour
 
         player = GetComponentInParent<Player>();
         playerActions = GetComponentInParent<PlayerActions>();
-        levelManager = player.levelManagerObject.GetComponent<LevelManager>();
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "3.MENU")
+            levelManager = player.levelManagerObject.GetComponent<LevelManager>();
     }
 
     private void OnEnable()
@@ -45,7 +47,7 @@ public class HandEvents : MonoBehaviour
         if (handSide == Hand.Right) player.rightHandGrabbedObject = e.target;
         else player.leftHandGrabbedObject = e.target;
 
-        if (!parameters.wasGrabbed)
+        if (!parameters.wasGrabbed && UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "3.MENU")
         {
             playerActions.CheckActionTime(parameters, true);
 
@@ -54,6 +56,7 @@ public class HandEvents : MonoBehaviour
         }
 
         parameters.wasGrabbed = true;
+        holding = true;
     }
 
     private void OnUngrabObject(object sender, ObjectInteractEventArgs e)
@@ -64,15 +67,17 @@ public class HandEvents : MonoBehaviour
         if (handSide == Hand.Right) player.rightHandGrabbedObject = null;
         else player.leftHandGrabbedObject = null;
 
-        if (!parameters.wasReleased)
+        if (!parameters.wasReleased && UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "3.MENU")
             playerActions.CheckActionTime(parameters, false);
 
         parameters.wasReleased = true;
+        holding = false;
     }
 
     public void OnDiscoHit(ObjectParameters parameters)
     {
-        playerActions.CheckActionTime(parameters, true);
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "3.MENU")
+            playerActions.CheckActionTime(parameters, true);
         GameObject f = Instantiate(discoFractured, transform.position, Quaternion.identity);
         f.GetComponent<AudioSource>().Play();
         Destroy(parameters.gameObject);
