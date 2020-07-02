@@ -100,7 +100,7 @@ public class ObjectMethods : MonoBehaviour
 
     public IEnumerator Dissolve()
     {
-        if (!dissolving)
+        /*if (!dissolving)
         {
         float x = 0;
         dissolving = true;
@@ -122,7 +122,8 @@ public class ObjectMethods : MonoBehaviour
             x += Time.fixedDeltaTime;
             yield return new WaitForSeconds(Time.fixedDeltaTime);
             }
-        }
+        }*/
+        yield return new WaitForSeconds(0);
 
     }
 
