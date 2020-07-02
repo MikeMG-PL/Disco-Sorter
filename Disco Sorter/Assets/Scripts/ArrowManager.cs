@@ -48,13 +48,7 @@ public class ArrowManager : MonoBehaviour
         {
             components = GetComponentsInChildren<FinalBlink>();
             distance = Vector3.Distance(levelManager.spawnPipeline[o.linkedReleaseId].transform.position, finish.position);
-
-            if (previousID != o.linkedReleaseId)
-                d = (int)distance;
-
-            speed = (2 * d - (int)distance) * 8 / (2 * d);
-            blinkSpeed = Mathf.Clamp(Mathf.Pow(speed, 2), 1, 100);
-
+            blinkSpeed = 1;
             previousID = o.linkedReleaseId;
 
             if (LevelManager.timer >= o.linkedReleaseTimeStart + 0.02f && LevelManager.timer <= o.linkedReleaseTimeEnd - 0.02f && !set)
@@ -95,7 +89,8 @@ public class ArrowManager : MonoBehaviour
 
     void ColorCheck()
     {
-        if (o != null && levelManager.spawnPipeline[o.linkedReleaseId].gameObject != null && !levelManager.spawnPipeline[o.linkedReleaseId].GetComponent<ObjectParameters>().wasReleased && !set)
+        if (o != null && levelManager.spawnPipeline[o.linkedReleaseId].gameObject != null &&
+            !levelManager.spawnPipeline[o.linkedReleaseId].GetComponent<ObjectParameters>().wasReleased && !set && LevelManager.timer >= o.linkedReleaseTimeStart - 1)
         {
             if (o.type == EntityType.RottenApple)
                 light = Light.Yellow;

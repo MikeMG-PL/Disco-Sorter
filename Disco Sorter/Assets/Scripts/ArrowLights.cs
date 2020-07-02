@@ -110,6 +110,6 @@ public class ArrowLights : MonoBehaviour
 
     public float ClampToAlpha(float y)
     {
-        return 30 - y * 24;
+        return 30 - y * 20;
     }
 }

@@ -24,7 +24,7 @@ public class FinalBlink : MonoBehaviour
 
     public IEnumerator Enable()
     {
-        blinkMaterial.SetFloat("_AlphaPower", 3);
+        blinkMaterial.SetFloat("_AlphaPower", 6);
 
         yield return new WaitForSeconds(0.25f);
 
