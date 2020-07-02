@@ -6,7 +6,8 @@ public class ReleaseIcon : MonoBehaviour
 {
     public List<Sprite> sprites; float alpha, childAlphaPower; bool disabling;
     SpriteRenderer spriteRenderer; MeshRenderer childRenderer;
-
+    [HideInInspector()]
+    public bool disabled;
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -14,6 +15,7 @@ public class ReleaseIcon : MonoBehaviour
 
         spriteRenderer.enabled = false;
         childRenderer.enabled = false;
+        Activate();
     }
 
     void Update()
@@ -54,6 +56,7 @@ public class ReleaseIcon : MonoBehaviour
 
         if (spriteRenderer != null)
         {
+            disabled = true;
             Destroy(transform.parent.gameObject);
             StopCoroutine(Disable());
         }

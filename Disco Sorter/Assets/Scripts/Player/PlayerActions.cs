@@ -42,8 +42,8 @@ public class PlayerActions : MonoBehaviour
                 else if(levelManager.spawnPipeline[parameters.linkedReleaseId] != null)
                 {
                     onScreen.HighlightVignette(ActionHighlight.Fail);
-                    StartCoroutine(levelManager.spawnPipeline[parameters.linkedReleaseId].GetComponentInChildren<ReleaseIcon>().Disable());
-                    StartCoroutine(levelManager.spawnPipeline[parameters.linkedReleaseId].GetComponentInChildren<ReleaseIcon>().DisableFog());
+                    //StartCoroutine(levelManager.spawnPipeline[parameters.linkedReleaseId].GetComponentInChildren<ReleaseIcon>().Disable());
+                    //StartCoroutine(levelManager.spawnPipeline[parameters.linkedReleaseId].GetComponentInChildren<ReleaseIcon>().DisableFog());
                 }
                 break;
         }

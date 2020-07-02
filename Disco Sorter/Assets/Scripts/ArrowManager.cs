@@ -39,9 +39,12 @@ public class ArrowManager : MonoBehaviour
         if (rightHand.parameters != null)
             o = rightHand.parameters;
 
+        
+
         if (o != null && levelManager.spawnPipeline[o.linkedReleaseId].gameObject != null &&
             !levelManager.spawnPipeline[o.linkedReleaseId].GetComponent<ObjectParameters>().wasReleased
-            && LevelManager.timer >= (o.linkedReleaseTimeStart + o.linkedReleaseTimeEnd)/2 - 1.11f)
+            && LevelManager.timer >= (o.linkedReleaseTimeStart + o.linkedReleaseTimeEnd) / 2 - 1.11f &&
+            levelManager.spawnPipeline[o.linkedReleaseId].transform.GetChild(0) != null)
         {
             if (o.type == EntityType.RottenApple)
                 light = Light.Yellow;
@@ -66,13 +69,9 @@ public class ArrowManager : MonoBehaviour
             light = Light.None;
     }
 
-    void Update()
-    {
-        Illuminate();
-    }
-
     private void FixedUpdate()
     {
+        Illuminate();
         ColorCheck();
     }
 
