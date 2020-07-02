@@ -7,7 +7,7 @@ public class ObjectMethods : MonoBehaviour
     public GameObject discoFractured;
     public Material dissolveMaterial;
     public bool dissolve;
-    bool dissolving, isChecked, performing;
+    bool dissolving, isChecked, performing, thisIsMenu;
     GameObject g;
     Transform distanceCounter;
 
@@ -15,8 +15,9 @@ public class ObjectMethods : MonoBehaviour
 
     void Start()
     {
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "3.MENU")
-            pointManager = GameObject.FindGameObjectWithTag("PointManager").GetComponent<PointManager>();
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "3.MENU") thisIsMenu = true;
+        else pointManager = GameObject.FindGameObjectWithTag("PointManager").GetComponent<PointManager>();
+
         dissolveMaterial.SetFloat("_DissolveAmount", 0);
         gameObject.GetComponent<Rigidbody>().maxAngularVelocity = 10000f;
     }
@@ -108,7 +109,7 @@ public class ObjectMethods : MonoBehaviour
         {
             dissolveMaterial.SetFloat("_DissolveAmount", Mathf.Sin(x) * 2);
 
-            if (dissolveMaterial.GetFloat("_DissolveAmount") >= 0.86f && !GameObject.FindGameObjectWithTag("PointManager").GetComponent<PointManager>().levelFailed)
+            if (dissolveMaterial.GetFloat("_DissolveAmount") >= 0.86f && (thisIsMenu || !GameObject.FindGameObjectWithTag("PointManager").GetComponent<PointManager>().levelFailed))
             {
                 Destroy(gameObject);
                 if (transform.parent != null && (transform.parent.CompareTag("Apple") || transform.CompareTag("RottenApple")))
