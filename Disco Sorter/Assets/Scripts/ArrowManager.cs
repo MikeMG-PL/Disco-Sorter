@@ -5,7 +5,6 @@ using UnityEngine;
 public class ArrowManager : MonoBehaviour
 {
     public LevelManager levelManager;
-    public float blinkSpeed;
     [HideInInspector()]
     public Color blinkColor;
     ArrowLights[] lights;
@@ -28,74 +27,24 @@ public class ArrowManager : MonoBehaviour
         lights = GetComponentsInChildren<ArrowLights>();
         for (int i = 0; i < lights.Length; i++)
         {
-            lights[i].blinkSpeed = blinkSpeed;
             lights[i].blinkColor = blinkColor;
         }
     }
 
-    float distance;
     ObjectParameters o;
-    float speed;
-    FinalBlink[] components;
-    void DistanceCheck()
+    void ColorCheck()
     {
         if (leftHand.parameters != null)
             o = leftHand.parameters;
         if (rightHand.parameters != null)
             o = rightHand.parameters;
 
-        if (o != null && levelManager.spawnPipeline[o.linkedReleaseId].gameObject != null && !levelManager.spawnPipeline[o.linkedReleaseId].GetComponent<ObjectParameters>().wasReleased)
-        {
-            components = GetComponentsInChildren<FinalBlink>();
-            distance = Vector3.Distance(levelManager.spawnPipeline[o.linkedReleaseId].transform.position, finish.position);
+        
 
-            if (previousID != o.linkedReleaseId)
-                d = (int)distance;
-
-            speed = (2 * d - (int)distance) * 8 / (2 * d);
-            blinkSpeed = Mathf.Clamp(Mathf.Pow(speed, 2), 1, 100);
-
-            previousID = o.linkedReleaseId;
-
-            if (LevelManager.timer >= o.linkedReleaseTimeStart + 0.02f && LevelManager.timer <= o.linkedReleaseTimeEnd - 0.02f && !set)
-            {
-                for (int i = 0; i < components.Length; i++)
-                {
-                    switch (light)
-                    {
-                        case Light.Red:
-                            if (components[i].GetComponent<ArrowLights>().light == Light.Red)
-                                StartCoroutine(components[i].GetComponent<FinalBlink>().Enable());
-                            break;
-
-                        case Light.Green:
-                            if (components[i].GetComponent<ArrowLights>().light == Light.Green)
-                                StartCoroutine(components[i].GetComponent<FinalBlink>().Enable());
-                            break;
-
-                        case Light.Yellow:
-                            if (components[i].GetComponent<ArrowLights>().light == Light.Yellow)
-                                StartCoroutine(components[i].GetComponent<FinalBlink>().Enable());
-                            break;
-
-                        case Light.None:
-                            break;
-                    }
-
-                }
-                set = true;
-            }
-        }
-        else
-        {
-            light = Light.None;
-            set = false;
-        }
-    }
-
-    void ColorCheck()
-    {
-        if (o != null && levelManager.spawnPipeline[o.linkedReleaseId].gameObject != null && !levelManager.spawnPipeline[o.linkedReleaseId].GetComponent<ObjectParameters>().wasReleased && !set)
+        if (o != null && levelManager.spawnPipeline[o.linkedReleaseId].gameObject != null &&
+            !levelManager.spawnPipeline[o.linkedReleaseId].GetComponent<ObjectParameters>().wasReleased
+            && LevelManager.timer >= (o.linkedReleaseTimeStart + o.linkedReleaseTimeEnd) / 2 - 1.11f &&
+            levelManager.spawnPipeline[o.linkedReleaseId].transform.GetChild(0) != null)
         {
             if (o.type == EntityType.RottenApple)
                 light = Light.Yellow;
@@ -120,17 +69,9 @@ public class ArrowManager : MonoBehaviour
             light = Light.None;
     }
 
-    void Update()
-    {
-        if (blinkSpeed <= 0)
-            blinkSpeed = 1;
-
-        Illuminate();
-    }
-
     private void FixedUpdate()
     {
-        DistanceCheck();
+        Illuminate();
         ColorCheck();
     }
 
@@ -144,7 +85,6 @@ public class ArrowManager : MonoBehaviour
                 for (int i = 0; i < lights.Length; i++)
                 {
                     lights[i].myLight = false;
-                    lights[i].NoColor();
                 }
                 break;
 
@@ -197,7 +137,6 @@ public class ArrowManager : MonoBehaviour
         blinkColor = c;
         for (int i = 0; i < lights.Length; i++)
         {
-            lights[i].blinkSpeed = blinkSpeed;
             lights[i].blinkColor = blinkColor;
             if (lights[i].light == light)
                 lights[i].myLight = true;

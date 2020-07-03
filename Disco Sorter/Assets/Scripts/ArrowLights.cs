@@ -8,7 +8,9 @@ public class ArrowLights : MonoBehaviour
     public Material mat;
     [HideInInspector()]
     public Material bloom;
-    bool bloomRunning, colorRunning; public bool topYellow;
+    [HideInInspector()]
+    public bool bloomRunning, colorRunning;
+    public bool topYellow;
     [HideInInspector()]
     public bool myLight;
     public new ArrowManager.Light light;
@@ -23,7 +25,7 @@ public class ArrowLights : MonoBehaviour
     {
         bloom = GetComponent<MeshRenderer>().material;
         NoColor();
-        bloom.SetFloat("_AlphaPower", 30);
+        bloom.SetFloat("_AlphaPower", 100);
         baseLight = light;
     }
 
@@ -32,14 +34,15 @@ public class ArrowLights : MonoBehaviour
         mat.EnableKeyword("_EMISSION");
         mat.SetColor("_EmissionColor", new Color(0.15f, 0.15f, 0.15f, 1));
         mat.SetColor("_Color", new Color(0.15f, 0.15f, 0.15f, 1));
+        bloom.SetFloat("_AlphaPower", 100);
     }
 
     public void Blink(Color c, float s)
     {
         if (bloomRunning == false && colorRunning == false && myLight == true)
         {
-            StartCoroutine(fixedBlinkBloom(c, s));
-            StartCoroutine(fixedBlinkColor(c, s));
+            StartCoroutine(fixedBlinkBloom(c));
+            StartCoroutine(fixedBlinkColor(c));
         }
     }
 
@@ -48,58 +51,34 @@ public class ArrowLights : MonoBehaviour
         Blink(blinkColor, blinkSpeed);
     }
 
-    public IEnumerator fixedBlinkBloom(Color c, float s)
+    public IEnumerator fixedBlinkBloom(Color c)
     {
         bloomRunning = true;
-        float i = 0;
-        bloom.SetFloat("_AlphaPower", 10);
-
-        float multiplier;
-        multiplier = s;
-        if (s >= 15)
-            multiplier = 10;
-
-        for (i = 0; i < 1; i += Mathf.Sin(Time.fixedDeltaTime) * 10 * multiplier)
+        for (float i = 0; i < 1; i += Mathf.Sin(Time.fixedDeltaTime) * 10)
         {
             bloom.SetFloat("_AlphaPower", ClampToAlpha(i));
             yield return new WaitForSeconds(Time.fixedDeltaTime);
         }
 
-        yield return new WaitForSeconds(2 / s);
-        i = 1; 
+        yield return new WaitForSeconds(1);
 
-        
+        bloom.SetFloat("_AlphaPower", 4);
 
-        for (i = 1; i > 0; i -= Mathf.Sin(Time.fixedDeltaTime) * 10 * multiplier)
-        {
-            bloom.SetFloat("_AlphaPower", ClampToAlpha(i));
-            yield return new WaitForSeconds(Time.fixedDeltaTime);
-        }
-        i = 0;
+        yield return new WaitForSeconds(0.2f);
 
         NoColor();
-        bloom.SetFloat("_AlphaPower", 30);
-        yield return new WaitForSeconds(2 / s);
+        bloom.SetFloat("_AlphaPower", 100);
         bloomRunning = false;
     }
 
-    public IEnumerator fixedBlinkColor(Color c, float s)
+    public IEnumerator fixedBlinkColor(Color c)
     {
         colorRunning = true;
-        float i = 1;
 
-        mat.SetColor("_EmissionColor", c * ClampToIntensity(i));
+        mat.SetColor("_EmissionColor", c * 3);
         mat.SetColor("_Color", c);
-        yield return new WaitForSeconds(2 / s);
-
-        i = 0;
-
-        mat.SetColor("_EmissionColor", c * ClampToIntensity(i));
-        mat.SetColor("_Color", c);
-        yield return new WaitForSeconds(Time.fixedDeltaTime);
-
+        yield return new WaitForSeconds(1.31f);
         NoColor();
-        yield return new WaitForSeconds(2 / s);
         colorRunning = false;
     }
 
@@ -110,6 +89,6 @@ public class ArrowLights : MonoBehaviour
 
     public float ClampToAlpha(float y)
     {
-        return 30 - y * 24;
+        return 30 - y * 15;
     }
 }
