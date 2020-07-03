@@ -91,7 +91,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: bc804d308b5af6e488664f8c52c93b7d, type: 2}
+      objectReference: {fileID: 2100000, guid: fb31c58cb33824b419db1dd1b7af5523, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 23cb37ef94ae3fc4ca053795486eb2ef, type: 3}
 --- !u!1001 &5646651117144439375
@@ -176,21 +176,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5861289943795818154, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 5861289943795818154, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 5861289943795818154, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.15
-      objectReference: {fileID: 0}
     - target: {fileID: 4011621206611398281, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
         type: 3}
       propertyPath: dissolveMaterial
@@ -205,6 +190,21 @@ PrefabInstance:
         type: 3}
       propertyPath: dissolve
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5861289943795818154, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5861289943795818154, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5861289943795818154, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 1305053816106069925, guid: 37ce9f027c7d6244b8e878f55bbe63b8,
         type: 3}

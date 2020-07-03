@@ -112,12 +112,26 @@ public class ObjectMethods : MonoBehaviour
                 StartCoroutine(Dissolve());
                 performing = true;
             }
-
         }
     }
 
     public IEnumerator Dissolve()
     {
+        switch (GetComponent<ObjectParameters>().color)
+        {
+            case EntityColour.Red:
+                MainMenuManager.reds--;
+                break;
+
+            case EntityColour.Green:
+                MainMenuManager.greens--;
+                break;
+
+            case EntityColour.None:
+                MainMenuManager.yellows--;
+                break;
+        }
+
         if (!dissolving)
         {
             float x = 0;
@@ -141,8 +155,6 @@ public class ObjectMethods : MonoBehaviour
                 yield return new WaitForSeconds(Time.fixedDeltaTime);
             }
         }
-        yield return new WaitForSeconds(0);
-
     }
 
     public IEnumerator RevertedDissolve()
@@ -155,6 +167,26 @@ public class ObjectMethods : MonoBehaviour
 
             x -= Time.fixedDeltaTime;
             yield return new WaitForSeconds(Time.fixedDeltaTime);
+
+            if(x <= 0.05)
+            {
+                switch (GetComponent<ObjectParameters>().color)
+                {
+                    case EntityColour.Red:
+                        MainMenuManager.reds++;
+                        break;
+
+                    case EntityColour.Green:
+                        MainMenuManager.greens++;
+                        break;
+
+                    case EntityColour.None:
+                        MainMenuManager.yellows++;
+                        break;
+                }
+            }
+            x = -0.1f;
+            StopCoroutine(RevertedDissolve());
         }
     }
 }

@@ -77,16 +77,6 @@ PrefabInstance:
       propertyPath: dissolveMaterial
       value: 
       objectReference: {fileID: 2100000, guid: f4520067db5fc274f9a9545a8fcb1eb9, type: 2}
-    - target: {fileID: 6647476662855390698, guid: 2064db32ea9aa7548844abb94b8a2739,
-        type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4865487080997690639, guid: 2064db32ea9aa7548844abb94b8a2739,
-        type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 2237043681895916773, guid: 2064db32ea9aa7548844abb94b8a2739,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -101,6 +91,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647476662855390698, guid: 2064db32ea9aa7548844abb94b8a2739,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4865487080997690639, guid: 2064db32ea9aa7548844abb94b8a2739,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6609446644638067155, guid: 2064db32ea9aa7548844abb94b8a2739,
         type: 3}

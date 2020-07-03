@@ -1,7 +1,6 @@
 ﻿using OculusSampleFramework;
 using OVR.OpenVR;
 using System.Collections;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using VRTK;
 

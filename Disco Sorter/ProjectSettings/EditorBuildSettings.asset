@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Old scenes/VR Ready.unity
     guid: c3ab3423df336b64eaf0e13de92629de
   - enabled: 1
+    path: Assets/Scenes/3.MENU.unity
+    guid: 45514e7d924c7594eaed9c57ff3b1d7c
+  - enabled: 1
     path: Assets/Scenes/2.GAME.unity
     guid: af1a704af7026984ca1ccf7884603714
   m_configObjects: {}
