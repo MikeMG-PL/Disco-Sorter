@@ -44,7 +44,7 @@ public class ArrowManager : MonoBehaviour
         if (o != null && levelManager.spawnPipeline[o.linkedReleaseId].gameObject != null &&
             !levelManager.spawnPipeline[o.linkedReleaseId].GetComponent<ObjectParameters>().wasReleased
             && LevelManager.timer >= (o.linkedReleaseTimeStart + o.linkedReleaseTimeEnd) / 2 - 1.11f &&
-            levelManager.spawnPipeline[o.linkedReleaseId].transform.GetChild(0) != null)
+            levelManager.spawnPipeline[o.linkedReleaseId].transform.childCount > 0)
         {
             if (o.type == EntityType.RottenApple)
                 light = Light.Yellow;

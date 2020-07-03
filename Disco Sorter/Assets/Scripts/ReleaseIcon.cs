@@ -57,7 +57,7 @@ public class ReleaseIcon : MonoBehaviour
         if (spriteRenderer != null)
         {
             disabled = true;
-            Destroy(transform.parent.gameObject);
+            Destroy(gameObject);
             StopCoroutine(Disable());
         }
         
@@ -99,7 +99,7 @@ public class ReleaseIcon : MonoBehaviour
 
         if (childRenderer != null)
         {
-            Destroy(transform.parent.gameObject);
+            Destroy(gameObject);
             StopCoroutine(DisableFog());
         }
     }
