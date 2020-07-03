@@ -58,16 +58,20 @@ public class MainMenuManager : MonoBehaviour
         }
     }
 
-    Material r, g, y;
+    Material r, g, y; GameObject ro, go, yo;
     void SpawnApples()
     {
         r = red.GetComponent<ObjectMethods>().dissolveMaterial;
         g = green.GetComponent<ObjectMethods>().dissolveMaterial;
         y = yellow.GetComponent<ObjectMethods>().dissolveMaterial;
 
-        Instantiate(red, redPos.position, Quaternion.identity);
-        Instantiate(green, greenPos.position, Quaternion.identity);
-        Instantiate(yellow, yellowPos.position, Quaternion.identity);
+        ro = Instantiate(red, redPos.position, Quaternion.identity);
+        go = Instantiate(green, greenPos.position, Quaternion.identity);
+        yo = Instantiate(yellow, yellowPos.position, Quaternion.identity);
+
+        ro.GetComponent<ObjectParameters>().color = EntityColour.Red;
+        go.GetComponent<ObjectParameters>().color = EntityColour.Green;
+        yo.GetComponent<ObjectParameters>().color = EntityColour.None;
 
         red.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = r;
         green.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = g;

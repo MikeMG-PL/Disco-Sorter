@@ -53,12 +53,15 @@ public class ArrowLights : MonoBehaviour
 
     public IEnumerator fixedBlinkBloom(Color c)
     {
+        float timerek = 0;
         bloomRunning = true;
         for (float i = 0; i < 1; i += Mathf.Sin(Time.fixedDeltaTime) * 10)
         {
+            timerek += Time.fixedDeltaTime;
             bloom.SetFloat("_AlphaPower", ClampToAlpha(i));
             yield return new WaitForSeconds(Time.fixedDeltaTime);
         }
+        Debug.Log(timerek);
 
         yield return new WaitForSeconds(1);
 
@@ -68,6 +71,10 @@ public class ArrowLights : MonoBehaviour
 
         NoColor();
         bloom.SetFloat("_AlphaPower", 100);
+
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "3.MENU")
+            yield return new WaitForSeconds(1);
+
         bloomRunning = false;
     }
 
@@ -79,6 +86,10 @@ public class ArrowLights : MonoBehaviour
         mat.SetColor("_Color", c);
         yield return new WaitForSeconds(1.31f);
         NoColor();
+
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "3.MENU")
+            yield return new WaitForSeconds(1);
+
         colorRunning = false;
     }
 
