@@ -104,7 +104,12 @@ public class PointManager : MonoBehaviour
     public void FailLevel()
     {
         if (godMode == false && levelFailed == false)
-        {
+        {   
+            for(int i = 0; i < levelManager.spawnPipeline.Count; i++)
+            {
+                if (levelManager.spawnPipeline[i] != null)
+                    levelManager.spawnPipeline[i].GetComponent<ObjectMethods>().dissolve = true;
+            }
             levelFailed = true;
             StartCoroutine(FailEffect());
         }
@@ -134,7 +139,7 @@ public class PointManager : MonoBehaviour
     {
         for (int i = 0; i < levelManager.spawnPipeline.Count; i++)
         {
-            if (levelManager.spawnPipeline[i] != null)
+            if (levelManager.spawnPipeline[i] != null && levelFailed)
             {
 
                 if (levelManager.spawnPipeline[i].CompareTag("DiscoBall") && levelManager.spawnPipeline[i].activeSelf)

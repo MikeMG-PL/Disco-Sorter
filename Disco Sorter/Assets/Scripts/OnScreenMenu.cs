@@ -83,6 +83,7 @@ public class OnScreenMenu : MonoBehaviour
 
     IEnumerator CreditsScreen()
     {
+        yield return new WaitForSeconds(3);
         defaultText.gameObject.SetActive(true);
         SetAlpha(defaultText.material, 0);
 
@@ -126,6 +127,7 @@ public class OnScreenMenu : MonoBehaviour
 
     IEnumerator SettingsScreen()
     {
+        yield return new WaitForSeconds(3);
         defaultText.gameObject.SetActive(true);
         SetAlpha(defaultText.material, 0);
 

@@ -53,15 +53,12 @@ public class ArrowLights : MonoBehaviour
 
     public IEnumerator fixedBlinkBloom(Color c)
     {
-        float timerek = 0;
         bloomRunning = true;
         for (float i = 0; i < 1; i += Mathf.Sin(Time.fixedDeltaTime) * 10)
         {
-            timerek += Time.fixedDeltaTime;
             bloom.SetFloat("_AlphaPower", ClampToAlpha(i));
             yield return new WaitForSeconds(Time.fixedDeltaTime);
         }
-        Debug.Log(timerek);
 
         yield return new WaitForSeconds(1);
 
