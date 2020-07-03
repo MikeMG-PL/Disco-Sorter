@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using OVR;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public enum MenuSide { Main, Credits, Settings};
@@ -7,6 +8,7 @@ public class MenuBox : MonoBehaviour
 {
     public MenuSide boxSide;
     public OnScreenMenu CreditScreen, SettingsScreen;
+    public FadeScreen screen;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -22,7 +24,7 @@ public class MenuBox : MonoBehaviour
 
     private void Play()
     {
-        SceneManager.LoadScene("2.GAME");
+        StartCoroutine(screen.FadeInAndStartGame());
     }
 
     private void Credits()
