@@ -62,7 +62,7 @@ public class ArrowLights : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
-        bloom.SetFloat("_AlphaPower", 4);
+        bloom.SetFloat("_AlphaPower", 8);
 
         yield return new WaitForSeconds(0.2f);
 
