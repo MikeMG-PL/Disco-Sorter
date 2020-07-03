@@ -6,6 +6,7 @@ public class ObjectMethods : MonoBehaviour
 {
     public GameObject discoFractured;
     public Material dissolveMaterial;
+    public Material mainMaterial;
     public bool dissolve;
     bool dissolving, isChecked, performing, thisIsMenu;
     GameObject g;
@@ -14,6 +15,8 @@ public class ObjectMethods : MonoBehaviour
 
     void Start()
     {
+        if (!transform.CompareTag("DiscoBall"))
+            transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = mainMaterial;
 
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "3.MENU") thisIsMenu = true;
         else pointManager = GameObject.FindGameObjectWithTag("PointManager").GetComponent<PointManager>();
@@ -32,6 +35,9 @@ public class ObjectMethods : MonoBehaviour
 
     void Update()
     {
+        if (!transform.CompareTag("DiscoBall") && !dissolve)
+            transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = mainMaterial;
+
         if (GetComponent<ObjectParameters>().wasGrabbed)
             dissolve = true;
     }
@@ -168,7 +174,7 @@ public class ObjectMethods : MonoBehaviour
             x -= Time.fixedDeltaTime;
             yield return new WaitForSeconds(Time.fixedDeltaTime);
 
-            if(x <= 0.05)
+            if (x <= 0.05)
             {
                 switch (GetComponent<ObjectParameters>().color)
                 {
