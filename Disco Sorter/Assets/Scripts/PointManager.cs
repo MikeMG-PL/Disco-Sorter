@@ -103,12 +103,11 @@ public class PointManager : MonoBehaviour
 
     public void FailLevel()
     {
-        if (godMode == false)
+        if (godMode == false && levelFailed == false)
         {
             levelFailed = true;
             StartCoroutine(FailEffect());
         }
-
     }
 
     public void DisplayPoints()
@@ -140,7 +139,7 @@ public class PointManager : MonoBehaviour
 
                 if (levelManager.spawnPipeline[i].CompareTag("DiscoBall") && levelManager.spawnPipeline[i].activeSelf)
                     levelManager.spawnPipeline[i].GetComponent<ObjectMethods>().DestroyDisco();
-                else
+                else if(levelManager.spawnPipeline[i].transform.childCount > 0)
                 {
                     levelManager.spawnPipeline[i].transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material =
                         levelManager.spawnPipeline[i].GetComponent<ObjectMethods>().dissolveMaterial;
@@ -164,8 +163,8 @@ public class PointManager : MonoBehaviour
                 stopListening = true;
             }
 
-            Time.timeScale -= Time.fixedDeltaTime / 2;
-            levelManager.GetComponent<AudioSource>().pitch -= Time.fixedDeltaTime / 2;
+            Time.timeScale -= Time.fixedDeltaTime;
+            levelManager.GetComponent<AudioSource>().pitch -= Time.fixedDeltaTime;
             yield return new WaitForSeconds(Time.fixedDeltaTime);
         }
         Time.timeScale = 0;
