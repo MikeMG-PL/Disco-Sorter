@@ -37,23 +37,8 @@ public class ArrowLights : MonoBehaviour
         bloom.SetFloat("_AlphaPower", 100);
     }
 
-    public void Blink(Color c, float s)
-    {
-        if (bloomRunning == false && colorRunning == false && myLight == true)
-        {
-            StartCoroutine(fixedBlinkBloom(c));
-            StartCoroutine(fixedBlinkColor(c));
-        }
-    }
-
-    private void Update()
-    {
-        Blink(blinkColor, blinkSpeed);
-    }
-
     public IEnumerator fixedBlinkBloom(Color c)
     {
-        bloomRunning = true;
         for (float i = 0; i < 1; i += Mathf.Sin(Time.fixedDeltaTime) * 10)
         {
             bloom.SetFloat("_AlphaPower", ClampToAlpha(i));
@@ -72,13 +57,11 @@ public class ArrowLights : MonoBehaviour
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "3.MENU")
             yield return new WaitForSeconds(1);
 
-        bloomRunning = false;
+        transform.parent.GetComponentInParent<ArrowManager>().isDone = false;
     }
 
     public IEnumerator fixedBlinkColor(Color c)
     {
-        colorRunning = true;
-
         mat.SetColor("_EmissionColor", c * 3);
         mat.SetColor("_Color", c);
         yield return new WaitForSeconds(1.31f);
@@ -86,8 +69,6 @@ public class ArrowLights : MonoBehaviour
 
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "3.MENU")
             yield return new WaitForSeconds(1);
-
-        colorRunning = false;
     }
 
     public float ClampToIntensity(float y)

@@ -51,5 +51,8 @@ MonoBehaviour:
   wrongBoxPunishment: -10
   noBoxPunishment: -5
   wrongActionsNeededToFail: 5
-  correctBoxPoints: 7
+  correctBoxPoints: 5
   onScreen: {fileID: 0}
+  levelFailed: 0
+  levelManager: {fileID: 0}
+  godMode: 0

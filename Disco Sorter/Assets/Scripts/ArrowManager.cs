@@ -4,60 +4,65 @@ using UnityEngine;
 
 public class ArrowManager : MonoBehaviour
 {
+    public List<ArrowLights> redLights, greenLights, yellowLights;
+    enum Hand { Left, Right };
     public LevelManager levelManager;
+    public HandEvents leftHand, rightHand;
+    ObjectParameters leftParameters, rightParameters;
     [HideInInspector()]
-    public Color blinkColor;
-    ArrowLights[] lights;
-    TopYellowArrow[] topYellows;
-    bool loopDone, illuminate = false; bool set;
-    int d, previousID;
-    [HideInInspector()]
-    public bool isChecked;
+    public bool isDone;
     public enum Light { None, Red, Green, Yellow }; public new Light light;
     ///////////////////////////////////////////////////////////////////////
-    public HandEvents leftHand, rightHand;
 
-    public Queue<GameObject> releasePipeline; public Transform finish;
-
-    void Start()
-    {
-        light = Light.None;
-        releasePipeline = new Queue<GameObject>();
-
-        lights = GetComponentsInChildren<ArrowLights>();
-        for (int i = 0; i < lights.Length; i++)
-        {
-            lights[i].blinkColor = blinkColor;
-        }
-    }
-
-    ObjectParameters o;
-    void ColorCheck()
+    void Check()
     {
         if (leftHand.parameters != null)
-            o = leftHand.parameters;
-        if (rightHand.parameters != null)
-            o = rightHand.parameters;
+            leftParameters = leftHand.parameters;
+        else leftParameters = null;
 
-        
+        if (rightHand.parameters != null)
+            rightParameters = rightHand.parameters;
+        else rightParameters = null;
+    }
+
+    void HandCheck(Hand h)
+    {
+        ObjectParameters o;
+
+        switch (h)
+        {
+            case Hand.Left:
+                o = leftParameters;
+                break;
+            case Hand.Right:
+                o = rightParameters;
+                break;
+            default:
+                o = leftParameters;
+                break;
+        }
 
         if (o != null && levelManager.spawnPipeline[o.linkedReleaseId].gameObject != null &&
-            !levelManager.spawnPipeline[o.linkedReleaseId].GetComponent<ObjectParameters>().wasReleased
-            && LevelManager.timer >= (o.linkedReleaseTimeStart + o.linkedReleaseTimeEnd) / 2 - 1.11f &&
-            levelManager.spawnPipeline[o.linkedReleaseId].transform.childCount > 0)
+                !levelManager.spawnPipeline[o.linkedReleaseId].GetComponent<ObjectParameters>().wasReleased
+                && LevelManager.timer >= (o.linkedReleaseTimeStart + o.linkedReleaseTimeEnd) / 2 - 1.11f &&
+                levelManager.spawnPipeline[o.linkedReleaseId].transform.childCount > 0 && !isDone)
         {
+            isDone = true;
+
             if (o.type == EntityType.RottenApple)
-                light = Light.Yellow;
+            {
+                Enlighten(Light.Yellow);
+            }
             if (o.type == EntityType.Apple)
             {
                 switch (o.color)
                 {
                     case EntityColour.Green:
-                        light = Light.Green;
+                        Enlighten(Light.Green);
                         break;
 
                     case EntityColour.Red:
-                        light = Light.Red;
+                        Enlighten(Light.Red);
                         break;
 
                     default:
@@ -65,83 +70,48 @@ public class ArrowManager : MonoBehaviour
                 }
             }
         }
-        else
-            light = Light.None;
+    }
+
+    void Enlighten(Light l)
+    {
+        List<ArrowLights> list;
+        Color color;
+
+        switch (l)
+        {
+            case Light.Red:
+                list = redLights;
+                color = Color.red;
+                break;
+
+            case Light.Green:
+                list = greenLights;
+                color = Color.green;
+                break;
+
+            case Light.Yellow:
+                list = yellowLights;
+                color = Color.yellow;
+                break;
+
+            default:
+                list = null;
+                color = Color.white;
+                break;
+        }
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            Debug.Log("Cor");
+            StartCoroutine(list[i].fixedBlinkBloom(color));
+            StartCoroutine(list[i].fixedBlinkColor(color));
+        }
     }
 
     private void FixedUpdate()
     {
-        Illuminate();
-        ColorCheck();
-    }
-
-    void Illuminate()
-    {
-        topYellows = GetComponentsInChildren<TopYellowArrow>();
-        switch (light)
-        {
-            case Light.None:
-
-                for (int i = 0; i < lights.Length; i++)
-                {
-                    lights[i].myLight = false;
-                }
-                break;
-
-            case Light.Red:
-                for (int i = 0; i < topYellows.Length; i++)
-                {
-                    SetYellow(false, i);
-                }
-                Set(Color.red);
-                break;
-
-            case Light.Green:
-                for (int i = 0; i < topYellows.Length; i++)
-                {
-                    SetYellow(false, i);
-                }
-                Set(Color.green);
-                break;
-
-            case Light.Yellow:
-
-                for (int i = 0; i < topYellows.Length; i++)
-                {
-                    SetYellow(true, i);
-                }
-                Set(Color.yellow);
-                break;
-        }
-
-    }
-
-
-
-    void SetYellow(bool isYellow, int iterator)
-    {
-        if (topYellows[iterator].gameObject.GetComponent<ArrowLights>().topYellow)
-        {
-            topYellows[iterator].transform.parent.GetComponent<MeshRenderer>().enabled = !isYellow;
-            topYellows[iterator].GetComponent<MeshRenderer>().enabled = !isYellow;
-        }
-        else
-        {
-            topYellows[iterator].transform.parent.GetComponent<MeshRenderer>().enabled = isYellow;
-            topYellows[iterator].GetComponent<MeshRenderer>().enabled = isYellow;
-        }
-    }
-
-    void Set(Color c)
-    {
-        blinkColor = c;
-        for (int i = 0; i < lights.Length; i++)
-        {
-            lights[i].blinkColor = blinkColor;
-            if (lights[i].light == light)
-                lights[i].myLight = true;
-            else
-                lights[i].myLight = false;
-        }
+        Check();
+        HandCheck(Hand.Left);
+        HandCheck(Hand.Right);
     }
 }

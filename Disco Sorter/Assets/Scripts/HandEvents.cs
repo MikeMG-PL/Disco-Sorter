@@ -71,6 +71,7 @@ public class HandEvents : MonoBehaviour
 
         parameters.wasReleased = true;
         holding = false;
+        parameters = null;
     }
 
     public void OnDiscoHit(ObjectParameters parameters)
