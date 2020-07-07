@@ -26,7 +26,7 @@ public class ArrowLights : MonoBehaviour
         bloom.SetFloat("_AlphaPower", 100);
     }
 
-    public IEnumerator fixedBlinkBloom(ArrowManager.Light l)
+    public IEnumerator fixedBlinkBloom(ArrowManager.Light l, ArrowManager.Hand hand)
     {
         if (l == ArrowManager.Light.Yellow && topYellow)
         {
@@ -57,10 +57,19 @@ public class ArrowLights : MonoBehaviour
 
         if (l == ArrowManager.Light.Yellow && topYellow)
             bloom = bloomBuffer;
-        transform.parent.GetComponentInParent<ArrowManager>().isDone = false;
+
+        switch(hand)
+        {
+            case ArrowManager.Hand.Left:
+                transform.parent.GetComponentInParent<ArrowManager>().isDoneLeft = false;
+                break;
+            case ArrowManager.Hand.Right:
+                transform.parent.GetComponentInParent<ArrowManager>().isDoneRight = false;
+                break;
+        }
     }
 
-    public IEnumerator fixedBlinkColor(ArrowManager.Light l)
+    public IEnumerator fixedBlinkColor(ArrowManager.Light l, ArrowManager.Hand hand)
     {
         matBuffer = mat;
         Color c;

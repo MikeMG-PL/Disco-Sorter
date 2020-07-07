@@ -5,7 +5,7 @@ using UnityEngine;
 public class ArrowManager : MonoBehaviour
 {
     public List<ArrowLights> redLights, greenLights, yellowLights;
-    enum Hand { Left, Right };
+    public enum Hand { Left, Right };
     [Header("-----------")]
     public LevelManager levelManager;
     public HandEvents leftHand, rightHand;
@@ -13,7 +13,7 @@ public class ArrowManager : MonoBehaviour
     ObjectParameters leftParameters, rightParameters;
 
     [HideInInspector()]
-    public bool isDone;
+    public bool isDoneLeft, isDoneRight;
     public enum Light { None, Red, Green, Yellow };
     ///////////////////////////////////////////////////////////////////////
 
@@ -30,52 +30,59 @@ public class ArrowManager : MonoBehaviour
 
     void HandCheck(Hand h)
     {
-        ObjectParameters o;
 
         switch (h)
         {
             case Hand.Left:
-                o = leftParameters;
+                if (leftParameters != null && levelManager.spawnPipeline[leftParameters.linkedReleaseId].gameObject != null &&
+                !levelManager.spawnPipeline[leftParameters.linkedReleaseId].GetComponent<ObjectParameters>().wasReleased
+                && LevelManager.timer >= (leftParameters.linkedReleaseTimeStart + leftParameters.linkedReleaseTimeEnd) / 2 - 1.11f &&
+                levelManager.spawnPipeline[leftParameters.linkedReleaseId].transform.childCount > 0 && !isDoneLeft)
+                {
+                    isDoneLeft = true;
+                    Proceed(leftParameters, Hand.Left);
+                }
                 break;
             case Hand.Right:
-                o = rightParameters;
+                if (rightParameters != null && levelManager.spawnPipeline[rightParameters.linkedReleaseId].gameObject != null &&
+                !levelManager.spawnPipeline[rightParameters.linkedReleaseId].GetComponent<ObjectParameters>().wasReleased
+                && LevelManager.timer >= (rightParameters.linkedReleaseTimeStart + rightParameters.linkedReleaseTimeEnd) / 2 - 1.11f &&
+                levelManager.spawnPipeline[rightParameters.linkedReleaseId].transform.childCount > 0 && !isDoneRight)
+                {
+                    isDoneRight = true;
+                    Proceed(rightParameters, Hand.Right);
+                }
                 break;
             default:
-                o = leftParameters;
                 break;
         }
+    }
 
-        if (o != null && levelManager.spawnPipeline[o.linkedReleaseId].gameObject != null &&
-                !levelManager.spawnPipeline[o.linkedReleaseId].GetComponent<ObjectParameters>().wasReleased
-                && LevelManager.timer >= (o.linkedReleaseTimeStart + o.linkedReleaseTimeEnd) / 2 - 1.11f &&
-                levelManager.spawnPipeline[o.linkedReleaseId].transform.childCount > 0 && !isDone)
+    void Proceed(ObjectParameters o, Hand hand)
+    {
+        if (o.type == EntityType.RottenApple)
         {
-            isDone = true;
-
-            if (o.type == EntityType.RottenApple)
+            Enlighten(Light.Yellow, hand);
+        }
+        if (o.type == EntityType.Apple)
+        {
+            switch (o.color)
             {
-                Enlighten(Light.Yellow);
-            }
-            if (o.type == EntityType.Apple)
-            {
-                switch (o.color)
-                {
-                    case EntityColour.Green:
-                        Enlighten(Light.Green);
-                        break;
+                case EntityColour.Green:
+                    Enlighten(Light.Green, hand);
+                    break;
 
-                    case EntityColour.Red:
-                        Enlighten(Light.Red);
-                        break;
+                case EntityColour.Red:
+                    Enlighten(Light.Red, hand);
+                    break;
 
-                    default:
-                        break;
-                }
+                default:
+                    break;
             }
         }
     }
 
-    void Enlighten(Light l)
+    void Enlighten(Light l, Hand hand)
     {
         List<ArrowLights> list;
 
@@ -100,8 +107,8 @@ public class ArrowManager : MonoBehaviour
 
         for (int i = 0; i < list.Count; i++)
         {
-            StartCoroutine(list[i].fixedBlinkBloom(l));
-            StartCoroutine(list[i].fixedBlinkColor(l));
+            StartCoroutine(list[i].fixedBlinkBloom(l, hand));
+            StartCoroutine(list[i].fixedBlinkColor(l, hand));
         }
     }
 
