@@ -14,13 +14,15 @@ public class HandEvents : MonoBehaviour
     [Header("Hands stuff")]
     public Hand handSide;
     public GameObject discoFractured;
+    public bool holding;
+
+    [HideInInspector()]
+    public ObjectParameters parameters;
 
     private Player player;
     private PlayerActions playerActions;
     private LevelManager levelManager;
-    [HideInInspector()]
-    public ObjectParameters parameters; public bool holding;
-
+    private bool thisIsGame;
 
     private void Start()
     {
@@ -28,8 +30,8 @@ public class HandEvents : MonoBehaviour
 
         player = GetComponentInParent<Player>();
         playerActions = GetComponentInParent<PlayerActions>();
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "3.MENU")
-            levelManager = player.levelManagerObject.GetComponent<LevelManager>();
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "2.GAME") thisIsGame = true;
+        if (thisIsGame) levelManager = player.levelManagerObject.GetComponent<LevelManager>();
     }
 
     private void OnEnable()
@@ -46,7 +48,7 @@ public class HandEvents : MonoBehaviour
         if (handSide == Hand.Right) player.rightHandGrabbedObject = e.target;
         else player.leftHandGrabbedObject = e.target;
 
-        if (!parameters.wasGrabbed && UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "3.MENU")
+        if (!parameters.wasGrabbed && thisIsGame)
         {
             playerActions.CheckActionTime(parameters, true);
 
@@ -66,7 +68,7 @@ public class HandEvents : MonoBehaviour
         if (handSide == Hand.Right) player.rightHandGrabbedObject = null;
         else player.leftHandGrabbedObject = null;
 
-        if (!parameters.wasReleased && UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "3.MENU")
+        if (!parameters.wasReleased && thisIsGame)
             playerActions.CheckActionTime(parameters, false);
 
         parameters.wasReleased = true;
@@ -76,7 +78,7 @@ public class HandEvents : MonoBehaviour
 
     public void OnDiscoHit(ObjectParameters parameters)
     {
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "3.MENU")
+        if (thisIsGame)
             playerActions.CheckActionTime(parameters, true);
         GameObject f = Instantiate(discoFractured, transform.position, Quaternion.identity);
         f.GetComponent<AudioSource>().Play();

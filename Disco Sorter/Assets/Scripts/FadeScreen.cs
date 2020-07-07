@@ -7,6 +7,7 @@ using VRTK;
 public class FadeScreen : MonoBehaviour
 {
     public VRTK_SDKManager SDKManager;
+
     private VRTK_SDKSetup SDKSetup;
     private bool thisIsGame, wasFaded;
 

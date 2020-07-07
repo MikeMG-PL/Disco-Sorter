@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Box : MonoBehaviour
+public class SortingBox : MonoBehaviour
 {
     // Kolider w pudle, do którego mamy wrzucać jabłka, sprawdza czy zostały spełnione wszystkie warunki i czy możemy dostać za jabłko punkty
 
-    public EntityColour color; SFXManager sfx;
-    PointManager pointManager;
+    public EntityColour color;
+    public PointManager pointManager;
+
+    private SFXManager sfx;
 
     void Start()
     {
-        pointManager = GameObject.FindGameObjectWithTag("PointManager").GetComponent<PointManager>();
         sfx = GetComponent<SFXManager>();
     }
 

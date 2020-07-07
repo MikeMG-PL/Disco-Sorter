@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AutoColor : MonoBehaviour
 {
+    // TODO Jeśli nie chcemy aby kolory były ustawiane dynamiczne podczas sceny, to lepiej ustawić je ręcznie
+
     public enum LampColor { blue, green, pink, red, white, yellow };
 
     public LampColor color;
@@ -30,13 +32,10 @@ public class AutoColor : MonoBehaviour
                 Debug.LogError("There is an object in the scene which has neither \"Maluch\" nor \"Lightbar\" tag.");
                 break;
         }
-    }
 
-    void Update()
-    {
         if (thisIsMaluch)
             SetColorMaluch(color);
-        else
+        else if (thisIsLightbar)
             SetColorLightbar(color);
     }
 

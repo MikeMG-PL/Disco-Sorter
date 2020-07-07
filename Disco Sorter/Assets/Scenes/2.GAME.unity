@@ -2743,7 +2743,8 @@ MonoBehaviour:
   levelManager: {fileID: 238941089}
   leftHand: {fileID: 441682201}
   rightHand: {fileID: 508613671}
-  isDone: 0
+  isDoneLeft: 0
+  isDoneRight: 0
 --- !u!1001 &183399156
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9364,11 +9365,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b51ec42fad8d5f4b9786ed40e6c6328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  handSide: 1
   discoFractured: {fileID: 3842982347706455850, guid: a97cc9522ba619647bfb40ae26b7a091,
     type: 3}
-  parameters: {fileID: 0}
+  handSide: 1
   holding: 0
+  parameters: {fileID: 0}
 --- !u!1001 &446839988
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14469,11 +14470,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b51ec42fad8d5f4b9786ed40e6c6328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  handSide: 0
   discoFractured: {fileID: 3842982347706455850, guid: a97cc9522ba619647bfb40ae26b7a091,
     type: 3}
-  parameters: {fileID: 0}
+  handSide: 0
   holding: 0
+  parameters: {fileID: 0}
 --- !u!1001 &534969674
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16954,6 +16955,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: 2
+  pointManager: {fileID: 6376705824267565053}
 --- !u!114 &795159142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23830,6 +23832,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: 0
+  pointManager: {fileID: 6376705824267565053}
 --- !u!65 &1345061085
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26413,6 +26416,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: 1
+  pointManager: {fileID: 6376705824267565053}
 --- !u!82 &1582770362
 AudioSource:
   m_ObjectHideFlags: 0
@@ -33669,6 +33673,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: PointManager
       objectReference: {fileID: 0}
+    - target: {fileID: 467894926629826607, guid: 53e7bbdfe4c885f46b1228d118c7e7d9,
+        type: 3}
+      propertyPath: onScreen
+      value: 
+      objectReference: {fileID: 1649572950}
+    - target: {fileID: 467894926629826607, guid: 53e7bbdfe4c885f46b1228d118c7e7d9,
+        type: 3}
+      propertyPath: levelManager
+      value: 
+      objectReference: {fileID: 238941089}
+    - target: {fileID: 467894926629826607, guid: 53e7bbdfe4c885f46b1228d118c7e7d9,
+        type: 3}
+      propertyPath: godMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7140892635860847634, guid: 53e7bbdfe4c885f46b1228d118c7e7d9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -33724,23 +33743,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 467894926629826607, guid: 53e7bbdfe4c885f46b1228d118c7e7d9,
-        type: 3}
-      propertyPath: onScreen
-      value: 
-      objectReference: {fileID: 1649572950}
-    - target: {fileID: 467894926629826607, guid: 53e7bbdfe4c885f46b1228d118c7e7d9,
-        type: 3}
-      propertyPath: levelManager
-      value: 
-      objectReference: {fileID: 238941089}
-    - target: {fileID: 467894926629826607, guid: 53e7bbdfe4c885f46b1228d118c7e7d9,
-        type: 3}
-      propertyPath: godMode
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53e7bbdfe4c885f46b1228d118c7e7d9, type: 3}
+--- !u!114 &6376705824267565053 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 467894926629826607, guid: 53e7bbdfe4c885f46b1228d118c7e7d9,
+    type: 3}
+  m_PrefabInstance: {fileID: 6376705824267565052}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46f40492e2cb3df489c5c8b2e795f6ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7502718996694812831
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33903,5 +33919,10 @@ PrefabInstance:
       propertyPath: color
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4275967844365662916, guid: f864918e9954ee74aaa4c48023f17ea2,
+        type: 3}
+      propertyPath: pointManager
+      value: 
+      objectReference: {fileID: 6376705824267565053}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f864918e9954ee74aaa4c48023f17ea2, type: 3}
