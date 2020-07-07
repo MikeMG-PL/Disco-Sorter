@@ -14,7 +14,7 @@ public class ArrowManager : MonoBehaviour
 
     [HideInInspector()]
     public bool isDoneLeft, isDoneRight;
-    public enum Light { None, Red, Green, Yellow };
+    public enum Light { Red, Green, Yellow, None };
     ///////////////////////////////////////////////////////////////////////
 
     void Check()
@@ -78,6 +78,10 @@ public class ArrowManager : MonoBehaviour
 
                 case EntityColour.Red:
                     Enlighten(Light.Red, hand, ttb);
+                    break;
+
+                case EntityColour.None:
+                    Enlighten(Light.Yellow, hand, ttb);
                     break;
 
                 default:

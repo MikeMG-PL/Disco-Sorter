@@ -6,12 +6,15 @@ public class MainMenuManager : MonoBehaviour
 {
     public static int reds = 0, greens = 0, yellows = 0;
 
+    int id = -1;
     public List<ArrowLights> lights;
     public HandEvents left, right;
     [Header("----------------------")]
     public Transform redPos, greenPos, yellowPos;
     [Header("----------------------")]
     public GameObject red, green, yellow;
+
+    bool performingLeft, performingRight;
 
     void Start()
     {
@@ -77,15 +80,62 @@ public class MainMenuManager : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(greens);
         Count();
-        CheckIfGrabbed(left);
-        CheckIfGrabbed(right);
+        if (!performingLeft)
+            CheckIfGrabbed(left);
+        if (!performingRight)
+            CheckIfGrabbed(right);
+    }
+
+    void Coroutines(HandEvents h)
+    {
+        StartCoroutine(lights[id].fixedBlinkBloom((ArrowManager.Light)id, (ArrowManager.Hand)h.handSide, 1));
+        StartCoroutine(lights[id].fixedBlinkColor((ArrowManager.Light)id, (ArrowManager.Hand)h.handSide, 1));
+        StartCoroutine(Wait(2, h));
     }
 
     void CheckIfGrabbed(HandEvents h)
     {
+        if (h.parameters != null)
+        {
+            if (h.handSide == Hand.Left)
+                performingLeft = true;
+            else
+                performingRight = true;
 
+            switch (h.parameters.color)
+            {
+                case EntityColour.Red:
+                    id = 0;
+                    Coroutines(h);
+                    break;
+
+                case EntityColour.Green:
+                    id = 1;
+                    Coroutines(h);
+                    break;
+
+                case EntityColour.None:
+                    id = 2;
+                    Coroutines(h);
+                    break;
+            }
+
+            //if (h.handSide == Hand.Left)
+            //performingLeft = false;
+            //else
+            //performingRight = false;
+        }
+    }
+
+    public IEnumerator Wait(float t, HandEvents h)
+    {
+        yield return new WaitForSeconds(t);
+
+        if (h.handSide == Hand.Left)
+            performingLeft = false;
+        else
+            performingRight = false;
     }
 
     Material r, g, y; GameObject ro, go, yo;

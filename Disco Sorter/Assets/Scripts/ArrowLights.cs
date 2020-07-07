@@ -56,16 +56,19 @@ public class ArrowLights : MonoBehaviour
 
         if (l == ArrowManager.Light.Yellow && topYellow)
             bloom = bloomBuffer;
-
-        switch(hand)
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "3.MENU")
         {
-            case ArrowManager.Hand.Left:
-                transform.parent.GetComponentInParent<ArrowManager>().isDoneLeft = false;
-                break;
-            case ArrowManager.Hand.Right:
-                transform.parent.GetComponentInParent<ArrowManager>().isDoneRight = false;
-                break;
+            switch (hand)
+            {
+                case ArrowManager.Hand.Left:
+                    transform.parent.GetComponentInParent<ArrowManager>().isDoneLeft = false;
+                    break;
+                case ArrowManager.Hand.Right:
+                    transform.parent.GetComponentInParent<ArrowManager>().isDoneRight = false;
+                    break;
+            }
         }
+
     }
 
     public IEnumerator fixedBlinkColor(ArrowManager.Light l, ArrowManager.Hand hand, float ttb)
@@ -89,7 +92,7 @@ public class ArrowLights : MonoBehaviour
                 break;
 
             default:
-                c = Color.white;
+                c = Color.red;
                 break;
         }
 
