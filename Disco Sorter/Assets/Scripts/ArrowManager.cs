@@ -6,12 +6,15 @@ public class ArrowManager : MonoBehaviour
 {
     public List<ArrowLights> redLights, greenLights, yellowLights;
     enum Hand { Left, Right };
+    [Header("-----------")]
     public LevelManager levelManager;
     public HandEvents leftHand, rightHand;
+    
     ObjectParameters leftParameters, rightParameters;
+
     [HideInInspector()]
     public bool isDone;
-    public enum Light { None, Red, Green, Yellow }; public new Light light;
+    public enum Light { None, Red, Green, Yellow };
     ///////////////////////////////////////////////////////////////////////
 
     void Check()
@@ -75,36 +78,30 @@ public class ArrowManager : MonoBehaviour
     void Enlighten(Light l)
     {
         List<ArrowLights> list;
-        Color color;
 
         switch (l)
         {
             case Light.Red:
                 list = redLights;
-                color = Color.red;
                 break;
 
             case Light.Green:
                 list = greenLights;
-                color = Color.green;
                 break;
 
             case Light.Yellow:
                 list = yellowLights;
-                color = Color.yellow;
                 break;
 
             default:
                 list = null;
-                color = Color.white;
                 break;
         }
 
         for (int i = 0; i < list.Count; i++)
         {
-            Debug.Log("Cor");
-            StartCoroutine(list[i].fixedBlinkBloom(color));
-            StartCoroutine(list[i].fixedBlinkColor(color));
+            StartCoroutine(list[i].fixedBlinkBloom(l));
+            StartCoroutine(list[i].fixedBlinkColor(l));
         }
     }
 

@@ -106,18 +106,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4984866336a3ba94a91a907b37f6c2e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  materials:
-  - {fileID: 2100000, guid: e99fd6538bb1e284ba4df25d4b804b59, type: 2}
-  - {fileID: 2100000, guid: 81704a084a4574a4ba6aca61aca043c7, type: 2}
-  - {fileID: 2100000, guid: 4620e2a9d52491743aaaa5943f65adb4, type: 2}
   mat: {fileID: 2100000, guid: 03705f7a870ba1f4484156115264e88a, type: 2}
-  bloom: {fileID: 0}
+  bloom: {fileID: 2100000, guid: 81704a084a4574a4ba6aca61aca043c7, type: 2}
+  yellowMat: {fileID: 2100000, guid: baea821c40799044c83bb17476d7c7f1, type: 2}
+  yellowBloom: {fileID: 2100000, guid: 4620e2a9d52491743aaaa5943f65adb4, type: 2}
   topYellow: 0
-  myLight: 0
-  light: 0
-  baseLight: 0
-  blinkSpeed: 1
-  blinkColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!136 &3912041931467278099
 CapsuleCollider:
   m_ObjectHideFlags: 0

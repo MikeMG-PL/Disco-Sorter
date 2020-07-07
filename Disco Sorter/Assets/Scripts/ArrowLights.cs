@@ -4,29 +4,18 @@ using UnityEngine;
 
 public class ArrowLights : MonoBehaviour
 {
-    public List<Material> materials;
     public Material mat;
-    [HideInInspector()]
     public Material bloom;
-    [HideInInspector()]
-    public bool bloomRunning, colorRunning;
+    public Material yellowMat;
+    public Material yellowBloom;
+    Material matBuffer, bloomBuffer;
     public bool topYellow;
-    [HideInInspector()]
-    public bool myLight;
-    public new ArrowManager.Light light;
-    [HideInInspector()]
-    public ArrowManager.Light baseLight;
-    [HideInInspector()]
-    public float blinkSpeed;
-    [HideInInspector()]
-    public Color blinkColor;
 
     private void Start()
     {
         bloom = GetComponent<MeshRenderer>().material;
         NoColor();
         bloom.SetFloat("_AlphaPower", 100);
-        baseLight = light;
     }
 
     public void NoColor()
@@ -37,8 +26,17 @@ public class ArrowLights : MonoBehaviour
         bloom.SetFloat("_AlphaPower", 100);
     }
 
-    public IEnumerator fixedBlinkBloom(Color c)
+    public IEnumerator fixedBlinkBloom(ArrowManager.Light l)
     {
+        if (l == ArrowManager.Light.Yellow && topYellow)
+        {
+            Debug.Log("yellow!");
+            bloomBuffer = bloom;
+            bloom = yellowBloom;
+        }
+
+        GetComponent<MeshRenderer>().material = bloom;
+
         for (float i = 0; i < 1; i += Mathf.Sin(Time.fixedDeltaTime) * 10)
         {
             bloom.SetFloat("_AlphaPower", ClampToAlpha(i));
@@ -57,11 +55,37 @@ public class ArrowLights : MonoBehaviour
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "3.MENU")
             yield return new WaitForSeconds(1);
 
+        if (l == ArrowManager.Light.Yellow && topYellow)
+            bloom = bloomBuffer;
         transform.parent.GetComponentInParent<ArrowManager>().isDone = false;
     }
 
-    public IEnumerator fixedBlinkColor(Color c)
+    public IEnumerator fixedBlinkColor(ArrowManager.Light l)
     {
+        matBuffer = mat;
+        Color c;
+
+        switch (l)
+        {
+            case ArrowManager.Light.Red:
+                c = Color.red;
+                break;
+
+            case ArrowManager.Light.Green:
+                c = Color.green;
+                break;
+
+            case ArrowManager.Light.Yellow:
+                c = Color.yellow;
+                mat = yellowMat;
+                break;
+
+            default:
+                c = Color.white;
+                break;
+        }
+
+        transform.parent.GetComponent<MeshRenderer>().material = mat;
         mat.SetColor("_EmissionColor", c * 3);
         mat.SetColor("_Color", c);
         yield return new WaitForSeconds(1.31f);
@@ -69,6 +93,9 @@ public class ArrowLights : MonoBehaviour
 
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "3.MENU")
             yield return new WaitForSeconds(1);
+
+        if (mat != null)
+            mat = matBuffer;
     }
 
     public float ClampToIntensity(float y)

@@ -85,38 +85,7 @@ public class MainMenuManager : MonoBehaviour
 
     void CheckIfGrabbed(HandEvents h)
     {
-        if (h.parameters != null && h.holding)
-        {
-            switch (h.parameters.color)
-            {
-                case EntityColour.Red:
 
-                    lights[0].blinkSpeed = 3;
-                    lights[0].myLight = true;
-
-                    break;
-
-                case EntityColour.Green:
-
-                    lights[1].blinkSpeed = 3;
-                    lights[1].myLight = true;
-
-                    break;
-
-                case EntityColour.None:
-
-                    lights[2].blinkSpeed = 3;
-                    lights[2].myLight = true;
-
-                    break;
-            }
-        }
-        else if (h.parameters != null && !h.holding)
-        {
-            lights[0].myLight = false;
-            lights[1].myLight = false;
-            lights[2].myLight = false;
-        }
     }
 
     Material r, g, y; GameObject ro, go, yo;
