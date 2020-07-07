@@ -26,7 +26,7 @@ public class ArrowLights : MonoBehaviour
         bloom.SetFloat("_AlphaPower", 100);
     }
 
-    public IEnumerator fixedBlinkBloom(ArrowManager.Light l, ArrowManager.Hand hand)
+    public IEnumerator fixedBlinkBloom(ArrowManager.Light l, ArrowManager.Hand hand, float ttb)
     {
         if (l == ArrowManager.Light.Yellow && topYellow)
         {
@@ -36,16 +36,15 @@ public class ArrowLights : MonoBehaviour
         }
 
         GetComponent<MeshRenderer>().material = bloom;
-
         for (float i = 0; i < 1; i += Mathf.Sin(Time.fixedDeltaTime) * 10)
         {
             bloom.SetFloat("_AlphaPower", ClampToAlpha(i));
             yield return new WaitForSeconds(Time.fixedDeltaTime);
         }
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(ttb);
 
-        bloom.SetFloat("_AlphaPower", 8);
+        bloom.SetFloat("_AlphaPower", 5);
 
         yield return new WaitForSeconds(0.2f);
 
@@ -69,7 +68,7 @@ public class ArrowLights : MonoBehaviour
         }
     }
 
-    public IEnumerator fixedBlinkColor(ArrowManager.Light l, ArrowManager.Hand hand)
+    public IEnumerator fixedBlinkColor(ArrowManager.Light l, ArrowManager.Hand hand, float ttb)
     {
         matBuffer = mat;
         Color c;
@@ -95,9 +94,12 @@ public class ArrowLights : MonoBehaviour
         }
 
         transform.parent.GetComponent<MeshRenderer>().material = mat;
-        mat.SetColor("_EmissionColor", c * 3);
+        mat.SetColor("_EmissionColor", c * 0.1f);
         mat.SetColor("_Color", c);
-        yield return new WaitForSeconds(1.31f);
+        yield return new WaitForSeconds(0.11f + ttb);
+        mat.SetColor("_EmissionColor", c * 5);
+        mat.SetColor("_Color", c);
+        yield return new WaitForSeconds(0.2f);
         NoColor();
 
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "3.MENU")
@@ -114,6 +116,6 @@ public class ArrowLights : MonoBehaviour
 
     public float ClampToAlpha(float y)
     {
-        return 30 - y * 15;
+        return 30 - y * 10;
     }
 }

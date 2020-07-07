@@ -71,6 +71,9 @@ public class HandEvents : MonoBehaviour
 
         parameters.wasReleased = true;
         holding = false;
+
+        Debug.Log("START: " + parameters.linkedReleaseTimeStart + ", TIME: " + LevelManager.timer + ", END: " + parameters.linkedReleaseTimeEnd);
+
         parameters = null;
     }
 

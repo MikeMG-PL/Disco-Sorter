@@ -33,12 +33,11 @@ public class PlayerActions : MonoBehaviour
                 if (parameters.action != EntityAction.CatchAndRelease) return;
                 actionStart = parameters.linkedReleaseTimeStart; actionEnd = parameters.linkedReleaseTimeEnd;
 
-                if (timer >= actionStart - 0.15f && timer <= actionEnd + 0.15f)
+                if (timer >= actionStart - 0.16f && timer <= actionEnd + 0.4f)
                 {
                     onScreen.HighlightVignette(ActionHighlight.Success);
                     parameters.wasReleasedOnTime = true;
                 }
-
                 else if(levelManager.spawnPipeline[parameters.linkedReleaseId] != null)
                 {
                     onScreen.HighlightVignette(ActionHighlight.Fail);

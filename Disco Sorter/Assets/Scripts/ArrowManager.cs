@@ -9,7 +9,7 @@ public class ArrowManager : MonoBehaviour
     [Header("-----------")]
     public LevelManager levelManager;
     public HandEvents leftHand, rightHand;
-    
+
     ObjectParameters leftParameters, rightParameters;
 
     [HideInInspector()]
@@ -30,7 +30,7 @@ public class ArrowManager : MonoBehaviour
 
     void HandCheck(Hand h)
     {
-
+        float timeToBlink;
         switch (h)
         {
             case Hand.Left:
@@ -39,41 +39,45 @@ public class ArrowManager : MonoBehaviour
                 && LevelManager.timer >= (leftParameters.linkedReleaseTimeStart + leftParameters.linkedReleaseTimeEnd) / 2 - 1.11f &&
                 levelManager.spawnPipeline[leftParameters.linkedReleaseId].transform.childCount > 0 && !isDoneLeft)
                 {
+                    timeToBlink = (leftParameters.linkedReleaseTimeStart + leftParameters.linkedReleaseTimeEnd) / 2 - LevelManager.timer;
                     isDoneLeft = true;
-                    Proceed(leftParameters, Hand.Left);
+                    Proceed(leftParameters, Hand.Left, timeToBlink);
                 }
                 break;
+
             case Hand.Right:
                 if (rightParameters != null && levelManager.spawnPipeline[rightParameters.linkedReleaseId].gameObject != null &&
                 !levelManager.spawnPipeline[rightParameters.linkedReleaseId].GetComponent<ObjectParameters>().wasReleased
                 && LevelManager.timer >= (rightParameters.linkedReleaseTimeStart + rightParameters.linkedReleaseTimeEnd) / 2 - 1.11f &&
                 levelManager.spawnPipeline[rightParameters.linkedReleaseId].transform.childCount > 0 && !isDoneRight)
                 {
+                    timeToBlink = (rightParameters.linkedReleaseTimeStart + rightParameters.linkedReleaseTimeEnd) / 2 - LevelManager.timer;
                     isDoneRight = true;
-                    Proceed(rightParameters, Hand.Right);
+                    Proceed(rightParameters, Hand.Right, timeToBlink);
                 }
                 break;
+
             default:
                 break;
         }
     }
 
-    void Proceed(ObjectParameters o, Hand hand)
+    void Proceed(ObjectParameters o, Hand hand, float ttb)
     {
         if (o.type == EntityType.RottenApple)
         {
-            Enlighten(Light.Yellow, hand);
+            Enlighten(Light.Yellow, hand, ttb);
         }
         if (o.type == EntityType.Apple)
         {
             switch (o.color)
             {
                 case EntityColour.Green:
-                    Enlighten(Light.Green, hand);
+                    Enlighten(Light.Green, hand, ttb);
                     break;
 
                 case EntityColour.Red:
-                    Enlighten(Light.Red, hand);
+                    Enlighten(Light.Red, hand, ttb);
                     break;
 
                 default:
@@ -82,7 +86,7 @@ public class ArrowManager : MonoBehaviour
         }
     }
 
-    void Enlighten(Light l, Hand hand)
+    void Enlighten(Light l, Hand hand, float ttb)
     {
         List<ArrowLights> list;
 
@@ -107,8 +111,8 @@ public class ArrowManager : MonoBehaviour
 
         for (int i = 0; i < list.Count; i++)
         {
-            StartCoroutine(list[i].fixedBlinkBloom(l, hand));
-            StartCoroutine(list[i].fixedBlinkColor(l, hand));
+            StartCoroutine(list[i].fixedBlinkBloom(l, hand, ttb));
+            StartCoroutine(list[i].fixedBlinkColor(l, hand, ttb));
         }
     }
 
