@@ -367,7 +367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fistClench: {fileID: 5567112191052190804}
   handEvents: {fileID: 0}
-  hitSensitivity: 0.75
+  hitSensitivity: 1.75
 --- !u!54 &4330252944281115248
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1800,6 +1800,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 6609446644638067155, guid: 2064db32ea9aa7548844abb94b8a2739,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4235348211233509326, guid: 2064db32ea9aa7548844abb94b8a2739,
         type: 3}
       propertyPath: m_IsTrigger
@@ -1809,11 +1814,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6609446644638067155, guid: 2064db32ea9aa7548844abb94b8a2739,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2064db32ea9aa7548844abb94b8a2739, type: 3}

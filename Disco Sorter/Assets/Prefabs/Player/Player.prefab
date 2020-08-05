@@ -5840,6 +5840,11 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 7c5512b0ab594194b90c81c6b2c89eb0, type: 2}
+    - target: {fileID: 5926997793722484909, guid: c1e0806a3e9bbf24da600e95d0dafd02,
+        type: 3}
+      propertyPath: hitSensitivity
+      value: 0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 5333937101011949233, guid: c1e0806a3e9bbf24da600e95d0dafd02,
         type: 3}
       propertyPath: m_Layer
@@ -7260,11 +7265,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 5926997793722484909, guid: c1e0806a3e9bbf24da600e95d0dafd02,
-        type: 3}
-      propertyPath: hitSensitivity
-      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 5333937101011949233, guid: c1e0806a3e9bbf24da600e95d0dafd02,
         type: 3}
