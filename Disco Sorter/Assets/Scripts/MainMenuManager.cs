@@ -5,6 +5,8 @@ using UnityEngine;
 public class MainMenuManager : MonoBehaviour
 {
     public static int reds = 0, greens = 0, yellows = 0;
+    [HideInInspector()]
+    public bool blocked;
 
     int id = -1;
     public List<ArrowLights> lights;
@@ -80,7 +82,8 @@ public class MainMenuManager : MonoBehaviour
 
     void Update()
     {
-        Count();
+        if (!blocked)
+            Count();
         if (!performingLeft)
             CheckIfGrabbed(left);
         if (!performingRight)

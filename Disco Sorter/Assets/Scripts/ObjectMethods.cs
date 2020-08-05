@@ -174,7 +174,7 @@ public class ObjectMethods : MonoBehaviour
             x -= Time.fixedDeltaTime;
             yield return new WaitForSeconds(Time.fixedDeltaTime);
 
-            if (x <= 0.05)
+            if (x <= 0.05 && GetComponent<ObjectParameters>().type != EntityType.Disco)
             {
                 switch (GetComponent<ObjectParameters>().color)
                 {

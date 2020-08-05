@@ -6,6 +6,7 @@ public enum MenuSide { Main, Credits, Settings};
 
 public class MenuBox : MonoBehaviour
 {
+    public ChooseLevel chooseLevel;
     public MenuSide boxSide;
     public OnScreenMenu CreditScreen, SettingsScreen;
     public FadeScreen screen;
@@ -24,7 +25,7 @@ public class MenuBox : MonoBehaviour
 
     private void Play()
     {
-        StartCoroutine(screen.FadeInAndStartGame());
+        chooseLevel.SpawnDiscos();
     }
 
     private void Credits()

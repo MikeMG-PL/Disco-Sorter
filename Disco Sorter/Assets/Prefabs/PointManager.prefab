@@ -50,7 +50,7 @@ MonoBehaviour:
   rottenDistanceMultiplier: 1
   wrongBoxPunishment: -10
   noBoxPunishment: -5
-  wrongActionsNeededToFail: 5
+  wrongActionsNeededToFail: 4
   correctBoxPoints: 5
   onScreen: {fileID: 0}
   levelFailed: 0
