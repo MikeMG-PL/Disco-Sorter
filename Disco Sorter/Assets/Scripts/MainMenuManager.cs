@@ -18,9 +18,9 @@ public class MainMenuManager : MonoBehaviour
 
     bool performingLeft, performingRight;
 
-    void Start()
+    void Awake()
     {
-        //SpawnApples();
+        reds = 0; greens = 0; yellows = 0;
     }
 
     void Count()

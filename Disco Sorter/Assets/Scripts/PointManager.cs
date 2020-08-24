@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PointManager : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class PointManager : MonoBehaviour
     int points, beforeComboCounter, combo, rottenDistance; Queue<bool> actionQueue; public enum AppleState { IncorrectBox, CorrectBox, NoBox, RottenThrow }; public bool levelFailed;
     public LevelManager levelManager; bool stopListening; public bool godMode;
 
-    void Start()
+    void Awake()
     {
         actionQueue = new Queue<bool>();
     }
@@ -174,6 +175,8 @@ public class PointManager : MonoBehaviour
         }
         Time.timeScale = 0;
         levelManager.GetComponent<AudioSource>().pitch = 0;
+        SceneManager.LoadScene("3.MENU");
+        yield return new WaitForSecondsRealtime(3);
         StopCoroutine(FailEffect());
     }
 }

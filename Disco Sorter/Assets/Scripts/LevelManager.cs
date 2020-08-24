@@ -55,7 +55,7 @@ public class LevelManager : MonoBehaviour
             timer += Time.fixedDeltaTime;
         }
 
-        if (songController.aSrc.isPlaying && Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return))
         {
             Restart();
         }
@@ -88,9 +88,8 @@ public class LevelManager : MonoBehaviour
 
     void Restart()
     {
-
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        //timer = 0;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        timer = 0;
     }
 
     void SpawnObjects()

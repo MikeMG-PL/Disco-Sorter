@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.3
   m_CustomReflection: {fileID: 8900000, guid: 688075b2003a4474b8a0ea4e06e06b3e, type: 3}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: NaN, g: NaN, b: NaN, a: 0.3}
+  m_IndirectSpecularColor: {r: 0.20423815, g: 0.20885265, b: 0.19552329, a: 0.3}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2607,7 +2607,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a88151d4129c4641833cf72fc01b129, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SDKManager: {fileID: 0}
+  SDKManager: {fileID: 1509737952}
 --- !u!114 &672356016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3792,11 +3792,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 8d1ec2558648bd247a048c4057f7bb30, type: 2}
-    - target: {fileID: 7048521354608316449, guid: e0d185b94789dfc4f92d4f68cfc8479c,
-        type: 3}
-      propertyPath: color
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4279846151477238125, guid: e0d185b94789dfc4f92d4f68cfc8479c,
         type: 3}
       propertyPath: m_Color.r
@@ -3811,6 +3806,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.b
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7048521354608316449, guid: e0d185b94789dfc4f92d4f68cfc8479c,
+        type: 3}
+      propertyPath: color
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4013093771670737278, guid: e0d185b94789dfc4f92d4f68cfc8479c,
         type: 3}
@@ -4923,11 +4923,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: dbfb7c2246ec2f34687f50097bee0878, type: 2}
-    - target: {fileID: 7048521354608316449, guid: e0d185b94789dfc4f92d4f68cfc8479c,
-        type: 3}
-      propertyPath: color
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 4279846151477238125, guid: e0d185b94789dfc4f92d4f68cfc8479c,
         type: 3}
       propertyPath: m_Color.r
@@ -4942,6 +4937,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.b
       value: 0.4815874
+      objectReference: {fileID: 0}
+    - target: {fileID: 7048521354608316449, guid: e0d185b94789dfc4f92d4f68cfc8479c,
+        type: 3}
+      propertyPath: color
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4013093771670737278, guid: e0d185b94789dfc4f92d4f68cfc8479c,
         type: 3}
@@ -6257,11 +6257,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 89b1790317383504daaf8ec93d4fd99d, type: 2}
-    - target: {fileID: 7048521354608316449, guid: e0d185b94789dfc4f92d4f68cfc8479c,
-        type: 3}
-      propertyPath: color
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4279846151477238125, guid: e0d185b94789dfc4f92d4f68cfc8479c,
         type: 3}
       propertyPath: m_Color.r
@@ -6276,6 +6271,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.b
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7048521354608316449, guid: e0d185b94789dfc4f92d4f68cfc8479c,
+        type: 3}
+      propertyPath: color
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4013093771670737278, guid: e0d185b94789dfc4f92d4f68cfc8479c,
         type: 3}
@@ -7040,6 +7040,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1498695631}
   m_Mesh: {fileID: -3262789968867269347, guid: 34e2589d4d4f4f441a1fc053bdc2e164, type: 3}
+--- !u!114 &1509737952 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4144602680336931768, guid: 08508dc24962baf428b9ffa8503aaba4,
+    type: 3}
+  m_PrefabInstance: {fileID: 672356008}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5837af0260a118e4d808bfe0405429a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1550987418 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3282091547396610328, guid: dad7c69c72f315d498c132a2c482baa3,
