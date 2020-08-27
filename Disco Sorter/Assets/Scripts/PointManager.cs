@@ -138,6 +138,7 @@ public class PointManager : MonoBehaviour
 
     IEnumerator FailEffect()
     {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<FadeScreen>().OnlyFade(3f);
         for (int i = 0; i < levelManager.spawnPipeline.Count; i++)
         {
             if (levelManager.spawnPipeline[i] != null && levelFailed)
@@ -175,10 +176,11 @@ public class PointManager : MonoBehaviour
         }
         Time.timeScale = 0;
         levelManager.GetComponent<AudioSource>().pitch = 0;
-        GameObject.FindGameObjectWithTag("Player").GetComponent<FadeScreen>().OnlyFade();
+
         yield return new WaitForSecondsRealtime(3);
         SceneManager.LoadScene("3.MENU");
         Time.timeScale = 1;
+
         StopCoroutine(FailEffect());
     }
 }

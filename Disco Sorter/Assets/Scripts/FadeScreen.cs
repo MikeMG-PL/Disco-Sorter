@@ -13,7 +13,7 @@ public class FadeScreen : MonoBehaviour
 
     void Awake()
     {
-        if (SceneManager.GetActiveScene().name == "2.GAME") thisIsGame = true;
+        OnlyUnfade(1f);
     }
 
     // Szybkie zmienienie ekranu na czarny podczas odpalenia gry i późniejszy fade out
@@ -22,22 +22,22 @@ public class FadeScreen : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Return))
         {
-            OnlyFade();
+            OnlyFade(0.5f);
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            OnlyUnfade();
+            OnlyUnfade(0.5f);
         }
 
-        if (!wasFaded && thisIsGame)
+        if (!wasFaded)
         {
             SDKSetup = SDKManager.loadedSetup;
             if (SDKSetup != null)
             {
-                GetComponent<VRTK_HeadsetFade>().Fade(Color.black, 0f);
+                OnlyFade(0);
                 wasFaded = true;
-                GetComponent<VRTK_HeadsetFade>().Unfade(0.75f);
+                OnlyUnfade(1f);
             }
         }
     }
@@ -46,19 +46,17 @@ public class FadeScreen : MonoBehaviour
     public IEnumerator FadeInAndStartGame()
     {
         GetComponent<VRTK_HeadsetFade>().Fade(Color.black, 0.5f);
-
         yield return new WaitForSeconds(0.5f);
-
         SceneManager.LoadScene("2.GAME");
     }
 
-    public void OnlyFade()
+    public void OnlyFade(float t)
     {
-        GetComponent<VRTK_HeadsetFade>().Fade(Color.black, 0.5f);
+        GetComponent<VRTK_HeadsetFade>().Fade(Color.black, t);
     }
 
-    public void OnlyUnfade()
+    public void OnlyUnfade(float t)
     {
-        GetComponent<VRTK_HeadsetFade>().Unfade(0.5f);
+        GetComponent<VRTK_HeadsetFade>().Unfade(t);
     }
 }
