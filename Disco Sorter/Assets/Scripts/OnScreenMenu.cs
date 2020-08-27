@@ -21,7 +21,6 @@ public class OnScreenMenu : MonoBehaviour
     {
         if (screenType == MenuSide.Main) StartCoroutine(MainScreen());
         else if (screenType == MenuSide.Credits) StartCoroutine(CreditsScreen());
-        else if (screenType == MenuSide.Settings) StartCoroutine(SettingsScreen());
     }
 
     private void Update()
@@ -125,16 +124,6 @@ public class OnScreenMenu : MonoBehaviour
         showDefaultText = true;
     }
 
-    IEnumerator SettingsScreen()
-    {
-        yield return new WaitForSeconds(3);
-        defaultText.gameObject.SetActive(true);
-        SetAlpha(defaultText.material, 0);
-
-        yield return new WaitForSeconds(1);
-
-        showDefaultText = true;
-    }
 
     public void StartCredits()
     {

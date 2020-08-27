@@ -37,8 +37,8 @@ public class MainMenuManager : MonoBehaviour
         }
         if (yellows < 1)
         {
-            StartCoroutine(COUNTYELLOW());
-            yellows++;
+            //StartCoroutine(COUNTYELLOW());
+            //yellows++;
         }
 
 
