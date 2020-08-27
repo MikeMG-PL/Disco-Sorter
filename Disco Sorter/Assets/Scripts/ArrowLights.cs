@@ -11,7 +11,7 @@ public class ArrowLights : MonoBehaviour
     Material matBuffer, bloomBuffer;
     public bool topYellow;
 
-    private void Start()
+    private void Awake()
     {
         bloom = GetComponent<MeshRenderer>().material;
         NoColor();

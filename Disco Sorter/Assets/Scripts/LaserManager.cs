@@ -10,7 +10,7 @@ public class LaserManager : MonoBehaviour
     bool illuminate;
 
 
-    void Start()
+    void Awake()
     {
         howMany = GameObject.FindGameObjectsWithTag("Laser").GetLength(0);
         GameObject[] tab;

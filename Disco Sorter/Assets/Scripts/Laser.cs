@@ -21,7 +21,7 @@ public class Laser : MonoBehaviour
     public float timer;
     Vector3 rot = new Vector3(0, 0, 0);
 
-    void Start()
+    void Awake()
     {
         col = (LaserColor)Random.Range(0, colors.Count);
         prev = col;

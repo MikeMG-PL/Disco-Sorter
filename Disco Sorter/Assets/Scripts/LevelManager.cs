@@ -25,15 +25,16 @@ public class LevelManager : MonoBehaviour
     [HideInInspector()]
     public List<GameObject> spawnPipeline = new List<GameObject>();
 
-    private void Awake()
+    /*private void Awake()
     {
 #if UNITY_EDITOR
         //Application.targetFrameRate = 99999;
 #endif
-    }
+    }*/
 
-    private void Start()
+    private void Awake()
     {
+        timer = 0;
         songController = GetComponent<GameAudioManipulation>();
         player = playerObject.GetComponent<Player>();
 

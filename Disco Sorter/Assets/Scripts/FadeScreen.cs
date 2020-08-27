@@ -11,7 +11,7 @@ public class FadeScreen : MonoBehaviour
     private VRTK_SDKSetup SDKSetup;
     private bool thisIsGame, wasFaded;
 
-    void Start()
+    void Awake()
     {
         if (SceneManager.GetActiveScene().name == "2.GAME") thisIsGame = true;
     }
@@ -40,5 +40,10 @@ public class FadeScreen : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         SceneManager.LoadScene("2.GAME");
+    }
+
+    public void OnlyFade()
+    {
+        GetComponent<VRTK_HeadsetFade>().Fade(Color.black, 0.5f);
     }
 }

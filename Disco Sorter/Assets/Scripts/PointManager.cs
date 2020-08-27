@@ -175,8 +175,10 @@ public class PointManager : MonoBehaviour
         }
         Time.timeScale = 0;
         levelManager.GetComponent<AudioSource>().pitch = 0;
-        SceneManager.LoadScene("3.MENU");
+        GameObject.FindGameObjectWithTag("Player").GetComponent<FadeScreen>().OnlyFade();
         yield return new WaitForSecondsRealtime(3);
+        SceneManager.LoadScene("3.MENU");
+        Time.timeScale = 1;
         StopCoroutine(FailEffect());
     }
 }

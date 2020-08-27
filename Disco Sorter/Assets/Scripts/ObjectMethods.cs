@@ -13,7 +13,7 @@ public class ObjectMethods : MonoBehaviour
     Transform distanceCounter;
     PointManager pointManager;
 
-    void Start()
+    void Awake()
     {
         if (!transform.CompareTag("DiscoBall"))
             transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = mainMaterial;

@@ -11,7 +11,7 @@ public class SortingBox : MonoBehaviour
 
     private SFXManager sfx;
 
-    void Start()
+    void Awake()
     {
         sfx = GetComponent<SFXManager>();
     }

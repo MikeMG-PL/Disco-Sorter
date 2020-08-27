@@ -8,6 +8,7 @@ public class ReleaseIcon : MonoBehaviour
     SpriteRenderer spriteRenderer; MeshRenderer childRenderer;
     [HideInInspector()]
     public bool disabled;
+
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();

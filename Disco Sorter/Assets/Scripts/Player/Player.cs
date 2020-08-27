@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     [HideInInspector]
     public GameObject leftHandGrabbedObject, rightHandGrabbedObject;
 
-    private void Start()
+    private void Awake()
     {
         if (GetComponent<VRTK_HeadsetFade>() != null)
         {

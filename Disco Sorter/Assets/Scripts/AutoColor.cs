@@ -14,7 +14,7 @@ public class AutoColor : MonoBehaviour
     public List<Material> materials = new List<Material>();
     public List<Material> fogs = new List<Material>();
 
-    void Start()
+    void Awake()
     {
         switch(gameObject.tag)
         {

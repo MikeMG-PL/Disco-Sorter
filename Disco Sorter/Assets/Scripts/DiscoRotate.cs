@@ -6,7 +6,7 @@ public class DiscoRotate : MonoBehaviour
 {
     public float speed = 10;
 
-    void Start()
+    void Awake()
     {
         if (speed > 360)
             speed = 360;

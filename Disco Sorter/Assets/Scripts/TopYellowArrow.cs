@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TopYellowArrow : MonoBehaviour
 {
-    void Start()
+    void Awake()
     {
         if (!GetComponent<ArrowLights>().topYellow)
         {
