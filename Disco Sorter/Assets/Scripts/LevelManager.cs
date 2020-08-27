@@ -25,13 +25,6 @@ public class LevelManager : MonoBehaviour
     [HideInInspector()]
     public List<GameObject> spawnPipeline = new List<GameObject>();
 
-    /*private void Awake()
-    {
-#if UNITY_EDITOR
-        //Application.targetFrameRate = 99999;
-#endif
-    }*/
-
     private void Awake()
     {
         timer = 0;

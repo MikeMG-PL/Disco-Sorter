@@ -20,6 +20,16 @@ public class FadeScreen : MonoBehaviour
     // Musimy to robić w ten sposób ponieważ SDK potrzebne do fade'u nie jest ładowane na Awake, tylko jakiś czas **po** Start
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Return))
+        {
+            OnlyFade();
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            OnlyUnfade();
+        }
+
         if (!wasFaded && thisIsGame)
         {
             SDKSetup = SDKManager.loadedSetup;
@@ -45,5 +55,10 @@ public class FadeScreen : MonoBehaviour
     public void OnlyFade()
     {
         GetComponent<VRTK_HeadsetFade>().Fade(Color.black, 0.5f);
+    }
+
+    public void OnlyUnfade()
+    {
+        GetComponent<VRTK_HeadsetFade>().Unfade(0.5f);
     }
 }
