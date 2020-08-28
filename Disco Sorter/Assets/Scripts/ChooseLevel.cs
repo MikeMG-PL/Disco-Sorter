@@ -20,13 +20,13 @@ public class ChooseLevel : MonoBehaviour
 
         for (int i = 0; i < levels.Count; i++)
         {
-            pos = new Vector3(transform.position.x + i / 2, transform.position.y, transform.position.z);
+            pos = new Vector3(transform.position.x + 0.5f, transform.position.y, transform.position.z);
             text = Instantiate(transform.GetChild(0));
             GameObject disco = Instantiate(discoPrefab, pos, Quaternion.identity, transform);
             text.parent = disco.transform;
             text.GetComponent<TextMesh>().text = levels[i];
             text.gameObject.SetActive(true);
-            text.position = new Vector3(transform.position.x, transform.position.y + 0.25f, transform.position.z);
+            text.position = new Vector3(transform.position.x + 0.5f, transform.position.y + 0.25f, transform.position.z);
             disco.AddComponent<MenuDiscoLevel>();
         }
 
