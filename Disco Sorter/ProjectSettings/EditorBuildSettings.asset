@@ -6,14 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/Old scenes/Menu.unity
-    guid: 935f6fd87b3975040bb248dc28beb396
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/Scenes/1.EDITOR.unity
     guid: 63180a6b7fd72cd4b9055f209cce704f
   - enabled: 0
-    path: Assets/Scenes/Old scenes/VR Ready.unity
-    guid: c3ab3423df336b64eaf0e13de92629de
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/3.MENU.unity
     guid: 45514e7d924c7594eaed9c57ff3b1d7c

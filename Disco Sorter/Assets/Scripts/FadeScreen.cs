@@ -47,7 +47,10 @@ public class FadeScreen : MonoBehaviour
         {
             timer += Time.fixedDeltaTime;
             if(timer >= 1f)
-                SceneManager.LoadScene("2.GAME");
+            {
+                SceneManager.LoadSceneAsync("2.GAME", LoadSceneMode.Single);
+                loadingLevel = false;
+            }
         }
     }
 

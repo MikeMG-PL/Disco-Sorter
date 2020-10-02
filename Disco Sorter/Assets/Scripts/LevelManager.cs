@@ -25,7 +25,9 @@ public class LevelManager : MonoBehaviour
     [HideInInspector()]
     public List<GameObject> spawnPipeline = new List<GameObject>();
 
-    private void Awake()
+
+
+    private void Start()
     {
         timer = 0;
         songController = GetComponent<GameAudioManipulation>();
