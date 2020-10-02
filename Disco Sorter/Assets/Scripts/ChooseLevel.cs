@@ -51,6 +51,6 @@ public class ChooseLevel : MonoBehaviour
 
     public void LaunchLevel()
     {
-        StartCoroutine(fadeScreen.FadeInAndStartGame());
+        fadeScreen.FadeInAndStartGame();
     }
 }

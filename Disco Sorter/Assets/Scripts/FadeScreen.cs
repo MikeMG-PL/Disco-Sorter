@@ -9,11 +9,13 @@ public class FadeScreen : MonoBehaviour
     public VRTK_SDKManager SDKManager;
 
     private VRTK_SDKSetup SDKSetup;
-    private bool thisIsGame, wasFaded;
+    private bool wasFaded, loadingLevel;
+    float timer;
 
     void Awake()
     {
         OnlyUnfade(1f);
+        timer = 0;
     }
 
     // Szybkie zmienienie ekranu na czarny podczas odpalenia gry i późniejszy fade out
@@ -40,14 +42,20 @@ public class FadeScreen : MonoBehaviour
                 OnlyUnfade(1f);
             }
         }
+
+        if(loadingLevel)
+        {
+            timer += Time.fixedDeltaTime;
+            if(timer >= 1f)
+                SceneManager.LoadScene("2.GAME");
+        }
     }
 
     // Funkcja używana podczas odpalania gry z menu
-    public IEnumerator FadeInAndStartGame()
+    public void FadeInAndStartGame()
     {
         GetComponent<VRTK_HeadsetFade>().Fade(Color.black, 0.5f);
-        yield return new WaitForSeconds(0.5f);
-        SceneManager.LoadScene("2.GAME");
+        loadingLevel = true;
     }
 
     public void OnlyFade(float t)
