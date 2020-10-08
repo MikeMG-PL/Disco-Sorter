@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class ChooseLevel : MonoBehaviour
 {
+    public MainMenuManager menu;
     public GameObject discoPrefab;
     public FadeScreen fadeScreen;
     public List<string> levels;
     GameObject[] apples;
     GameObject[] rottenApples;
-    float timer;
 
     public void SpawnDiscos()
     {
+        menu.blocked = true;
         Transform text;
         Vector3 pos;
+
 
         for (int i = 0; i < levels.Count; i++)
         {

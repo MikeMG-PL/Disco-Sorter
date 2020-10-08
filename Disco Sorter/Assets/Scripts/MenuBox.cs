@@ -8,7 +8,6 @@ public enum MenuSide { Main, Credits, Settings };
 
 public class MenuBox : MonoBehaviour
 {
-    public MainMenuManager menu;
     bool redRunning, yellowRunning;
     public ChooseLevel chooseLevel;
     public MenuSide boxSide;
@@ -26,8 +25,9 @@ public class MenuBox : MonoBehaviour
 
         if (other.transform.parent.CompareTag("Apple"))
         {
-            if (boxSide == MenuSide.Main && other.transform.parent.GetComponent<ObjectParameters>().color == EntityColour.Green) Play();
-            else if (boxSide == MenuSide.Credits && other.transform.parent.GetComponent<ObjectParameters>().color == EntityColour.Red) Credits();
+            if (boxSide == MenuSide.Main) Play();
+            else if (boxSide == MenuSide.Credits) Credits();
+            else if (boxSide == MenuSide.Settings) Settings();
         }
     }
 
@@ -39,9 +39,7 @@ public class MenuBox : MonoBehaviour
 
     private void Play()
     {
-        menu.blocked = true;
-        //chooseLevel.SpawnDiscos();
-        StartCoroutine(DISCOS());
+        chooseLevel.SpawnDiscos();
     }
 
     private void Credits()
@@ -62,12 +60,5 @@ public class MenuBox : MonoBehaviour
         yield return new WaitForSecondsRealtime(14);
         redRunning = false;
         StopCoroutine(CREDITS());
-    }
-
-    public IEnumerator DISCOS()
-    {
-        yield return new WaitForSecondsRealtime(1.5f);
-        chooseLevel.SpawnDiscos();
-        StopCoroutine(DISCOS());
     }
 }
