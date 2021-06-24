@@ -53,6 +53,8 @@ public class ObjectMethods : MonoBehaviour
         {
             isChecked = true;
 
+            if (pointManager == null) return; // Najprawdopodobniej nie jesteśmy w scenie GAME
+
             if (gameObject.CompareTag("RottenApple"))
             {
                 distanceCounter = GameObject.FindGameObjectWithTag("DistanceCounter").transform;
@@ -98,6 +100,8 @@ public class ObjectMethods : MonoBehaviour
             && !isChecked && GetComponent<ObjectParameters>().wasGrabbed)
         {
             isChecked = true;
+
+            if (pointManager == null) return; // Najprawdopodobniej nie jesteśmy w scenie GAME
 
             if (gameObject.CompareTag("RottenApple"))
             {
