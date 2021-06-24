@@ -21,7 +21,7 @@ public class GameAudioManipulation : MonoBehaviour
 
     void MenuAfterFinish()
     {
-        if (aSrc.time >= aSrc.clip.length)
+        if (aSrc.time >= aSrc.clip.length - 0.5f)
             SceneManager.LoadScene("3.MENU");
     }
 }
